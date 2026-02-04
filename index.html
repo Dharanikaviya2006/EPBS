@@ -210,30 +210,45 @@ function downloadImage() {
         link.click();
     });
 }
+async function shareImage() {
+    const canvas = await generateCanvas();
 
-function shareImage() {
-    generateCanvas().then(canvas => {
-        canvas.toBlob(blob => {
-            const file = new File([blob], "post.png", { type: "image/png" });
+    canvas.toBlob(async blob => {
+        const file = new File([blob], "post.png", { type: "image/png" });
 
-            const caption = captionText.textContent || "Check this out!";
-            const hashtags = "#PostCreator #MadeWithCode";
+        const caption = captionText.textContent || "Check this out!";
+        const hashtags = "#PostCreator #MadeWithCode";
+        const fullText = caption + " " + hashtags;
 
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({
+        // Function to copy caption
+        async function copyCaption() {
+            try {
+                await navigator.clipboard.writeText(fullText);
+                alert("Caption & hashtags copied to clipboard. Paste it when posting!");
+            } catch {
+                alert("Sharing app may not support captions. Please copy manually:\n\n" + fullText);
+            }
+        }
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
                     files: [file],
                     title: "My Post",
-                    text: caption + " " + hashtags
-                }).catch(() => {
-                    downloadImage();
+                    text: fullText
                 });
-            } else {
+                // Copy anyway because many apps ignore text
+                await copyCaption();
+            } catch {
                 downloadImage();
+                await copyCaption();
             }
-        });
+        } else {
+            downloadImage();
+            await copyCaption();
+        }
     });
 }
-
 
 setInterval(() => {
     likeCount.textContent = Math.floor(Math.random() * 900 + 100);
