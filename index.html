@@ -67,13 +67,7 @@ body {
 }
 
 .post-caption { padding: 0 10px 12px; font-size: 14px; }
-
-.hashtags {
-    margin-top: 4px;
-    color: #1d9bf0;
-    font-size: 13px;
-    word-wrap: break-word;
-}
+.hashtags { margin-top: 4px; color: #1d9bf0; font-size: 13px; word-wrap: break-word; }
 .hashtags span { margin-right: 6px; }
 
 .controls input, .controls button {
@@ -207,6 +201,12 @@ imageContainer.addEventListener("pointermove", e => {
 });
 imageContainer.addEventListener("pointerup", () => isDragging = false);
 
+function generateCaption() {
+    const caption = mainCaption.textContent;
+    const tags = Array.from(hashTags.querySelectorAll("span")).map(s => s.textContent);
+    return `I just created this post!\n${caption}\n${tags.join(" ")}`;
+}
+
 function generateCanvas() {
     return html2canvas(document.getElementById("captureArea"), {backgroundColor: null});
 }
@@ -219,40 +219,25 @@ function downloadImage() {
         link.click();
     });
 }
+
 async function shareImage() {
     try {
         const canvas = await generateCanvas();
+        const shareText = generateCaption();
+
+        // Copy caption + hashtags
+        try {
+            await navigator.clipboard.writeText(shareText);
+            alert("Caption & hashtags copied to clipboard!");
+        } catch {}
 
         canvas.toBlob(async (blob) => {
-            if (!blob) {
-                alert("Unable to prepare image for sharing.");
-                return;
-            }
-
             const file = new File([blob], "post.png", { type: "image/png" });
 
-            const caption = mainCaption.textContent || "";
-            const tags = Array.from(hashTags.querySelectorAll("span")).map(s => s.textContent);
-            const shareText = (caption + " " + tags.join(" ")).trim();
-
-            // Always copy caption + hashtags as backup
-            try {
-                await navigator.clipboard.writeText(shareText);
-            } catch {}
-
-            // If device supports file sharing
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    files: [file],
-                    text: shareText,
-                    title: "Shared Post"
-                });
+            if (navigator.share && navigator.canShare({ files: [file] })) {
+                await navigator.share({ files: [file], text: shareText, title: "Shared Post" });
             } else if (navigator.share) {
-                // Some devices only allow text/URL
-                await navigator.share({
-                    text: shareText,
-                    title: "Shared Post"
-                });
+                await navigator.share({ text: shareText, title: "Shared Post" });
             } else {
                 alert("Sharing is not supported on this device/browser.");
             }
@@ -260,7 +245,6 @@ async function shareImage() {
         }, "image/png");
 
     } catch (err) {
-        console.error("Share failed:", err);
         alert("Sharing was cancelled or not supported.");
     }
 }
