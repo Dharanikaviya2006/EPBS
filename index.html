@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Post Creator</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2f7, #d6e0f5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.editor { width: 100%; max-width: 400px; }
+
+.post-frame {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.profile { display: flex; align-items: center; gap: 8px; }
+.avatar { width: 34px; height: 34px; border-radius: 50%; background: #ccc; }
+.username { font-weight: bold; font-size: 14px; }
+
+.follow-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid #333;
+    background: white;
+}
+
+.post-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    position: relative;
+    background: #eee;
+    cursor: grab;
+}
+
+.post-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    user-select: none;
+    -webkit-user-drag: none;
+    transform-origin: top left;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 16px;
+}
+
+.post-caption { padding: 0 10px 12px; font-size: 14px; }
+
+.controls input, .controls button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.controls button {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Social Post Creator</h2>
+
+<div class="editor">
+    <div class="post-frame" id="captureArea">
+        <div class="post-header">
+            <div class="profile">
+                <div class="avatar"></div>
+                <div class="username">Your Page</div>
+            </div>
+            <button class="follow-btn">FOLLOW</button>
+        </div>
+
+        <div class="post-image" id="imageContainer">
+            <img id="photoPreview">
+        </div>
+
+        <div class="post-actions">
+            <div>❤️ <span id="likeCount">0</span> 💬 ✈️</div>
+            <div>🔖</div>
+        </div>
+
+        <div class="post-caption" id="captionText">Your caption here</div>
+    </div>
+
+    <div class="controls">
+        <input type="file" id="photoInput" accept="image/*">
+        <input type="range" id="zoomSlider" min="1" max="3" step="0.05" value="1">
+        <input type="text" id="captionInput" placeholder="Enter caption...">
+        <button onclick="downloadImage()">Download</button>
+        <button onclick="shareImage()">Share</button>
+    </div>
+</div>
+
+<script>
+const photoInput = document.getElementById("photoInput");
+const photoPreview = document.getElementById("photoPreview");
+const captionInput = document.getElementById("captionInput");
+const captionText = document.getElementById("captionText");
+const zoomSlider = document.getElementById("zoomSlider");
+const imageContainer = document.getElementById("imageContainer");
+const likeCount = document.getElementById("likeCount");
+
+let scale = 1, baseScale = 1;
+let posX = 0, posY = 0;
+let isDragging = false;
+let startX = 0, startY = 0;
+
+photoInput.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => photoPreview.src = ev.target.result;
+    reader.readAsDataURL(file);
+});
+
+photoPreview.onload = () => {
+    const containerSize = imageContainer.offsetWidth;
+    const imgW = photoPreview.naturalWidth;
+    const imgH = photoPreview.naturalHeight;
+
+    // Auto-fit portrait vs landscape
+    if (imgH > imgW) {
+        baseScale = containerSize / imgH;
+    } else {
+        baseScale = containerSize / imgW;
+    }
+
+    scale = baseScale;
+    zoomSlider.value = 1;
+    posX = (containerSize - imgW * scale) / 2;
+    posY = (containerSize - imgH * scale) / 2;
+    updateTransform();
+};
+
+zoomSlider.addEventListener("input", () => {
+    scale = baseScale * zoomSlider.value;
+    updateTransform();
+});
+
+function updateTransform() {
+    photoPreview.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+}
+
+// Smooth precise dragging
+imageContainer.addEventListener("pointerdown", e => {
+    isDragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+    imageContainer.setPointerCapture(e.pointerId);
+});
+
+imageContainer.addEventListener("pointermove", e => {
+    if (!isDragging) return;
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    updateTransform();
+});
+
+imageContainer.addEventListener("pointerup", () => {
+    isDragging = false;
+});
+
+captionInput.addEventListener("input", () => {
+    captionText.textContent = captionInput.value || "Your caption here";
+});
+
+function generateCanvas() {
+    return html2canvas(document.getElementById("captureArea"), {backgroundColor: null});
+}
+
+function downloadImage() {
+    generateCanvas().then(canvas => {
+        const link = document.createElement("a");
+        link.download = "post.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
+function shareImage() {
+    generateCanvas().then(canvas => {
+        canvas.toBlob(blob => {
+            const file = new File([blob], "post.png", { type: "image/png" });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({ files: [file], title: "My Post" });
+            } else {
+                downloadImage();
+            }
+        });
+    });
+}
+
+setInterval(() => {
+    likeCount.textContent = Math.floor(Math.random() * 900 + 100);
+}, 3000);
+</script>
+
+</body>
+</html>
