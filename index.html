@@ -140,7 +140,7 @@ body{
   <input type="checkbox" onchange="toggleMode(this)">
 </div>
 
-<h2 style="text-align:center;">HE5 Solutions Professional Frame</h2>
+<h2 style="text-align:center;">Event Frame Branding System</h2>
 
 <div class="editor">
   <div class="frame" id="captureArea">
@@ -198,7 +198,7 @@ captionInput.addEventListener("input",()=>{
   const words=captionInput.value.trim().split(" ");
   const userTags=words.filter(w=>w.startsWith("#"));
   const captionWords=words.filter(w=>!w.startsWith("#"));
-  mainCaption.textContent="Project update: "+(captionWords.join(" ")||"Engineering excellence in progress.");
+  mainCaption.textContent=(captionWords.join(" ")||"Engineering excellence in progress.");
   renderHashtags([...userTags,...DEFAULT_HASHTAGS]);
 });
 
