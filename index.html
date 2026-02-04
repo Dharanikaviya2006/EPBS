@@ -17,7 +17,6 @@ body {
     align-items: center;
     padding: 20px;
 }
-
 .editor { width: 100%; max-width: 400px; }
 
 .post-frame {
@@ -26,14 +25,12 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     overflow: hidden;
 }
-
 .post-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
 }
-
 .profile { display: flex; align-items: center; gap: 8px; }
 .avatar { width: 34px; height: 34px; border-radius: 50%; background: #ccc; }
 .username { font-weight: bold; font-size: 14px; }
@@ -53,7 +50,6 @@ body {
     background: #eee;
     cursor: grab;
 }
-
 .post-image img {
     position: absolute;
     top: 0;
@@ -72,6 +68,14 @@ body {
 
 .post-caption { padding: 0 10px 12px; font-size: 14px; }
 
+.hashtags {
+    margin-top: 4px;
+    color: #1d9bf0;
+    font-size: 13px;
+    word-wrap: break-word;
+}
+.hashtags span { margin-right: 6px; }
+
 .controls input, .controls button {
     width: 100%;
     margin-top: 8px;
@@ -79,7 +83,6 @@ body {
     border-radius: 8px;
     border: 1px solid #ccc;
 }
-
 .controls button {
     background: #4a90e2;
     color: white;
@@ -113,23 +116,29 @@ body {
             <div>🔖</div>
         </div>
 
-        <div class="post-caption" id="captionText">Your caption here</div>
+        <div class="post-caption">
+            <div id="mainCaption">Your caption here</div>
+            <div id="hashTags" class="hashtags"></div>
+        </div>
     </div>
 
     <div class="controls">
         <input type="file" id="photoInput" accept="image/*">
         <input type="range" id="zoomSlider" min="1" max="3" step="0.05" value="1">
-        <input type="text" id="captionInput" placeholder="Enter caption...">
+        <input type="text" id="captionInput" placeholder="Enter caption with #hashtags...">
         <button onclick="downloadImage()">Download</button>
         <button onclick="shareImage()">Share</button>
     </div>
 </div>
 
 <script>
+const DEFAULT_HASHTAGS = ["#PostCreator", "#MadeWithCode"];
+
 const photoInput = document.getElementById("photoInput");
 const photoPreview = document.getElementById("photoPreview");
 const captionInput = document.getElementById("captionInput");
-const captionText = document.getElementById("captionText");
+const mainCaption = document.getElementById("mainCaption");
+const hashTags = document.getElementById("hashTags");
 const zoomSlider = document.getElementById("zoomSlider");
 const imageContainer = document.getElementById("imageContainer");
 const likeCount = document.getElementById("likeCount");
@@ -138,6 +147,20 @@ let scale = 1, baseScale = 1;
 let posX = 0, posY = 0;
 let isDragging = false;
 let startX = 0, startY = 0;
+
+function renderHashtags(tags){
+    hashTags.innerHTML = tags.map(tag => `<span>${tag}</span>`).join("");
+}
+renderHashtags(DEFAULT_HASHTAGS);
+
+captionInput.addEventListener("input", () => {
+    const words = captionInput.value.trim().split(" ");
+    const userTags = words.filter(w => w.startsWith("#"));
+    const captionWords = words.filter(w => !w.startsWith("#"));
+
+    mainCaption.textContent = captionWords.join(" ") || "Your caption here";
+    renderHashtags([...userTags, ...DEFAULT_HASHTAGS]);
+});
 
 photoInput.addEventListener("change", e => {
     const file = e.target.files[0];
@@ -148,21 +171,16 @@ photoInput.addEventListener("change", e => {
 });
 
 photoPreview.onload = () => {
-    const containerSize = imageContainer.offsetWidth;
+    const size = imageContainer.offsetWidth;
     const imgW = photoPreview.naturalWidth;
     const imgH = photoPreview.naturalHeight;
 
-    // Auto-fit portrait vs landscape
-    if (imgH > imgW) {
-        baseScale = containerSize / imgH;
-    } else {
-        baseScale = containerSize / imgW;
-    }
-
+    baseScale = imgH > imgW ? size / imgH : size / imgW;
     scale = baseScale;
     zoomSlider.value = 1;
-    posX = (containerSize - imgW * scale) / 2;
-    posY = (containerSize - imgH * scale) / 2;
+
+    posX = (size - imgW * scale) / 2;
+    posY = (size - imgH * scale) / 2;
     updateTransform();
 };
 
@@ -175,28 +193,19 @@ function updateTransform() {
     photoPreview.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
 }
 
-// Smooth precise dragging
 imageContainer.addEventListener("pointerdown", e => {
     isDragging = true;
     startX = e.clientX - posX;
     startY = e.clientY - posY;
     imageContainer.setPointerCapture(e.pointerId);
 });
-
 imageContainer.addEventListener("pointermove", e => {
     if (!isDragging) return;
     posX = e.clientX - startX;
     posY = e.clientY - startY;
     updateTransform();
 });
-
-imageContainer.addEventListener("pointerup", () => {
-    isDragging = false;
-});
-
-captionInput.addEventListener("input", () => {
-    captionText.textContent = captionInput.value || "Your caption here";
-});
+imageContainer.addEventListener("pointerup", () => isDragging = false);
 
 function generateCanvas() {
     return html2canvas(document.getElementById("captureArea"), {backgroundColor: null});
@@ -211,43 +220,49 @@ function downloadImage() {
     });
 }
 async function shareImage() {
-    const canvas = await generateCanvas();
+    try {
+        const canvas = await generateCanvas();
 
-    canvas.toBlob(async blob => {
-        const file = new File([blob], "post.png", { type: "image/png" });
-
-        const caption = captionText.textContent || "Check this out!";
-        const hashtags = "#PostCreator #MadeWithCode";
-        const fullText = caption + " " + hashtags;
-
-        // Function to copy caption
-        async function copyCaption() {
-            try {
-                await navigator.clipboard.writeText(fullText);
-                alert("Caption & hashtags copied to clipboard. Paste it when posting!");
-            } catch {
-                alert("Sharing app may not support captions. Please copy manually:\n\n" + fullText);
+        canvas.toBlob(async (blob) => {
+            if (!blob) {
+                alert("Unable to prepare image for sharing.");
+                return;
             }
-        }
 
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            const file = new File([blob], "post.png", { type: "image/png" });
+
+            const caption = mainCaption.textContent || "";
+            const tags = Array.from(hashTags.querySelectorAll("span")).map(s => s.textContent);
+            const shareText = (caption + " " + tags.join(" ")).trim();
+
+            // Always copy caption + hashtags as backup
             try {
+                await navigator.clipboard.writeText(shareText);
+            } catch {}
+
+            // If device supports file sharing
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
                     files: [file],
-                    title: "My Post",
-                    text: fullText
+                    text: shareText,
+                    title: "Shared Post"
                 });
-                // Copy anyway because many apps ignore text
-                await copyCaption();
-            } catch {
-                downloadImage();
-                await copyCaption();
+            } else if (navigator.share) {
+                // Some devices only allow text/URL
+                await navigator.share({
+                    text: shareText,
+                    title: "Shared Post"
+                });
+            } else {
+                alert("Sharing is not supported on this device/browser.");
             }
-        } else {
-            downloadImage();
-            await copyCaption();
-        }
-    });
+
+        }, "image/png");
+
+    } catch (err) {
+        console.error("Share failed:", err);
+        alert("Sharing was cancelled or not supported.");
+    }
 }
 
 setInterval(() => {
