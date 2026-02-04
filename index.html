@@ -52,11 +52,11 @@ body {
 }
 .post-image img {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     user-select: none;
     -webkit-user-drag: none;
-    transform-origin: top left;
+    transform-origin: center center;
 }
 
 .post-actions {
@@ -184,7 +184,7 @@ zoomSlider.addEventListener("input", () => {
 });
 
 function updateTransform() {
-    photoPreview.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+    photoPreview.style.transform = `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${scale})`;
 }
 
 imageContainer.addEventListener("pointerdown", e => {
