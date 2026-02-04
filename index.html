@@ -215,14 +215,25 @@ function shareImage() {
     generateCanvas().then(canvas => {
         canvas.toBlob(blob => {
             const file = new File([blob], "post.png", { type: "image/png" });
+
+            const caption = captionText.textContent || "Check this out!";
+            const hashtags = "#PostCreator #MadeWithCode";
+
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({ files: [file], title: "My Post" });
+                navigator.share({
+                    files: [file],
+                    title: "My Post",
+                    text: caption + " " + hashtags
+                }).catch(() => {
+                    downloadImage();
+                });
             } else {
                 downloadImage();
             }
         });
     });
 }
+
 
 setInterval(() => {
     likeCount.textContent = Math.floor(Math.random() * 900 + 100);
