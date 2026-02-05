@@ -198,7 +198,8 @@ function goBack(){
  setupSection.classList.remove("hidden");
 }
 
-/* EXISTING LOGIC BELOW UNCHANGED */
+const DEFAULT_TAGS = ["#HE5Solutions","#EventBranding","#Innovation"];
+
 const frameUpload=document.getElementById("frameUpload");
 const defaultCaption=document.getElementById("defaultCaption");
 const defaultTags=document.getElementById("defaultTags");
@@ -220,6 +221,35 @@ const notice=document.getElementById("notice");
 let caption="", tags=[], photoScale=1, frameScale=1, photoX=0, photoY=0;
 let dragging=false,startX=0,startY=0,startDist=0,startScale=1;
 
+/* ---------- HASHTAG RENDERER ---------- */
+function renderTags(){
+ hashText.innerHTML="";
+ tags.forEach(tag=>{
+   const a=document.createElement("a");
+   a.style.marginRight="8px";
+   a.style.textDecoration="none";
+   a.style.color="#fc7800";
+   a.style.fontWeight="600";
+   a.target="_blank";
+
+   if(tag.startsWith("#")){
+     const clean=tag.replace("#","");
+     a.href=`https://twitter.com/hashtag/${clean}`;
+     a.textContent=tag;
+   }
+   else if(tag.startsWith("http://") || tag.startsWith("https://")){
+     a.href=tag;
+     a.textContent=tag;
+   }
+   else{
+     a.href="https://google.com/search?q="+encodeURIComponent(tag);
+     a.textContent=tag;
+   }
+   hashText.appendChild(a);
+ });
+}
+
+/* ---------- SETUP ---------- */
 function saveSetup(){
  const file=frameUpload.files[0];
  if(!file) return alert("Upload a frame image");
@@ -228,15 +258,20 @@ function saveSetup(){
    frameOverlay.onload=autoFitFrame;
    frameOverlay.src=e.target.result;
    caption=defaultCaption.value;
-   tags=defaultTags.value.split(" ");
+
+   const userTags = defaultTags.value.split(" ").filter(t=>t.trim()!=="");
+   tags = [...DEFAULT_TAGS, ...userTags];
+
    captionText.textContent=caption;
-   hashText.textContent=tags.join(" ");
+   renderTags();
+
    setupSection.classList.add("hidden");
    editorSection.classList.remove("hidden");
  };
  reader.readAsDataURL(file);
 }
 
+/* ---------- IMAGE LOGIC (UNCHANGED) ---------- */
 photoUpload.onchange=e=>{
  const reader=new FileReader();
  reader.onload=ev=>{
@@ -267,8 +302,8 @@ function autoFitFrame(){
 function updatePhoto(){ userPhoto.style.transform=`translate(-50%,-50%) translate(${photoX}px,${photoY}px) scale(${photoScale})`; }
 function updateFrame(){ frameOverlay.style.transform=`translate(-50%,-50%) scale(${frameScale})`; }
 
-captureArea.addEventListener("pointerdown",e=>{ dragging=true; startX=e.clientX-photoX; });
-captureArea.addEventListener("pointermove",e=>{ if(!dragging) return; photoX=e.clientX-startX; updatePhoto(); });
+captureArea.addEventListener("pointerdown",e=>{ dragging=true; startX=e.clientX-photoX; startY=e.clientY-photoY; captureArea.setPointerCapture(e.pointerId); });
+captureArea.addEventListener("pointermove",e=>{ if(!dragging) return; photoX=e.clientX-startX; photoY=e.clientY-startY; updatePhoto(); });
 captureArea.addEventListener("pointerup",()=>dragging=false);
 
 photoZoom.oninput=()=>{photoScale=photoZoom.value;updatePhoto();}
@@ -279,7 +314,9 @@ frameFitMode.onchange=autoFitFrame;
 function centerImage(){photoX=0;photoY=0;updatePhoto();}
 function resetImage(){autoFitImage();}
 
+/* ---------- EXPORT ---------- */
 function generateCanvas(){return html2canvas(captureArea);}
+
 async function downloadImage(){
  const canvas=await generateCanvas();
  const format=downloadFormat.value;
@@ -302,6 +339,7 @@ async function shareImage(){
  await navigator.clipboard.writeText(text);
  notice.textContent="Caption & hashtags copied!";
  setTimeout(()=>notice.textContent="",2000);
+
  canvas.toBlob(async blob=>{
    const file=new File([blob],"event-frame.png",{type:"image/png"});
    if(navigator.share && navigator.canShare({files:[file]})){
@@ -310,5 +348,6 @@ async function shareImage(){
  });
 }
 </script>
+
 </body>
 </html>
