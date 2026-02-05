@@ -3,273 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HE5 Solutions Frame Creator</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap" rel="stylesheet">
+<title>HE5 Event Branding System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-:root{
-  --bg:#f5efe6;
-  --card:#fffdf9;
-  --text:#000;
-  --accent:#c8a27a;
-  --button:#d6a77a;
-}
-body.dark{
-  --bg:#1f1f1f;
-  --card:#2a2a2a;
-  --text:#ffffff;
-  --accent:#e6b89c;
-  --button:#c97c5d;
-}
+:root{ --orange:#fc7800; --orange-light:#ff9d3f; }
+
 body{
   margin:0;
-  font-family:"Times New Roman","Lora","Calibri",serif;
-  background:var(--bg);
-  color:var(--text);
-  padding:20px;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#fc7800,#ff9d3f);
 }
 
-/* Toggle top-right */
-.theme-toggle{
-  position:fixed;
-  top:15px;
-  right:20px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:14px;
-}
-.theme-toggle input{
-  appearance:none;
-  width:44px;height:22px;
-  background:#ccc;border-radius:20px;position:relative;
-}
-.theme-toggle input:checked{background:var(--button)}
-.theme-toggle input::before{
-  content:"";width:18px;height:18px;border-radius:50%;
-  background:#fff;position:absolute;top:2px;left:2px;transition:.3s;
-}
-.theme-toggle input:checked::before{left:24px}
+.hero{ text-align:center; padding:70px 20px 50px; color:white; }
 
-.editor{width:100%;max-width:420px;margin:auto}
-
-.frame{
-  background:var(--card);
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,0.06);
-}
-
-.frame-header{
-  text-align:center;
-  padding:20px;
-  font-size:24px;
-  font-weight:600;
-  color:var(--accent);
-}
-
-.user-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:12px 16px;
-  font-weight:600;
-}
-.avatar{
-  width:42px;height:42px;border-radius:50%;
-  background:linear-gradient(135deg,#e6c9a8,#d4a373);
-}
-
-.image-area{
+.section{
   width:100%;
-  aspect-ratio:1/1;
-  background:#ececec;
-  position:relative;
-  overflow:hidden;
-  touch-action:none;
-}
-.image-area img{
-  position:absolute;
-  top:50%;left:50%;
-  transform-origin:center;
+  max-width:1100px;
+  margin:40px auto;
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.12);
 }
 
-.caption{
-  padding:16px;
-  font-size:14px;
+h2{font-family:'Lora',serif;color:var(--orange)}
+
+input,textarea,select,button{
+  width:100%; margin-top:12px; padding:12px;
+  border-radius:10px; font-family:inherit; font-size:14px;
 }
-.hashtags a{
-  color:var(--accent);
-  text-decoration:none;
-  margin-right:6px;
-  font-weight:500;
+button{ background:var(--orange); color:#fff; border:none; font-weight:600; cursor:pointer; }
+
+.editor-layout{ display:flex; gap:30px; flex-wrap:wrap; }
+.editor-left,.editor-right{
+  width:220px; background:#fafafa; padding:18px; border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+.editor-main{ flex:1 1 400px; }
+
+.frame-container{
+  position:relative; width:100%; aspect-ratio:1/1;
+  overflow:hidden; border-radius:16px; background:#f3f3f3;
+  touch-action:none; cursor:grab;
+}
+.frame-container:active{cursor:grabbing}
+
+.photo,.frame{
+  position:absolute; top:50%; left:50%;
+  transform-origin:center; user-select:none; pointer-events:none;
 }
 
-.controls input,.controls select,.controls button{
-  width:100%;
-  margin-top:8px;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  background:var(--card);
-  color:var(--text);
-  font-family:inherit;
-}
-.controls button{
-  background:var(--button);
-  color:#fff;
-  border:none;
-  font-weight:600;
-}
+.caption{ margin-top:16px; text-align:left; font-size:14px; }
+.notice{ text-align:center; font-size:13px; color:var(--orange); margin-top:8px; height:18px; }
+.hidden{display:none}
 
-.notice{
-  text-align:center;
-  font-size:13px;
-  color:var(--accent);
-  margin-top:6px;
-  height:18px;
+@media(max-width:900px){
+  .editor-layout{flex-direction:column}
+  .editor-left,.editor-right{width:100%}
 }
 </style>
 </head>
-
 <body>
 
-<div class="theme-toggle">
-  Dark Mode
-  <input type="checkbox" onchange="toggleMode(this)">
+<div class="hero">
+  <h1>HE5 Solutions Event Branding</h1>
+  <p>Create professional branded event photos instantly</p>
 </div>
 
-<h2 style="text-align:center;">Event Frame Branding System</h2>
+<!-- STEP 1 -->
+<div class="section" id="setupSection">
+  <h2>Step 1: Setup Frame</h2>
+  <input type="file" id="frameUpload" accept="image/*">
+  <textarea id="defaultCaption" placeholder="Default professional caption"></textarea>
+  <input type="text" id="defaultTags" placeholder="#HE5Solutions #Innovation">
+  <button onclick="saveSetup()">Continue</button>
+</div>
 
-<div class="editor">
-  <div class="frame" id="captureArea">
-    <div class="frame-header">HE5 Solutions</div>
+<!-- STEP 2 -->
+<div class="section hidden" id="editorSection">
+  <h2>HE5 Solutions Editor</h2>
 
-    <div class="user-row">
-      <div class="avatar"></div>
-      HE5 Solutions
+  <div class="editor-layout">
+
+    <div class="editor-left">
+      <label>Image Fit Mode</label>
+      <select id="fitMode">
+        <option value="fit">Fit to Frame</option>
+        <option value="fill">Fill Frame</option>
+      </select>
+
+      <label>Frame Fit Mode</label>
+      <select id="frameFitMode">
+        <option value="fit">Fit Frame</option>
+        <option value="fill">Fill Frame Area</option>
+      </select>
+
+      <button onclick="centerImage()">Center Image</button>
+      <button onclick="resetImage()">Reset Image</button>
     </div>
 
-    <div class="image-area" id="imageContainer">
-      <img id="photoPreview">
+    <div class="editor-main">
+      <div class="frame-container" id="captureArea">
+        <img id="userPhoto" class="photo">
+        <img id="frameOverlay" class="frame">
+      </div>
+
+      <div class="caption">
+        <div id="captionText"></div>
+        <div id="hashText"></div>
+      </div>
+
+      <input type="file" id="photoUpload" accept="image/*">
+
+      <select id="downloadFormat">
+        <option value="png">Download PNG</option>
+        <option value="jpg">Download JPG</option>
+        <option value="jpeg">Download JPEG</option>
+        <option value="pdf">Download PDF</option>
+      </select>
+
+      <button onclick="downloadImage()">Download</button>
+      <button onclick="shareImage()">Share</button>
+      <div class="notice" id="notice"></div>
     </div>
 
-    <div class="caption">
-      <div id="mainCaption">Professional caption will appear here</div>
-      <div id="hashTags" class="hashtags"></div>
-    </div>
-  </div>
+    <div class="editor-right">
+      <label>Photo Zoom</label>
+      <input type="range" id="photoZoom" min="0.2" max="4" step="0.01" value="1">
 
-  <div class="controls">
-    <input type="file" id="photoInput" accept="image/*">
-    <select id="fitMode">
-      <option value="cover">Fill Frame</option>
-      <option value="contain">Fit Inside</option>
-    </select>
-    <input type="range" id="zoomSlider" min="1" max="3" step="0.05" value="1">
-    <input type="text" id="captionInput" placeholder="Enter technical caption with #hashtags...">
-    <button onclick="downloadImage()">Download Image</button>
-    <button onclick="shareImage()">Share Image</button>
-    <div class="notice" id="copyNotice"></div>
+      <label>Frame Size</label>
+      <input type="range" id="frameZoom" min="0.5" max="2" step="0.01" value="1">
+    </div>
+
   </div>
 </div>
 
 <script>
-const DEFAULT_HASHTAGS=["#HE5Solutions","#Innovation","#Engineering"];
-const captionNotice=document.getElementById("copyNotice");
-const photoPreview=document.getElementById("photoPreview");
-const photoInput=document.getElementById("photoInput");
-const captionInput=document.getElementById("captionInput");
-const mainCaption=document.getElementById("mainCaption");
-const hashTags=document.getElementById("hashTags");
-const zoomSlider=document.getElementById("zoomSlider");
-const fitMode=document.getElementById("fitMode");
-const imageContainer=document.getElementById("imageContainer");
+let caption="", tags=[];
+let photoScale=1, frameScale=1;
+let photoX=0, photoY=0;
+let dragging=false, startX=0, startY=0;
+let startDist=0, startScale=1;
 
-let scale=1,baseScale=1,posX=0,posY=0,startX=0,startY=0,isDragging=false,startDist=0,startScale=1;
-
-function renderHashtags(tags){
-  hashTags.innerHTML=tags.map(t=>`<a href="https://www.instagram.com/explore/tags/${t.replace('#','')}/" target="_blank">${t}</a>`).join("");
-}
-renderHashtags(DEFAULT_HASHTAGS);
-
-captionInput.addEventListener("input",()=>{
-  const words=captionInput.value.trim().split(" ");
-  const userTags=words.filter(w=>w.startsWith("#"));
-  const captionWords=words.filter(w=>!w.startsWith("#"));
-  mainCaption.textContent=(captionWords.join(" ")||"Engineering excellence in progress.");
-  renderHashtags([...userTags,...DEFAULT_HASHTAGS]);
-});
-
-photoInput.addEventListener("change",e=>{
-  const reader=new FileReader();
-  reader.onload=ev=>photoPreview.src=ev.target.result;
-  reader.readAsDataURL(e.target.files[0]);
-});
-
-photoPreview.onload=()=>applyFit();
-fitMode.addEventListener("change",applyFit);
-
-function applyFit(){
-  const size=imageContainer.offsetWidth;
-  const imgW=photoPreview.naturalWidth;
-  const imgH=photoPreview.naturalHeight;
-  baseScale=fitMode.value==="cover"?Math.max(size/imgW,size/imgH):Math.min(size/imgW,size/imgH);
-  scale=baseScale;zoomSlider.value=1;posX=0;posY=0;updateTransform();
+function saveSetup(){
+ const file=frameUpload.files[0];
+ if(!file) return alert("Upload a frame image");
+ const reader=new FileReader();
+ reader.onload=e=>{
+   frameOverlay.src=e.target.result;
+   caption=defaultCaption.value;
+   tags=defaultTags.value.split(" ");
+   captionText.textContent=caption;
+   hashText.textContent=tags.join(" ");
+   setupSection.classList.add("hidden");
+   editorSection.classList.remove("hidden");
+ };
+ reader.readAsDataURL(file);
 }
 
-zoomSlider.addEventListener("input",()=>{scale=baseScale*zoomSlider.value;updateTransform();});
-function updateTransform(){photoPreview.style.transform=`translate(-50%,-50%) translate(${posX}px,${posY}px) scale(${scale})`;}
+photoUpload.onchange=e=>{
+ const reader=new FileReader();
+ reader.onload=ev=>userPhoto.src=ev.target.result;
+ reader.readAsDataURL(e.target.files[0]);
+};
 
-/* Drag */
-imageContainer.addEventListener("pointerdown",e=>{isDragging=true;startX=e.clientX-posX;startY=e.clientY-posY;});
-imageContainer.addEventListener("pointermove",e=>{if(!isDragging)return;posX=e.clientX-startX;posY=e.clientY-startY;updateTransform();});
-imageContainer.addEventListener("pointerup",()=>isDragging=false);
+fitMode.onchange=autoFitImage;
+frameFitMode.onchange=autoFitFrame;
 
-/* Pinch Zoom */
-imageContainer.addEventListener("touchmove",e=>{
+userPhoto.onload=autoFitImage;
+frameOverlay.onload=autoFitFrame;
+
+function autoFitImage(){
+ const box=captureArea.getBoundingClientRect();
+ const scaleX=box.width/userPhoto.naturalWidth;
+ const scaleY=box.height/userPhoto.naturalHeight;
+ photoScale = fitMode.value==="fit" ? Math.min(scaleX,scaleY) : Math.max(scaleX,scaleY);
+ photoX=0; photoY=0;
+ photoZoom.value=photoScale;
+ updatePhoto();
+}
+
+function autoFitFrame(){
+ const box=captureArea.getBoundingClientRect();
+ const scaleX=box.width/frameOverlay.naturalWidth;
+ const scaleY=box.height/frameOverlay.naturalHeight;
+ frameScale = frameFitMode.value==="fit" ? Math.min(scaleX,scaleY) : Math.max(scaleX,scaleY);
+ updateFrame();
+}
+
+function updatePhoto(){
+ userPhoto.style.transform=`translate(-50%,-50%) translate(${photoX}px,${photoY}px) scale(${photoScale})`;
+}
+function updateFrame(){
+ frameOverlay.style.transform=`translate(-50%,-50%) scale(${frameScale})`;
+}
+
+captureArea.addEventListener("pointerdown",e=>{
+ dragging=true;
+ startX=e.clientX-photoX;
+ startY=e.clientY-photoY;
+ captureArea.setPointerCapture(e.pointerId);
+});
+captureArea.addEventListener("pointermove",e=>{
+ if(!dragging) return;
+ photoX=e.clientX-startX;
+ photoY=e.clientY-startY;
+ updatePhoto();
+});
+captureArea.addEventListener("pointerup",()=>dragging=false);
+captureArea.addEventListener("pointercancel",()=>dragging=false);
+
+captureArea.addEventListener("touchstart",e=>{
  if(e.touches.length===2){
-  e.preventDefault();
-  const dx=e.touches[0].clientX-e.touches[1].clientX;
-  const dy=e.touches[0].clientY-e.touches[1].clientY;
-  const dist=Math.sqrt(dx*dx+dy*dy);
-  if(!startDist){startDist=dist;startScale=scale;}
-  scale=startScale*(dist/startDist);
-  zoomSlider.value=scale/baseScale;
-  updateTransform();
+   startDist=getDistance(e.touches[0],e.touches[1]);
+   startScale=photoScale;
  }
 });
-imageContainer.addEventListener("touchend",()=>startDist=0);
+captureArea.addEventListener("touchmove",e=>{
+ if(e.touches.length===2){
+   e.preventDefault();
+   photoScale=startScale*(getDistance(e.touches[0],e.touches[1])/startDist);
+   photoZoom.value=photoScale;
+   updatePhoto();
+ }
+},{passive:false});
 
-function generateCanvas(){return html2canvas(document.getElementById("captureArea"),{backgroundColor:null});}
+function getDistance(p1,p2){
+ const dx=p1.clientX-p2.clientX, dy=p1.clientY-p2.clientY;
+ return Math.sqrt(dx*dx+dy*dy);
+}
 
-function downloadImage(){
- generateCanvas().then(c=>{
-  const a=document.createElement("a");
-  a.download="he5-professional-post.png";
-  a.href=c.toDataURL();
-  a.click();
- });
+photoZoom.oninput=()=>{photoScale=photoZoom.value;updatePhoto();}
+frameZoom.oninput=()=>{frameScale=frameZoom.value;updateFrame();}
+function centerImage(){photoX=0;photoY=0;updatePhoto();}
+function resetImage(){autoFitImage();}
+
+function generateCanvas(){return html2canvas(captureArea);}
+async function downloadImage(){
+ const canvas=await generateCanvas();
+ const format=downloadFormat.value;
+ if(format==="pdf"){
+   const { jsPDF }=window.jspdf;
+   const pdf=new jsPDF();
+   pdf.addImage(canvas.toDataURL("image/png"),"PNG",10,10,180,180);
+   pdf.save("event-frame.pdf");
+ } else {
+   const a=document.createElement("a");
+   a.download=`event-frame.${format}`;
+   a.href=canvas.toDataURL(`image/${format}`);
+   a.click();
+ }
 }
 
 async function shareImage(){
  const canvas=await generateCanvas();
- const text=`${mainCaption.textContent} ${Array.from(hashTags.querySelectorAll("a")).map(x=>x.textContent).join(" ")}`;
- try{
-   await navigator.clipboard.writeText(text);
-   captionNotice.textContent="Caption & hashtags copied!";
-   setTimeout(()=>captionNotice.textContent="",2000);
- }catch{}
+ const text=`${caption} ${tags.join(" ")}`;
+ await navigator.clipboard.writeText(text);
+ notice.textContent="Caption & hashtags copied!";
+ setTimeout(()=>notice.textContent="",2000);
+
  canvas.toBlob(async blob=>{
-   const file=new File([blob],"he5-professional-post.png",{type:"image/png"});
+   const file=new File([blob],"event-frame.png",{type:"image/png"});
    if(navigator.share && navigator.canShare({files:[file]})){
-     await navigator.share({files:[file],text,title:"HE5 Solutions Update"});
+     await navigator.share({files:[file],text,title:"Event Post"});
    }
  });
 }
-
-function toggleMode(el){document.body.classList.toggle("dark",el.checked);}
 </script>
 </body>
 </html>
