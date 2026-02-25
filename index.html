@@ -727,22 +727,42 @@ const file=frameUpload.files[0];
 if(!file) return alert("Upload frame image");
 
 const reader=new FileReader();
-reader.onload = ev => {
-  frameOverlay.onload = () => {
+document.getElementById("setupForm").addEventListener("submit", e => {
+  e.preventDefault();
 
-    const ratio = frameOverlay.naturalWidth / frameOverlay.naturalHeight;
-frameRatio = frameOverlay.naturalWidth / frameOverlay.naturalHeight;
-captureArea.style.aspectRatio = frameRatio;
-previewArea.style.aspectRatio = frameRatio;   // 🔥 IMPORTANT FIX
+  const file = frameUpload.files[0];
+  if (!file) {
+    alert("Upload frame image");
+    return;
+  }
 
-  frameOverlay.src = ev.target.result;
+  const reader = new FileReader();
 
-  caption = defaultCaption.value;
-  tags = [...DEFAULT_TAGS, ...defaultTags.value.split(" ").filter(Boolean)];
+  reader.onload = ev => {
 
-  setupSection.classList.add("hidden");
-  photoEditorSection.classList.remove("hidden");
-};
+    frameOverlay.onload = () => {
+
+      frameRatio = frameOverlay.naturalWidth / frameOverlay.naturalHeight;
+
+      captureArea.style.aspectRatio = frameRatio;
+      previewArea.style.aspectRatio = frameRatio;
+
+      caption = defaultCaption.value;
+      tags = [
+        ...DEFAULT_TAGS,
+        ...defaultTags.value.split(" ").filter(Boolean)
+      ];
+
+      setupSection.classList.add("hidden");
+      photoEditorSection.classList.remove("hidden");
+    };
+
+    // ✅ SET SRC HERE (CORRECT PLACE)
+    frameOverlay.src = ev.target.result;
+  };
+
+  reader.readAsDataURL(file);
+});
 reader.readAsDataURL(file);
 });
 
