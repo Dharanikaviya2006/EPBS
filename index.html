@@ -299,40 +299,62 @@ z-index:2;
     flex:1;
   }
 }  
-  /* ==============================
-   PROFESSIONAL PREVIEW FIX
-============================== */
+/* ===============================
+   FINAL PREVIEW LAYOUT FIX
+=============================== */
+
+#previewSection{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  overflow:auto;
+}
 
 #previewSection .editor-layout{
-  justify-content:center;
+  flex-direction:column;
   align-items:center;
+  width:100%;
 }
 
 #previewSection .left-panel{
   width:100% !important;
   max-width:900px;
-  padding:0;
   border:none;
+  padding:0;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
 }
 
 #previewSection .frame-container{
   width:100%;
+  max-width:900px;
   height:auto;
-  aspect-ratio:auto !important;
-  max-height:85vh;
+  aspect-ratio: var(--frame-ratio);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f3f3f3;
 }
 
 #previewImage{
-  display:block;
   width:100%;
-  height:auto;
-  max-height:85vh;
+  height:100%;
   object-fit:contain;
 }
-</style>
+
+#previewSection .caption{
+  margin-top:20px;
+  text-align:center;
+  width:100%;
+}
+
+#previewSection .right-panel{
+  width:100%;
+  max-width:900px;
+  margin-top:30px;
+}</style>
 </head>
 <body>
 <div class="section" id="setupSection">
@@ -760,6 +782,11 @@ document.getElementById("setupForm").addEventListener("submit", e => {
       // ✅ Apply SAME ratio to both containers
       captureArea.style.aspectRatio = frameRatio;
       previewArea.style.aspectRatio = frameRatio;
+
+      document.documentElement.style.setProperty(
+  "--frame-ratio",
+  frameRatio
+);
 
       caption = defaultCaption.value;
       tags = [
