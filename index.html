@@ -19,8 +19,8 @@
 
 html, body{
   width:100%;
-  height:100dvh;
-  overflow:hidden;
+  min-height:100vh;
+  margin:0;
 }
 
 body{
@@ -31,13 +31,12 @@ body{
   align-items:center;
 }
 .section{
-  width:100vw;
-  height:100dvh;
+  width:100%;
+  min-height:100vh;
   background:#fff;
   padding:20px;
   display:flex;
   flex-direction:column;
-  overflow:hidden;
 }
 h2{font-family:'Lora',serif;color:var(--orange)}
 
@@ -300,15 +299,14 @@ z-index:2;
   }
 }  
 /* ===============================
-   FINAL PREVIEW LAYOUT FIX
+   FINAL STABLE PREVIEW LAYOUT
 =============================== */
 
 #previewSection{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:flex-start;
-  overflow:auto;
+  padding:20px;
 }
 
 #previewSection .editor-layout{
@@ -319,7 +317,7 @@ z-index:2;
 
 #previewSection .left-panel{
   width:100% !important;
-  max-width:900px;
+  max-width:700px;
   border:none;
   padding:0;
   display:flex;
@@ -329,13 +327,12 @@ z-index:2;
 
 #previewSection .frame-container{
   width:100%;
-  max-width:900px;
-  height:auto;
+  max-width:700px;
   aspect-ratio: var(--frame-ratio);
+  background:#f3f3f3;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#f3f3f3;
 }
 
 #previewImage{
@@ -345,16 +342,19 @@ z-index:2;
 }
 
 #previewSection .caption{
-  margin-top:20px;
+  margin-top:18px;
   text-align:center;
   width:100%;
 }
 
 #previewSection .right-panel{
   width:100%;
-  max-width:900px;
+  max-width:700px;
   margin-top:30px;
-}</style>
+  display:flex;
+  flex-direction:column;
+}
+</style>
 </head>
 <body>
 <div class="section" id="setupSection">
