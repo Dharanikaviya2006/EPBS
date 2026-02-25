@@ -474,6 +474,17 @@ const retakeBtn = document.getElementById("retakeBtn");
 let frameRatio = 1;
 let caption="", tags=[];
 
+function showStep(sectionToShow) {
+
+  // Hide all sections
+  setupSection.classList.add("hidden");
+  photoEditorSection.classList.add("hidden");
+  previewSection.classList.add("hidden");
+
+  // Show requested section
+  sectionToShow.classList.remove("hidden");
+}
+
 /* ======================================================
    TRUE FREE STYLE IMAGE ENGINE (CANVAS-LIKE)
 ====================================================== */
