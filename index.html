@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HE5 Event Branding System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root{ --orange:#fc7800; --orange-light:#ff9d3f; }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html, body{
+  width:100%;
+  height:100dvh;
+  overflow:hidden;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#fc7800,#ff9d3f);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.section{
+  width:100vw;
+  height:100dvh;
+  background:#fff;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+h2{font-family:'Lora',serif;color:var(--orange)}
+
+input,textarea,select,button{
+width:100%;
+margin-top:12px;
+padding:12px;
+border-radius:10px;
+font-family:inherit;
+font-size:14px;
+box-sizing:border-box;
+}
+
+button{
+background:var(--orange);
+color:#fff;
+border:none;
+font-weight:600;
+cursor:pointer;
+}
+
+.back-btn{background:#777 !important;margin-bottom:15px;}
+.hidden{display:none}
+
+/* ===== FRAME CONTAINER ===== */
+.frame-container{
+  position:relative;
+  width:100%;
+  max-width:100%;
+  height:100%; /* control max size */
+  margin:auto;
+  aspect-ratio: 1 / 1;  /* temporary default */
+  overflow:hidden;
+  border-radius:16px;
+  background:#f3f3f3;
+  touch-action: none; /* prevent default touch actions */
+}
+
+/* ===== SHUTTER BUTTON ===== */
+
+.shutter-btn{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  border:6px solid white;
+  background:white;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  cursor:pointer;
+  position:relative;
+  transition:transform 0.1s ease;
+}
+
+.shutter-btn::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:50px;
+  height:50px;
+  background:#fc7800;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+}
+
+.shutter-btn:active{
+  transform:scale(0.9);
+}
+
+/* ===== LAYER ORDER ===== */
+
+/* Base photo */
+.photo{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  max-width:none;
+  max-height:none;
+  user-select:none;
+  z-index:1;
+  cursor:grab;
+}
+/* Camera preview */
+#cameraPreview{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:16px;
+z-index:2;
+}
+
+/* Frame always on top */
+.frame{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;     /* 🔥 FIXED */
+  pointer-events:none;
+  z-index:3;
+}
+.editor-layout{
+  flex:1;
+  display:flex;
+  height:100%;
+}
+.right-panel > * {
+  flex-shrink:0;
+}
+
+.caption{ margin-top:16px; font-size:14px; }
+.notice{ text-align:center; font-size:13px; color:var(--orange); margin-top:8px; height:18px; }
+
+/* ===== DESKTOP ===== */
+@media (min-width:1024px){
+  .editor-layout{
+    display:flex;
+    width:100%;
+    flex:1;
+    height:100%;
+    }
+
+  .left-panel{
+    width:50%;
+    padding-right:25px;
+    border-right:4px solid #e6e6e6;
+  }
+
+  .right-panel{
+    width:50%;
+    padding-left:25px;
+  }
+}
+
+/* ===== MOBILE PORTRAIT ===== */
+@media (max-width:1023px) and (orientation:portrait){
+
+  .editor-layout{
+    flex-direction:column;
+    height:100%;
+  }
+
+  .left-panel{
+    flex:0 0 60%;   /* 🔥 Give frame real space */
+    width:100%;
+  }
+
+  .right-panel{
+    flex:1;         /* Remaining space for controls */
+    width:100%;
+    overflow:hidden;
+  }
+
+  .frame-container{
+    width:100%;
+    height:100%;    /* Now works because parent has height */
+  }
+}
+/* ===== MOBILE LANDSCAPE FINAL FIX ===== */
+/* ===== TRUE FULLSCREEN LANDSCAPE ===== */
+@media (max-width:1023px) and (orientation:landscape){
+
+  html, body{
+    width:100vw;
+    height:100dvh;
+    overflow:hidden;
+  }
+
+  .section{
+    width:100vw;
+    height:100dvh;
+    padding:0;
+  }
+
+  .editor-layout{
+    width:100%;
+    height:100%;
+    display:flex;
+  }
+
+  .left-panel{
+    width:65%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-right:2px solid #e6e6e6;
+  }
+
+  .right-panel{
+    width:35%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:10px;
+  }
+
+  .frame-container{
+    width:100%;
+    height:100%;
+    max-width:none;
+    border-radius:0;
+  }
+  /* Make everything compact */
+  input, textarea, select{
+    padding:5px;
+    font-size:12px;
+    margin-top:4px;
+  }
+  button{
+    padding:8px;
+    font-size:13px;
+  }
+     .back-btn{
+    padding:6px;
+    font-size:12px;
+    margin-bottom:4px;
+  }
+
+  .action-row{
+    display:flex;
+    gap:5px;
+  }
+
+  .action-row button{
+    flex:1;
+  }
+
+  #switchCameraBtn,
+  #rotateBtn{
+    width:36px;
+    padding:5px;
+  }
+
+  .shutter-btn{
+    width:50px;
+    height:50px;
+    border:4px solid white;
+  }
+
+  .shutter-btn::after{
+    width:34px;
+    height:34px;
+  }
+  .frame-container{
+  border-radius:0;
+}
+  .action-row{
+    display:flex;
+    gap:6px;
+  }
+  .action-row button{
+    flex:1;
+  }
+}  
+/* Remove extra spacing in preview panel */
+#previewSection .right-panel select,
+#previewSection .right-panel button {
+  margin-top:8px;
+}
+
+#previewSection .right-panel {
+  gap:8px;
+}
+#previewImage{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+</style>
+</head>
+<body>
+<div class="section" id="setupSection">
+<h2 style="text-align:center;">Frame Setup</h2>
+<form id="setupForm">
+<input type="file" id="frameUpload" accept="image/*" required>
+<textarea id="defaultCaption" placeholder="Default professional caption"></textarea>
+<input type="text" id="defaultTags" placeholder="#HE5Solutions #Innovation">
+<button type="submit">Continue</button>
+</form>
+</div>
+<div class="section hidden" id="photoEditorSection">
+
+  <div class="editor-layout">
+
+    <!-- LEFT SIDE -->
+    <div class="left-panel">
+      <div class="frame-container" id="captureArea">
+        <img id="userPhoto" class="photo">
+        <video id="cameraPreview" autoplay playsinline
+          style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+        </video>
+        <img id="frameOverlay" class="frame">
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right-panel">
+      <button class="back-btn" id="backBtn">⬅ Back</button>
+
+      <input type="file" id="photoUpload" accept="image/*">
+      <div id="shutterWrapper" style="display:none; text-align:center; margin-top:10px;">
+        <button id="captureBtn" class="shutter-btn"></button>
+      </div>
+<div style="display:flex; gap:8px; align-items:center;">
+  <button id="openCameraBtn" style="flex:1;">📷 Capture</button>
+  <button id="switchCameraBtn" style="width:45px; display:none;">🔄</button>
+  <button id="rotateBtn" style="width:45px;">↻</button>
+  <button id="retakeBtn" class="hidden" style="width:45px;">🔁</button>
+</div>
+
+<button id="goToPreviewBtn" style="margin-top:12px;">Next ➜</button>
+    </div>
+  </div>
+</div>
+<div class="section hidden" id="previewSection">
+
+  <button class="back-btn small-back-btn" id="backToEditorBtn">⬅</button>
+
+  <div class="editor-layout">
+
+    <div class="left-panel">
+
+      <div class="frame-container" id="previewArea">
+        <img id="previewImage"
+             style="max-width:100%; max-height:100%; object-fit:contain;">
+      </div>
+
+      <div class="caption">
+        <div id="previewCaption"></div>
+        <div id="previewHash"></div>
+      </div>
+
+    </div>
+
+    <div class="right-panel">
+
+      <select id="downloadFormat">
+        <option value="png">PNG</option>
+        <option value="jpg">JPG</option>
+        <option value="jpeg">JPEG</option>
+        <option value="pdf">PDF</option>
+      </select>
+
+      <button id="downloadBtn">Download</button>
+      <button id="shareBtn">Share</button>
+      <div class="notice" id="notice"></div>
+
+    </div>
+
+  </div>
+</div>
+<script>
+const DEFAULT_TAGS=["#HE5Solutions","#EventBranding","#Innovation"];
+
+const frameUpload=document.getElementById("frameUpload");
+const defaultCaption=document.getElementById("defaultCaption");
+const defaultTags=document.getElementById("defaultTags");
+const setupSection=document.getElementById("setupSection");
+const photoEditorSection=document.getElementById("photoEditorSection");
+const previewSection=document.getElementById("previewSection");
+const goToPreviewBtn=document.getElementById("goToPreviewBtn");
+const backToEditorBtn=document.getElementById("backToEditorBtn");
+const previewImage=document.getElementById("previewImage");
+const previewCaption=document.getElementById("previewCaption");
+const previewHash=document.getElementById("previewHash");
+const frameOverlay=document.getElementById("frameOverlay");
+const userPhoto=document.getElementById("userPhoto");
+const photoUpload=document.getElementById("photoUpload");
+const captureArea=document.getElementById("captureArea");
+const notice=document.getElementById("notice");
+const backBtn=document.getElementById("backBtn");
+const openCameraBtn=document.getElementById("openCameraBtn");
+const cameraPreview=document.getElementById("cameraPreview");
+const captureBtn=document.getElementById("captureBtn");
+const switchCameraBtn=document.getElementById("switchCameraBtn");
+const downloadBtn=document.getElementById("downloadBtn");
+const shareBtn=document.getElementById("shareBtn");
+const downloadFormat=document.getElementById("downloadFormat");
+const previewArea=document.getElementById("previewArea");
+const retakeBtn = document.getElementById("retakeBtn");
+
+
+let caption="", tags=[];
+
+/* ======================================================
+   TRUE FREE STYLE IMAGE ENGINE (CANVAS-LIKE)
+====================================================== */
+rotateBtn.onclick = () => {
+  rotation = (rotation + 90) % 360;
+  render();
+};
+
+/* ======================================================
+   PROFESSIONAL FREE MOVE + SMART ZOOM ENGINE
+====================================================== */
+
+let baseScale = 1;
+let scale = 1;
+let posX = 0;
+let posY = 0;
+let rotation = 0;
+
+let startX = 0;
+let startY = 0;
+
+const pointers = new Map();
+let isDragging = false;
+let pinchStartDistance = 0;
+let pinchStartScale = 1;
+
+/* GPU Smooth Render */
+function render(){
+  requestAnimationFrame(()=>{
+    userPhoto.style.transform =
+      `translate(-50%, -50%) 
+       translate3d(${posX}px, ${posY}px, 0) 
+       scale(${scale}) 
+       rotate(${rotation}deg)`;
+  });
+}
+
+/* Better Fit Logic */
+function fitImage(){
+
+  const rect = captureArea.getBoundingClientRect();
+
+  const imgW = userPhoto.naturalWidth;
+  const imgH = userPhoto.naturalHeight;
+
+  const containerRatio = rect.width / rect.height;
+  const imageRatio = imgW / imgH;
+
+  if (imageRatio > containerRatio) {
+    baseScale = rect.height / imgH;
+  } else {
+    baseScale = rect.width / imgW;
+  }
+
+  scale = baseScale;
+  posX = 0;
+  posY = 0;
+  rotation = 0;
+
+  render();
+}
+
+/* Zoom centered at pointer */
+function zoomAt(clientX, clientY, newScale){
+
+  newScale = Math.min(Math.max(newScale, baseScale * 0.2), baseScale * 8);
+
+  const rect = captureArea.getBoundingClientRect();
+
+  const cx = clientX - rect.left;
+  const cy = clientY - rect.top;
+
+  const dx = cx - rect.width / 2;
+  const dy = cy - rect.height / 2;
+
+  const ratio = newScale / scale;
+
+  posX -= dx * (ratio - 1);
+  posY -= dy * (ratio - 1);
+
+  scale = newScale;
+
+  render();
+}
+
+/* POINTER DOWN */
+captureArea.addEventListener("pointerdown", e=>{
+  captureArea.setPointerCapture(e.pointerId);
+  pointers.set(e.pointerId, e);
+
+  if(pointers.size === 1){
+    isDragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+  }
+});
+
+/* POINTER MOVE */
+captureArea.addEventListener("pointermove", e=>{
+  if(!pointers.has(e.pointerId)) return;
+
+  pointers.set(e.pointerId, e);
+
+  /* DRAG */
+  if(pointers.size === 1 && isDragging){
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    render();
+  }
+
+  /* PINCH ZOOM */
+  if(pointers.size === 2){
+    isDragging = false;
+
+    const pts = [...pointers.values()];
+    const dx = pts[1].clientX - pts[0].clientX;
+    const dy = pts[1].clientY - pts[0].clientY;
+    const distance = Math.hypot(dx, dy);
+
+    if(!pinchStartDistance){
+      pinchStartDistance = distance;
+      pinchStartScale = scale;
+    }
+
+    const midX = (pts[0].clientX + pts[1].clientX) / 2;
+    const midY = (pts[0].clientY + pts[1].clientY) / 2;
+
+    zoomAt(midX, midY, pinchStartScale * (distance / pinchStartDistance));
+  }
+});
+
+/* POINTER UP */
+captureArea.addEventListener("pointerup", e=>{
+  pointers.delete(e.pointerId);
+  captureArea.releasePointerCapture(e.pointerId);
+  if(pointers.size < 2) pinchStartDistance = 0;
+  if(pointers.size === 0) isDragging = false;
+});
+
+/* WHEEL ZOOM (Desktop) */
+captureArea.addEventListener("wheel", e=>{
+  e.preventDefault();
+  zoomAt(e.clientX, e.clientY, scale * (1 - Math.sign(e.deltaY) * 0.1));
+},{passive:false});
+/* ======================================================
+   ADVANCED SECURE CAMERA ENGINE
+====================================================== */
+
+let stream = null;
+let currentFacing = "user";
+
+/* Secure camera start */
+async function startCamera() {
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert("Camera not supported on this device.");
+    return;
+  }
+
+  const isLocal =
+  location.hostname === "localhost" ||
+  location.hostname === "127.0.0.1" ||
+  location.hostname.startsWith("192.168.");
+
+if (location.protocol !== "https:" && !isLocal) {
+  alert("Camera requires HTTPS or local environment.");
+  return;
+}
+
+
+  try {
+
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+
+    const constraints = {
+      video: {
+        facingMode: currentFacing,
+        width: { ideal: 1920 },
+        height: { ideal: 1080 }
+      },
+      audio: false
+    };
+
+    stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+    cameraPreview.srcObject = stream;
+    cameraPreview.style.display = "block";
+    document.getElementById("shutterWrapper").style.display = "block";
+    switchCameraBtn.style.display = "inline-block";
+
+    userPhoto.style.display = "none";
+
+  } catch (err) {
+
+    if (err.name === "NotAllowedError") {
+      alert("Camera permission denied. Please enable camera access.");
+    } else {
+      alert("Camera not available.");
+    }
+
+    console.error(err);
+  }
+}
+
+/* Open camera */
+openCameraBtn.onclick = () => {
+  currentFacing = "user";
+  startCamera();
+};
+
+/* Switch camera */
+switchCameraBtn.onclick = () => {
+  currentFacing = currentFacing === "user" ? "environment" : "user";
+  startCamera();
+};
+
+/* Capture image */
+captureBtn.onclick = () => {
+
+  const canvas = document.createElement("canvas");
+  canvas.width = cameraPreview.videoWidth;
+  canvas.height = cameraPreview.videoHeight;
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(cameraPreview, 0, 0);
+
+  userPhoto.onload = fitImage;
+  userPhoto.src = canvas.toDataURL("image/png");
+
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+    stream = null;
+  }
+
+  cameraPreview.style.display = "none";
+  document.getElementById("shutterWrapper").style.display = "none";
+  switchCameraBtn.style.display = "none";
+
+  userPhoto.style.display = "block";
+
+  // 🔥 Show Retake AFTER capture
+  retakeBtn.classList.remove("hidden");
+};
+retakeBtn.onclick = () => {
+
+  userPhoto.src = "";
+  userPhoto.style.display = "none";
+
+  scale = 1;
+  posX = 0;
+  posY = 0;
+  rotation = 0;
+
+  render();
+
+  retakeBtn.classList.add("hidden");
+  startCamera();
+};
+
+
+/* ===============================
+   BACK TO EDITOR BUTTON FIX
+=============================== */
+
+backToEditorBtn.addEventListener("click", () => {
+
+  // Hide preview section
+  previewSection.classList.add("hidden");
+
+  // Show editor section
+  photoEditorSection.classList.remove("hidden");
+
+  // Clear notice message
+  notice.textContent = "";
+
+});
+function fixViewportHeight() {
+  document.documentElement.style.setProperty(
+    '--vh',
+    `${window.innerHeight * 0.01}px`
+  );
+}
+
+window.addEventListener('resize', fixViewportHeight);
+fixViewportHeight();
+
+/* ======================================================
+   FORM
+====================================================== */
+
+document.getElementById("setupForm").addEventListener("submit",e=>{
+e.preventDefault();
+const file=frameUpload.files[0];
+if(!file) return alert("Upload frame image");
+
+const reader=new FileReader();
+reader.onload = ev => {
+  frameOverlay.onload = () => {
+
+    const ratio = frameOverlay.naturalWidth / frameOverlay.naturalHeight;
+
+    captureArea.style.aspectRatio = frameOverlay.naturalWidth / frameOverlay.naturalHeight;
+  };
+
+  frameOverlay.src = ev.target.result;
+
+  caption = defaultCaption.value;
+  tags = [...DEFAULT_TAGS, ...defaultTags.value.split(" ").filter(Boolean)];
+
+  setupSection.classList.add("hidden");
+  photoEditorSection.classList.remove("hidden");
+};
+reader.readAsDataURL(file);
+});
+
+backBtn.onclick=()=>{
+photoEditorSection.classList.add("hidden");
+previewSection.classList.add("hidden");
+setupSection.classList.remove("hidden");
+};
+photoUpload.onchange = e => {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    userPhoto.onload = fitImage;
+    userPhoto.src = ev.target.result;
+    userPhoto.style.display = "block";
+
+    retakeBtn.classList.add("hidden"); // Hide retake if uploaded manually
+  };
+  reader.readAsDataURL(e.target.files[0]);
+};
+
+/* ===============================
+   STEP 2 → STEP 3
+================================= */
+let finalCanvas = null;
+goToPreviewBtn.onclick = async () => {
+
+  if (!userPhoto.complete || !userPhoto.naturalWidth){
+    alert("Please upload or capture a photo first.");
+    return;
+  }
+
+  try {
+
+    finalCanvas = await generateCanvas(); // ✅ REMOVE "let"
+
+    previewImage.src = finalCanvas.toDataURL("image/png");
+
+    previewCaption.textContent = caption;
+    previewHash.textContent = tags.join(" ");
+
+    photoEditorSection.classList.add("hidden");
+    previewSection.classList.remove("hidden");
+
+  } catch (err) {
+    console.error(err);
+    alert("Failed to generate preview.");
+  }
+
+};
+/* ======================================================
+   EXPORT
+====================================================== */
+async function generateCanvas() {
+
+  if (!userPhoto.src || !userPhoto.naturalWidth) {
+    alert("No image loaded.");
+    throw new Error("Image not loaded");
+  }
+
+  // Wait for layout to fully stabilize
+  await new Promise(resolve => setTimeout(resolve, 50));
+
+  const canvas = await html2canvas(captureArea, {
+    useCORS: true,
+    scale: 2,                 // fixed scale
+    backgroundColor: "#ffffff", // IMPORTANT FIX
+    removeContainer: true,
+    logging: false
+  });
+
+  if (!canvas.width || !canvas.height) {
+    throw new Error("Canvas render failed");
+  }
+
+  return canvas;
+}
+downloadBtn.onclick = async () => {
+
+  try {
+
+    if (!finalCanvas) {
+      alert("Preview not generated.");
+      return;
+    }
+
+    const format = downloadFormat.value;
+
+    if (format === "pdf") {
+
+      const { jsPDF } = window.jspdf;
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: [finalCanvas.width, finalCanvas.height]
+      });
+
+      pdf.addImage(
+        finalCanvas.toDataURL("image/png"),
+        "PNG",
+        0,
+        0,
+        finalCanvas.width,
+        finalCanvas.height
+      );
+
+      pdf.save("event-frame.pdf");
+      return;
+    }
+
+    let mime = "image/png";
+    if (format === "jpg" || format === "jpeg") {
+      mime = "image/jpeg";
+    }
+
+    const blob = await new Promise(resolve =>
+      finalCanvas.toBlob(resolve, mime, 0.95)
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `event-frame.${format}`;
+    document.body.appendChild(a);
+    a.click();
+
+    URL.revokeObjectURL(url);
+    a.remove();
+
+  } catch (err) {
+    console.error(err);
+    alert("Download failed.");
+  }
+
+};
+shareBtn.addEventListener("click", async () => {
+
+  try {
+
+    if (!finalCanvas) {
+      alert("Preview not generated.");
+      return;
+    }
+
+    const format = downloadFormat.value.toLowerCase();
+
+    const formattedText = caption.trim()
+      ? `${caption.trim()}\n\n${tags.join(" ").trim()}`
+      : tags.join(" ").trim();
+
+    let blob;
+    let mime;
+    let extension;
+
+    /* ===============================
+       DETERMINE FORMAT PROPERLY
+    =============================== */
+
+    if (format === "png") {
+      
+      mime = "image/png";
+      extension = "png";
+    }
+    else if (format === "jpg" || format === "jpeg") {
+      mime = "image/jpeg";
+      extension = "jpg";
+    }
+    else if (format === "pdf") {
+
+      const { jsPDF } = window.jspdf;
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: [finalCanvas.width, finalCanvas.height]
+      });
+
+      pdf.addImage(
+        finalCanvas.toDataURL("image/png"),
+        "PNG",
+        0,
+        0,
+        finalCanvas.width,
+        finalCanvas.height
+      );
+
+      blob = pdf.output("blob");
+
+      const file = new File([blob], "he5-event.pdf", {
+        type: "application/pdf"
+      });
+
+      await copyCaption(formattedText);
+      await shareFile(file, formattedText);
+      return;
+    }
+    else {
+      mime = "image/png";
+      extension = "png";
+    }
+
+    /* ===============================
+       FORCE MIME CORRECTLY
+    =============================== */
+
+    blob = await new Promise((resolve, reject) => {
+      finalCanvas.toBlob((b) => {
+        if (!b) reject("Blob failed");
+        else resolve(b);
+      }, mime, 0.95);
+    });
+
+    const file = new File(
+      [blob],
+      `he5-event.${extension}`,
+      { type: mime }
+    );
+
+    await copyCaption(formattedText);
+    await shareFile(file, formattedText);
+
+  } catch (err) {
+    console.error(err);
+    alert("Share failed or cancelled.");
+  }
+
+});
+
+
+/* ===============================
+   SHARE HELPER
+=============================== */
+
+async function shareFile(file, text) {
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+
+    await navigator.share({
+      files: [file],
+      text: text
+    });
+
+  } else {
+
+    await navigator.share({
+      text: text
+    });
+
+    alert("File sharing not supported. Caption copied.");
+  }
+}
+
+
+/* ===============================
+   CLIPBOARD HELPER
+=============================== */
+
+async function copyCaption(text) {
+
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      notice.textContent = "Caption copied to clipboard!";
+    } catch {}
+  }
+}
+</script>
+
+</body>
+</html>
