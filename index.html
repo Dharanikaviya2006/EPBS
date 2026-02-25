@@ -720,13 +720,6 @@ fixViewportHeight();
 /* ======================================================
    FORM
 ====================================================== */
-
-document.getElementById("setupForm").addEventListener("submit",e=>{
-e.preventDefault();
-const file=frameUpload.files[0];
-if(!file) return alert("Upload frame image");
-
-const reader=new FileReader();
 document.getElementById("setupForm").addEventListener("submit", e => {
   e.preventDefault();
 
@@ -742,8 +735,10 @@ document.getElementById("setupForm").addEventListener("submit", e => {
 
     frameOverlay.onload = () => {
 
+      // ✅ Calculate exact frame ratio
       frameRatio = frameOverlay.naturalWidth / frameOverlay.naturalHeight;
 
+      // ✅ Apply SAME ratio to both containers
       captureArea.style.aspectRatio = frameRatio;
       previewArea.style.aspectRatio = frameRatio;
 
@@ -757,13 +752,11 @@ document.getElementById("setupForm").addEventListener("submit", e => {
       photoEditorSection.classList.remove("hidden");
     };
 
-    // ✅ SET SRC HERE (CORRECT PLACE)
+    // ✅ Set image source AFTER defining onload
     frameOverlay.src = ev.target.result;
   };
 
   reader.readAsDataURL(file);
-});
-reader.readAsDataURL(file);
 });
 
 backBtn.onclick=()=>{
