@@ -373,62 +373,57 @@ z-index:2;
    FINAL STABLE PREVIEW LAYOUT
 =============================== */
 
+/* ---------- DEFAULT (Desktop & Landscape Split) ---------- */
+
 #previewSection{
   padding:20px;
 }
 
 #previewSection .editor-layout{
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  height:100%;
-  gap:20px;
-}
-
-/* Remove any split layout */
-#previewSection .left-panel,
-#previewSection .right-panel{
+  display:flex;
   width:100%;
-  border:none;
-  padding:0;
+  height:100%;
 }
 
-/* Center preview image */
+/* Keep left-right layout by default */
 #previewSection .left-panel{
+  width:65%;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:18px;
+  border-right:2px solid #e6e6e6;
+  padding:20px;
+}
+
+#previewSection .right-panel{
+  width:35%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  padding:20px;
 }
 
 /* Frame sizing */
 #previewSection .frame-container{
   width:100%;
   max-width:520px;
-  max-height:60vh;
+  max-height:70%;
   border-radius:16px;
 }
 
-/* Perfect scaling */
 #previewImage{
   width:100%;
   height:auto;
   object-fit:contain;
 }
 
-/* Caption */
 #previewSection .caption{
+  margin-top:15px;
   text-align:center;
   font-size:15px;
-}
-
-/* Controls centered */
-#previewSection .right-panel{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:16px;
 }
 
 /* Compact control width */
@@ -437,15 +432,30 @@ z-index:2;
   width:260px;
   max-width:90%;
 }
-  /* ===============================
-   PREVIEW BACK BUTTON CENTERED
-=============================== */
 
-#previewSection > .back-btn{
-  align-self:center;
-  width:160px;
-  text-align:center;
-  margin-bottom:10px;
+
+/* ---------- MOBILE PORTRAIT ONLY (Centered Layout) ---------- */
+
+@media (max-width:1023px) and (orientation:portrait){
+
+  #previewSection .editor-layout{
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+  }
+
+  #previewSection .left-panel,
+  #previewSection .right-panel{
+    width:100%;
+    border:none;
+    padding:0;
+  }
+
+  #previewSection .frame-container{
+    max-height:55vh;
+  }
+
 }
 </style>
 </head>
