@@ -1011,27 +1011,40 @@ downloadBtn.onclick = async () => {
 
     if (format === "pdf") {
 
-      const { jsPDF } = window.jspdf;
+  const { jsPDF } = window.jspdf;
 
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "px",
-        format: [finalCanvas.width, finalCanvas.height]
-      });
+  const imgData = finalCanvas.toDataURL("image/png");
 
-      pdf.addImage(
-        finalCanvas.toDataURL("image/png"),
-        "PNG",
-        0,
-        0,
-        finalCanvas.width,
-        finalCanvas.height
-      );
+  // Determine orientation automatically
+  const orientation =
+    finalCanvas.width > finalCanvas.height ? "landscape" : "portrait";
 
-      pdf.save("event-frame.pdf");
-      return;
-    }
+  const pdf = new jsPDF({
+    orientation: orientation,
+    unit: "mm",
+    format: "a4"
+  });
 
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  // Convert canvas pixels to proportional PDF size
+  const ratio = Math.min(
+    pageWidth / finalCanvas.width,
+    pageHeight / finalCanvas.height
+  );
+
+  const imgWidth = finalCanvas.width * ratio;
+  const imgHeight = finalCanvas.height * ratio;
+
+  const x = (pageWidth - imgWidth) / 2;
+  const y = (pageHeight - imgHeight) / 2;
+
+  pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
+
+  pdf.save("event-frame.pdf");
+  return;
+}
     let mime = "image/png";
     if (format === "jpg" || format === "jpeg") {
       mime = "image/jpeg";
