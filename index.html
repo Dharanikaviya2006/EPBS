@@ -373,10 +373,10 @@ z-index:2;
    FINAL STABLE PREVIEW LAYOUT
 =============================== */
 
-/* ---------- DEFAULT (Desktop & Landscape Split) ---------- */
+/* ---------- DESKTOP & LANDSCAPE (STRICT SPLIT) ---------- */
 
 #previewSection{
-  padding:20px;
+  padding:0;
 }
 
 #previewSection .editor-layout{
@@ -385,9 +385,10 @@ z-index:2;
   height:100%;
 }
 
-/* Keep left-right layout by default */
+/* LEFT PANEL (Frame Area) */
 #previewSection .left-panel{
   width:65%;
+  height:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -396,21 +397,23 @@ z-index:2;
   padding:20px;
 }
 
+/* RIGHT PANEL (Controls) */
 #previewSection .right-panel{
   width:35%;
+  height:100%;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  gap:16px;
-  padding:20px;
+  gap:18px;
+  padding:25px;
 }
 
 /* Frame sizing */
 #previewSection .frame-container{
   width:100%;
-  max-width:520px;
-  max-height:70%;
+  max-width:550px;
+  max-height:80%;
   border-radius:16px;
 }
 
@@ -426,7 +429,7 @@ z-index:2;
   font-size:15px;
 }
 
-/* Compact control width */
+/* Button sizing */
 #previewSection select,
 #previewSection button{
   width:260px;
@@ -434,9 +437,13 @@ z-index:2;
 }
 
 
-/* ---------- MOBILE PORTRAIT ONLY (Centered Layout) ---------- */
+/* ---------- MOBILE PORTRAIT ONLY (STACKED) ---------- */
 
 @media (max-width:1023px) and (orientation:portrait){
+
+  #previewSection{
+    padding:15px;
+  }
 
   #previewSection .editor-layout{
     flex-direction:column;
@@ -448,6 +455,7 @@ z-index:2;
   #previewSection .left-panel,
   #previewSection .right-panel{
     width:100%;
+    height:auto;
     border:none;
     padding:0;
   }
