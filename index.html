@@ -552,7 +552,6 @@ z-index:2;
 </div>
 <script>
 const DEFAULT_TAGS=["#HE5Solutions","#EventBranding","#Innovation"];
-
 const frameUpload=document.getElementById("frameUpload");
 const defaultCaption=document.getElementById("defaultCaption");
 const defaultTags=document.getElementById("defaultTags");
@@ -579,7 +578,7 @@ const shareBtn=document.getElementById("shareBtn");
 const downloadFormat=document.getElementById("downloadFormat");
 const previewArea=document.getElementById("previewArea");
 const retakeBtn = document.getElementById("retakeBtn");
-
+const shutterWrapper = document.getElementById("shutterWrapper");
 let frameRatio = 1;
 let caption="", tags=[];
 
@@ -752,95 +751,120 @@ captureArea.addEventListener("wheel", e=>{
 /* ======================================================
    ADVANCED SECURE CAMERA ENGINE
 ====================================================== */
-
-let stream = null;
 let currentFacing = "user";
 
 /* Secure camera start */
+let stream = null;
+let currentDeviceId = null;
+let availableCameras = [];
+
+async function getLocalCameras() {
+
+  const devices = await navigator.mediaDevices.enumerateDevices();
+
+  const videoDevices = devices.filter(d => d.kind === "videoinput");
+
+  // Filter out virtual / phone cameras by label keywords
+  availableCameras = videoDevices.filter(device => {
+    const label = device.label.toLowerCase();
+
+    return !(
+      label.includes("virtual") ||
+      label.includes("droidcam") ||
+      label.includes("epoccam") ||
+      label.includes("continuity") ||
+      label.includes("phone") ||
+      label.includes("snap camera") ||
+      label.includes("obs")
+    );
+  });
+
+  return availableCameras;
+}
+
 async function startCamera() {
 
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+  if (!navigator.mediaDevices?.getUserMedia) {
     alert("Camera not supported.");
-    return;
-  }
-
-  const isSecure =
-    location.protocol === "https:" ||
-    location.hostname === "localhost" ||
-    location.hostname === "127.0.0.1";
-
-  if (!isSecure) {
-    alert("Camera requires HTTPS or localhost.");
     return;
   }
 
   try {
 
+    // Stop old stream
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
       stream = null;
     }
 
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    // 🔥 Get real local cameras
+    const cameras = await getLocalCameras();
 
-    let constraints;
-
-    if (isMobile) {
-      // 🔥 MOBILE: use facingMode so switching works
-      constraints = {
-        video: {
-          facingMode: currentFacing
-        },
-        audio: false
-      };
-
-      switchCameraBtn.classList.remove("hidden");
-    } else {
-      // 🔥 DESKTOP: use default webcam only
-      constraints = {
-        video: true,
-        audio: false
-      };
-
-      switchCameraBtn.classList.add("hidden");
+    if (!cameras.length) {
+      alert("No local camera found.");
+      return;
     }
+
+    // If first time, use first real camera
+    if (!currentDeviceId) {
+      currentDeviceId = cameras[0].deviceId;
+    }
+
+    const constraints = {
+      video: {
+        deviceId: { exact: currentDeviceId },
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      },
+      audio: false
+    };
 
     stream = await navigator.mediaDevices.getUserMedia(constraints);
 
     cameraPreview.srcObject = stream;
+
+    await new Promise(resolve => {
+      cameraPreview.onloadedmetadata = resolve;
+    });
+
     await cameraPreview.play();
 
     cameraPreview.style.display = "block";
-    shutterWrapper.style.display = "block";
     userPhoto.style.display = "none";
 
   } catch (err) {
-    console.error(err);
-    alert("Unable to start camera.");
+    console.error("Camera error:", err);
+    alert("Unable to access local camera.");
   }
-}/* Open camera */
+}
+/* Open camera */
 openCameraBtn.onclick = async () => {
-  currentFacing = "user";
+
   await startCamera();
 
-  // 🔥 Hide open camera after starting
-  openCameraBtn.classList.add("hidden");
-
-  // Hide editing buttons while capturing
-  retakeBtn.classList.add("hidden");
-  rotateBtn.classList.add("hidden");
-  goToPreviewBtn.classList.add("hidden");
-
-  // Show shutter
+  openCameraBtn.style.display = "none";
   shutterWrapper.style.display = "block";
+  switchCameraBtn.style.display = "inline-block";
+
+  rotateBtn.style.display = "none";
+  retakeBtn.style.display = "none";
+  goToPreviewBtn.style.display = "none";
 };
 /* Switch camera */
-switchCameraBtn.addEventListener("click", async () => {
-  currentFacing =
-    currentFacing === "user" ? "environment" : "user";
+switchCameraBtn.onclick = async () => {
+
+  if (availableCameras.length < 2) return;
+
+  const currentIndex = availableCameras.findIndex(
+    cam => cam.deviceId === currentDeviceId
+  );
+
+  const nextIndex = (currentIndex + 1) % availableCameras.length;
+
+  currentDeviceId = availableCameras[nextIndex].deviceId;
 
   await startCamera();
-});
+};
 
 /* Capture image */
 captureBtn.onclick = () => {
@@ -860,16 +884,15 @@ captureBtn.onclick = () => {
     stream = null;
   }
 
-  cameraPreview.style.display = "none";
-  shutterWrapper.style.display = "none";
-  switchCameraBtn.classList.add("hidden");
+cameraPreview.style.display = "none";
+shutterWrapper.style.display = "none";
+switchCameraBtn.style.display = "none";
 
-  userPhoto.style.display = "block";
+userPhoto.style.display = "block";
 
-  // 🔥 NOW show editing controls
-  retakeBtn.classList.remove("hidden");
-  rotateBtn.classList.remove("hidden");
-  goToPreviewBtn.classList.remove("hidden");
+rotateBtn.style.display = "inline-block";
+retakeBtn.style.display = "inline-block";
+goToPreviewBtn.style.display = "block";
 };
 retakeBtn.onclick = async () => {
 
@@ -880,17 +903,15 @@ retakeBtn.onclick = async () => {
   posX = 0;
   posY = 0;
   rotation = 0;
-
   render();
 
-  retakeBtn.classList.add("hidden");
-  rotateBtn.classList.add("hidden");
-  goToPreviewBtn.classList.add("hidden");
+  rotateBtn.style.display = "none";
+  goToPreviewBtn.style.display = "none";
 
-  await startCamera();
+  await startCamera(false); // default camera again
 
-  openCameraBtn.classList.add("hidden");
   shutterWrapper.style.display = "block";
+  switchCameraBtn.style.display = "inline-block";
 };
 /* ===============================
    BACK TO EDITOR BUTTON FIX
