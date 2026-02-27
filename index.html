@@ -823,10 +823,16 @@ openCameraBtn.onclick = async () => {
   currentFacing = "user";
   await startCamera();
 
-  // Enter fullscreen AFTER camera starts
-  setTimeout(() => {
-    enterFullscreen();
-  }, 500);
+  // 🔥 Hide open camera after starting
+  openCameraBtn.classList.add("hidden");
+
+  // Hide editing buttons while capturing
+  retakeBtn.classList.add("hidden");
+  rotateBtn.classList.add("hidden");
+  goToPreviewBtn.classList.add("hidden");
+
+  // Show shutter
+  shutterWrapper.style.display = "block";
 };
 /* Switch camera */
 switchCameraBtn.addEventListener("click", async () => {
@@ -855,15 +861,17 @@ captureBtn.onclick = () => {
   }
 
   cameraPreview.style.display = "none";
-  document.getElementById("shutterWrapper").style.display = "none";
-  switchCameraBtn.style.display = "none";
+  shutterWrapper.style.display = "none";
+  switchCameraBtn.classList.add("hidden");
 
   userPhoto.style.display = "block";
 
-  // 🔥 Show Retake AFTER capture
+  // 🔥 NOW show editing controls
   retakeBtn.classList.remove("hidden");
+  rotateBtn.classList.remove("hidden");
+  goToPreviewBtn.classList.remove("hidden");
 };
-retakeBtn.onclick = () => {
+retakeBtn.onclick = async () => {
 
   userPhoto.src = "";
   userPhoto.style.display = "none";
@@ -876,10 +884,14 @@ retakeBtn.onclick = () => {
   render();
 
   retakeBtn.classList.add("hidden");
-  startCamera();
+  rotateBtn.classList.add("hidden");
+  goToPreviewBtn.classList.add("hidden");
+
+  await startCamera();
+
+  openCameraBtn.classList.add("hidden");
+  shutterWrapper.style.display = "block";
 };
-
-
 /* ===============================
    BACK TO EDITOR BUTTON FIX
 =============================== */
