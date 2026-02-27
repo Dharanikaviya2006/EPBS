@@ -485,9 +485,13 @@ z-index:2;
     <div class="left-panel">
       <div class="frame-container" id="captureArea">
         <img id="userPhoto" class="photo">
-        <video id="cameraPreview" autoplay playsinline
-          style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-        </video>
+        <video 
+  id="cameraPreview"
+  autoplay
+  playsinline
+  muted
+  style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+</video>
         <img id="frameOverlay" class="frame">
       </div>
     </div>
@@ -500,11 +504,11 @@ z-index:2;
       <div id="shutterWrapper" style="display:none; text-align:center; margin-top:10px;">
         <button id="captureBtn" class="shutter-btn"></button>
       </div>
-<div style="display:flex; gap:8px; align-items:center;">
-  <button id="openCameraBtn" style="flex:1;">📷 Capture</button>
-  <button id="switchCameraBtn" style="width:45px; display:none;">🔄</button>
-  <button id="rotateBtn" style="width:45px;">↻</button>
-  <button id="retakeBtn" class="hidden" style="width:45px;">🔁</button>
+<div class="action-row">
+  <button id="openCameraBtn">Open Camera</button>
+  <button id="switchCameraBtn" class="hidden">🔄</button>
+  <button id="rotateBtn">↻</button>
+  <button id="retakeBtn" class="hidden">🔁</button>
 </div>
 
 <button id="goToPreviewBtn" style="margin-top:12px;">Next ➜</button>
@@ -541,7 +545,6 @@ z-index:2;
 
       <button id="downloadBtn">Download</button>
       <button id="shareBtn">Share</button>
-      <div class="notice" id="notice"></div>
 
     </div>
 
@@ -580,6 +583,17 @@ const retakeBtn = document.getElementById("retakeBtn");
 let frameRatio = 1;
 let caption="", tags=[];
 
+function enterFullscreen() {
+  const el = document.documentElement;
+
+  if (el.requestFullscreen) {
+    el.requestFullscreen();
+  } else if (el.webkitRequestFullscreen) {
+    el.webkitRequestFullscreen();
+  } else if (el.msRequestFullscreen) {
+    el.msRequestFullscreen();
+  }
+}
 function showStep(sectionToShow) {
 
   // Hide all sections
@@ -746,33 +760,60 @@ let currentFacing = "user";
 async function startCamera() {
 
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    alert("Camera not supported on this device.");
+    alert("Camera not supported in this browser.");
     return;
   }
 
-  const isLocal =
-  location.hostname === "localhost" ||
-  location.hostname === "127.0.0.1" ||
-  location.hostname.startsWith("192.168.");
+  const isSecure =
+    location.protocol === "https:" ||
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1";
 
-if (location.protocol !== "https:" && !isLocal) {
-  alert("Camera requires HTTPS or local environment.");
-  return;
-}
-
+  if (!isSecure) {
+    alert("Camera requires HTTPS or Localhost.");
+    return;
+  }
 
   try {
 
+    // Stop previous stream
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
       stream = null;
     }
 
+    // 🔥 Request permission first (important for device labels)
+    await navigator.mediaDevices.getUserMedia({ video: true });
+
+    const devices = await navigator.mediaDevices.enumerateDevices();
+
+    const videoDevices = devices.filter(
+      device => device.kind === "videoinput"
+    );
+
+    if (videoDevices.length === 0) {
+      alert("No camera devices found.");
+      return;
+    }
+
+    // Pick first real camera
+    // Prefer built-in webcam (avoid virtual/mobile cameras)
+let selectedDevice = videoDevices.find(device =>
+  device.label.toLowerCase().includes("integrated") ||
+  device.label.toLowerCase().includes("hd") ||
+  device.label.toLowerCase().includes("webcam")
+);
+
+// Fallback to first if nothing matches
+if (!selectedDevice) {
+  selectedDevice = videoDevices[0];
+}
+
     const constraints = {
       video: {
-        facingMode: currentFacing,
-        width: { ideal: 1920 },
-        height: { ideal: 1080 }
+        deviceId: { exact: selectedDevice.deviceId },
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
       },
       audio: false
     };
@@ -780,34 +821,43 @@ if (location.protocol !== "https:" && !isLocal) {
     stream = await navigator.mediaDevices.getUserMedia(constraints);
 
     cameraPreview.srcObject = stream;
+    cameraPreview.muted = true;
+    cameraPreview.playsInline = true;
+
+    await cameraPreview.play();
+
     cameraPreview.style.display = "block";
     document.getElementById("shutterWrapper").style.display = "block";
-    switchCameraBtn.style.display = "inline-block";
+    switchCameraBtn.classList.add("hidden");
 
     userPhoto.style.display = "none";
 
   } catch (err) {
 
-    if (err.name === "NotAllowedError") {
-      alert("Camera permission denied. Please enable camera access.");
-    } else {
-      alert("Camera not available.");
-    }
-
     console.error(err);
+
+    if (err.name === "NotAllowedError") {
+      alert("Camera permission denied.");
+    } else if (err.name === "NotReadableError") {
+      alert("Camera is already in use by another application.");
+    } else {
+      alert("Unable to start camera.");
+    }
   }
-}
-
-/* Open camera */
-openCameraBtn.onclick = () => {
+}/* Open camera */
+openCameraBtn.onclick = async () => {
   currentFacing = "user";
-  startCamera();
-};
+  await startCamera();
 
+  // Enter fullscreen AFTER camera starts
+  setTimeout(() => {
+    enterFullscreen();
+  }, 500);
+};
 /* Switch camera */
-switchCameraBtn.onclick = () => {
+switchCameraBtn.onclick = async () => {
   currentFacing = currentFacing === "user" ? "environment" : "user";
-  startCamera();
+  await startCamera();
 };
 
 /* Capture image */
@@ -921,6 +971,7 @@ frameOverlay.onload = () => {
   ];
 
   showStep(photoEditorSection);
+  enterFullscreen();
 };
 
     // ✅ Set image source AFTER defining onload
@@ -1198,7 +1249,6 @@ async function copyCaption(text) {
   if (navigator.clipboard && window.isSecureContext) {
     try {
       await navigator.clipboard.writeText(text);
-      notice.textContent = "Caption copied to clipboard!";
     } catch {}
   }
 }
