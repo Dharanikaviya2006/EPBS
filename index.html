@@ -760,7 +760,7 @@ let currentFacing = "user";
 async function startCamera() {
 
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    alert("Camera not supported in this browser.");
+    alert("Camera not supported.");
     return;
   }
 
@@ -770,79 +770,53 @@ async function startCamera() {
     location.hostname === "127.0.0.1";
 
   if (!isSecure) {
-    alert("Camera requires HTTPS or Localhost.");
+    alert("Camera requires HTTPS or localhost.");
     return;
   }
 
   try {
 
-    // Stop previous stream
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
       stream = null;
     }
 
-    // 🔥 Request permission first (important for device labels)
-    await navigator.mediaDevices.getUserMedia({ video: true });
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    const devices = await navigator.mediaDevices.enumerateDevices();
+    let constraints;
 
-    const videoDevices = devices.filter(
-      device => device.kind === "videoinput"
-    );
+    if (isMobile) {
+      // 🔥 MOBILE: use facingMode so switching works
+      constraints = {
+        video: {
+          facingMode: currentFacing
+        },
+        audio: false
+      };
 
-    if (videoDevices.length === 0) {
-      alert("No camera devices found.");
-      return;
+      switchCameraBtn.classList.remove("hidden");
+    } else {
+      // 🔥 DESKTOP: use default webcam only
+      constraints = {
+        video: true,
+        audio: false
+      };
+
+      switchCameraBtn.classList.add("hidden");
     }
-
-    // Pick first real camera
-    // Prefer built-in webcam (avoid virtual/mobile cameras)
-let selectedDevice = videoDevices.find(device =>
-  device.label.toLowerCase().includes("integrated") ||
-  device.label.toLowerCase().includes("hd") ||
-  device.label.toLowerCase().includes("webcam")
-);
-
-// Fallback to first if nothing matches
-if (!selectedDevice) {
-  selectedDevice = videoDevices[0];
-}
-
-    const constraints = {
-      video: {
-        deviceId: { exact: selectedDevice.deviceId },
-        width: { ideal: 1280 },
-        height: { ideal: 720 }
-      },
-      audio: false
-    };
 
     stream = await navigator.mediaDevices.getUserMedia(constraints);
 
     cameraPreview.srcObject = stream;
-    cameraPreview.muted = true;
-    cameraPreview.playsInline = true;
-
     await cameraPreview.play();
 
     cameraPreview.style.display = "block";
-    document.getElementById("shutterWrapper").style.display = "block";
-    switchCameraBtn.classList.add("hidden");
-
+    shutterWrapper.style.display = "block";
     userPhoto.style.display = "none";
 
   } catch (err) {
-
     console.error(err);
-
-    if (err.name === "NotAllowedError") {
-      alert("Camera permission denied.");
-    } else if (err.name === "NotReadableError") {
-      alert("Camera is already in use by another application.");
-    } else {
-      alert("Unable to start camera.");
-    }
+    alert("Unable to start camera.");
   }
 }/* Open camera */
 openCameraBtn.onclick = async () => {
@@ -855,10 +829,12 @@ openCameraBtn.onclick = async () => {
   }, 500);
 };
 /* Switch camera */
-switchCameraBtn.onclick = async () => {
-  currentFacing = currentFacing === "user" ? "environment" : "user";
+switchCameraBtn.addEventListener("click", async () => {
+  currentFacing =
+    currentFacing === "user" ? "environment" : "user";
+
   await startCamera();
-};
+});
 
 /* Capture image */
 captureBtn.onclick = () => {
