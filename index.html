@@ -1184,7 +1184,15 @@ shareBtn.addEventListener("click", async () => {
     finalCanvas.height
   );
 
-  pdf.save("event-frame.pdf");
+  const blob = pdf.output("blob");
+
+  const file = new File([blob], "he5-event.pdf", {
+    type: "application/pdf"
+  });
+
+  await copyCaption(formattedText);
+  await shareFile(file, formattedText);
+
   return;
 }
     else {
