@@ -1165,33 +1165,28 @@ shareBtn.addEventListener("click", async () => {
     }
     else if (format === "pdf") {
 
-      const { jsPDF } = window.jspdf;
+  const { jsPDF } = window.jspdf;
 
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "px",
-        format: [finalCanvas.width, finalCanvas.height]
-      });
+  const imgData = finalCanvas.toDataURL("image/png");
 
-      pdf.addImage(
-        finalCanvas.toDataURL("image/png"),
-        "PNG",
-        0,
-        0,
-        finalCanvas.width,
-        finalCanvas.height
-      );
+  const pdf = new jsPDF({
+    orientation: finalCanvas.width > finalCanvas.height ? "landscape" : "portrait",
+    unit: "px",
+    format: [finalCanvas.width, finalCanvas.height]
+  });
 
-      blob = pdf.output("blob");
+  pdf.addImage(
+    imgData,
+    "PNG",
+    0,
+    0,
+    finalCanvas.width,
+    finalCanvas.height
+  );
 
-      const file = new File([blob], "he5-event.pdf", {
-        type: "application/pdf"
-      });
-
-      await copyCaption(formattedText);
-      await shareFile(file, formattedText);
-      return;
-    }
+  pdf.save("event-frame.pdf");
+  return;
+}
     else {
       mime = "image/png";
       extension = "png";
