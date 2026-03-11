@@ -22,27 +22,57 @@ html, body{
   min-height:100vh;
   margin:0;
 }
-
 body{
   font-family:'Poppins',sans-serif;
-  background:linear-gradient(135deg,#fc7800,#ff9d3f);
+
+  background: linear-gradient(135deg,#ff7a00,#ff9a3c,#f4a259);
+
+  min-height:100vh;
+
   display:flex;
   justify-content:center;
   align-items:center;
-}
-.section{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  background:#fff;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
+
   overflow:hidden;
 }
-h2{font-family:'Lora',serif;color:var(--orange)}
+.section{
+  width:100%;
+  min-height:100vh;
 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  position:absolute;
+  top:0;
+  left:0;
+
+  background:transparent;
+}
+.bg-decor{
+position:fixed;
+inset:0;
+z-index:-1;
+pointer-events:none;
+}
+.bg-decor span{
+animation:float 12s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-30px)}
+100%{transform:translateY(0)}
+}
+#setupSection h2{
+font-family:'Lora',serif;
+font-size:34px;
+color:white;
+margin-bottom:18px;
+text-align:center;
+}
 input,textarea,select,button{
 width:100%;
 margin-top:12px;
@@ -52,38 +82,104 @@ font-family:inherit;
 font-size:14px;
 box-sizing:border-box;
 }
-
 button{
-background:var(--orange);
-color:#fff;
+
+background:linear-gradient(135deg,#fc7800,#ff9d3f);
+
+color:white;
+
 border:none;
+
 font-weight:600;
+
 cursor:pointer;
+
+transition:.2s;
+
 }
 
-.back-btn{background:#777 !important;margin-bottom:15px;}
-.hidden{display:none}
+button:hover{
+
+transform:translateY(-1px);
+
+box-shadow:0 6px 14px rgba(0,0,0,0.2);
+
+}
+.back-btn{
+position:absolute;
+top:25px;
+left:25px;
+
+background:#777 !important;
+
+width:120px;
+
+z-index:10;
+}
+.hidden{
+  display:none !important;
+}
 
 /* ===== FRAME CONTAINER ===== */
 .frame-container{
-  position:relative;
-  width:100%;
-  aspect-ratio: var(--frame-ratio, 1);
-  margin:auto;
-  overflow:hidden;
-  border-radius:16px;
-  background:#f3f3f3;
-  touch-action:none;
 
+position:relative;
+
+width:100%;
+aspect-ratio: var(--frame-ratio, 1);
+transition:transform .2s ease,box-shadow .2s ease;
+margin:auto;
+
+overflow:hidden;
+
+border-radius:18px;
+
+background:#eaeaea;
+
+box-shadow:
+
+0 30px 70px rgba(0,0,0,0.25),
+
+inset 0 3px 10px rgba(0,0,0,0.12);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+transition:all .25s ease;
+
+border:6px solid white;
+
+}
+#photoEditorSection{
   display:flex;
   align-items:center;
   justify-content:center;
+}
 
-  flex-shrink:0;      /* 🔥 CRITICAL */
-  min-height:200px;   /* 🔥 prevents collapse */
+.editor-layout{
+  width:100%;
+  max-width:1200px;
+  height:90vh;
+
+  display:flex;
+  flex:1;
+
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,0.25);
+}
+.frame-container:hover{
+transform:scale(1.02);
 }
 /* ===== SHUTTER BUTTON ===== */
-
+input[type="file"]{
+  background:white;
+  border:2px dashed #ddd;
+  padding:16px;
+  text-align:center;
+}
 .shutter-btn{
   width:70px;
   height:70px;
@@ -119,12 +215,23 @@ cursor:pointer;
   position:absolute;
   top:50%;
   left:50%;
+
   transform:translate(-50%, -50%);
   max-width:none;
   max-height:none;
+
   user-select:none;
-  z-index:1;
+  z-index:2;
+
   cursor:grab;
+
+  transition:box-shadow 0.2s ease;
+}
+
+.photo:active{
+  cursor:grabbing;
+  z-index:2;
+  box-shadow:0 10px 30px rgba(0,0,0,0.25);
 }
 /* Camera preview */
 #cameraPreview{
@@ -135,36 +242,127 @@ width:100%;
 height:100%;
 object-fit:cover;
 border-radius:16px;
-z-index:2;
+z-index:1;
 }
 
 /* Frame always on top */
 .frame{
   position:absolute;
   inset:0;
+
   width:100%;
   height:100%;
+
   object-fit:contain;
   object-position:center;
+
   pointer-events:none;
+
   z-index:3;
-}
-.editor-layout{
-  flex:1;
-  display:flex;
-  height:100%;
+
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.25));
 }
 .right-panel > * {
   flex-shrink:0;
 }
+.right-panel{
+  width:380px;
 
-.caption{ margin-top:16px; font-size:14px; }
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:18px;
+
+  padding:30px;
+
+  background:#fafafa;
+
+  border-left:1px solid #eee;
+}
+.bg-decor{
+position:fixed;
+inset:0;
+z-index:0;
+pointer-events:none;
+overflow:hidden;
+}
+
+.bg-decor span{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,0.25);
+backdrop-filter:blur(6px);
+}
+
+/* top-left big circle */
+.bg-decor span:nth-child(1){
+width:320px;
+height:320px;
+top:-80px;
+left:-60px;
+opacity:.35;
+}
+
+/* top-right */
+.bg-decor span:nth-child(2){
+width:140px;
+height:140px;
+top:120px;
+right:140px;
+opacity:.45;
+}
+
+/* bottom-left */
+.bg-decor span:nth-child(3){
+width:120px;
+height:120px;
+bottom:120px;
+left:90px;
+opacity:.45;
+}
+
+/* bottom-right */
+.bg-decor span:nth-child(4){
+width:130px;
+height:130px;
+bottom:120px;
+right:80px;
+opacity:.4;
+}
+.caption{
+
+margin-top:18px;
+
+font-size:15px;
+
+text-align:center;
+
+padding:10px 16px;
+
+background:white;
+
+border-radius:12px;
+
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+}
 .notice{ text-align:center; font-size:13px; color:var(--orange); margin-top:8px; height:18px; }
+.action-row{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+}
 
-/* ===== DESKTOP ===== */
-/* ===============================
-   DESKTOP CLEAN LAYOUT
-=============================== */
+.action-row button{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+}
+#openCameraBtn{
+  width:120px;
+}
 @media (min-width:1024px){
 
   .editor-layout{
@@ -173,30 +371,43 @@ z-index:2;
     width:100%;
   }
 
-  .left-panel{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:40px;
-    border-right:1px solid #e6e6e6;
-  }
+.left-panel{
+  flex:1;
 
-  .right-panel{
-    width:420px;   /* fixed clean control width */
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding:40px;
-  }
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
+  background:#f6f6f6;
+
+  padding:40px;
+}
+.right-panel{
+  width:420px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+  padding:35px;
+  background:white;
+  box-shadow:inset 1px 0 0 #eee;
+}
+.right-panel input,
+.right-panel textarea{
+  max-width:320px;
+}
   .frame-container{
     width:100%;
     max-width:650px;  /* prevent giant stretching */
     max-height:90%;
     border-radius:16px;
   }
-
+.frame-container:hover{
+  transform:scale(1.01);
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.25),
+    inset 0 2px 10px rgba(0,0,0,0.08);
+}
   #previewImage{
     width:100%;
     height:auto;
@@ -228,11 +439,11 @@ z-index:2;
     padding:15px;
   }
 
-  #previewSection .editor-layout{
-    flex-direction:column;
-    height:100%;
-  }
-
+#previewSection .editor-layout{
+  width:900px;
+  max-width:95%;
+  height:auto;
+}
   #previewSection .left-panel,
   #previewSection .right-panel{
     width:100%;
@@ -246,14 +457,15 @@ z-index:2;
     align-items:center;
     justify-content:center;
   }
+#previewSection .frame-container{
 
-  #previewSection .frame-container{
-    width:100%;
-    max-width:95%;
-    max-height:55vh;
-    border-radius:16px;
-  }
+width:100%;
+max-width:420px;
 
+border-radius:18px;
+
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
   #previewImage{
     width:100%;
     height:auto;
@@ -265,12 +477,28 @@ z-index:2;
     text-align:center;
   }
 
-  #previewSection .right-panel{
-    margin-top:25px;
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-  }
+#previewSection .right-panel{
+
+width:260px;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+
+gap:16px;
+
+padding:20px;
+}
+}
+#previewArea{
+  background:
+    linear-gradient(145deg,#ffffff,#f2f2f2);
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.18);
+
+  border-radius:18px;
 }
 /* ===== MOBILE LANDSCAPE===== */
 @media (max-width:1023px) and (orientation:landscape){
@@ -285,6 +513,7 @@ z-index:2;
     width:100vw;
     height:100dvh;
     padding:0;
+    gap:20px;
   }
 
   .editor-layout{
@@ -294,13 +523,22 @@ z-index:2;
   }
 
 .left-panel{
-  width:65%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-right:2px solid #e6e6e6;
-  padding:10px;
+
+flex:1;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+padding:40px;
+
+background:
+radial-gradient(circle at center,#ffffff 40%,#f3f3f3);
+
+border-right:1px solid #e6e6e6;
+
+position:relative;
+
 }
 
 .frame-container{
@@ -333,15 +571,14 @@ z-index:2;
     margin-bottom:4px;
   }
 
-  .action-row{
-    display:flex;
-    gap:5px;
-  }
+.action-row{
+  justify-content:center;
+}
 
-  .action-row button{
-    flex:1;
-  }
-
+.action-row button{
+  width:56px;
+  height:46px;
+}
   #switchCameraBtn,
   #rotateBtn{
     width:36px;
@@ -378,17 +615,11 @@ z-index:2;
 #previewSection{
   padding:0;
 }
-
-#previewSection .editor-layout{
-  display:flex;
-  width:100%;
-  height:100%;
-}
-
 /* LEFT PANEL (Frame Area) */
 #previewSection .left-panel{
   width:65%;
   height:100%;
+  flex:1;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -422,21 +653,63 @@ z-index:2;
   height:auto;
   object-fit:contain;
 }
-
 #previewSection .caption{
-  margin-top:15px;
-  text-align:center;
-  font-size:15px;
-}
 
+margin-top:18px;
+
+background:white;
+
+padding:14px 20px;
+
+border-radius:14px;
+
+font-size:15px;
+
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+text-align:center;
+
+max-width:420px;
+}
 /* Button sizing */
 #previewSection select,
 #previewSection button{
   width:260px;
   max-width:90%;
 }
+#previewSection{
 
+display:flex;
+align-items:center;
+justify-content:center;
 
+padding:40px;
+}
+
+/* Preview Card */
+#previewSection .editor-layout{
+
+width:900px;
+max-width:95%;
+
+height:auto;
+
+display:flex;
+
+background:rgba(255,255,255,0.25);
+
+backdrop-filter:blur(16px);
+
+border-radius:22px;
+
+box-shadow:0 30px 80px rgba(0,0,0,0.3);
+
+overflow:hidden;
+
+padding:30px;
+
+gap:30px;
+}
 /* ---------- MOBILE PORTRAIT ONLY (STACKED) ---------- */
 
 @media (max-width:1023px) and (orientation:portrait){
@@ -465,11 +738,109 @@ z-index:2;
   }
 
 }
+#goToPreviewBtn{
+  width:320px;
+  max-width:90%;
+  margin-top:18px;
+  font-size:16px;
+  padding:14px;
+}
+.setup-card{
+width:420px;
+max-width:95%;
+
+background:white;
+
+padding:35px;
+
+border-radius:18px;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,0.25);
+
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.setup-desc{
+font-size:13px;
+color:#666;
+margin-bottom:10px;
+}
+
+.input-label{
+font-size:12px;
+font-weight:600;
+color:#555;
+margin-top:10px;
+}
+
+.primary-btn{
+margin-top:20px;
+font-size:15px;
+}
+#setupSection{
+z-index:2;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:25px;
+}
+#setupForm{
+
+width:420px;
+max-width:92%;
+
+padding:40px;
+
+display:flex;
+flex-direction:column;
+gap:14px;
+
+background:rgba(255,255,255,0.28);
+
+backdrop-filter:blur(14px);
+
+border-radius:18px;
+
+box-shadow:0 30px 80px rgba(0,0,0,0.25);
+}
+#setupForm button{
+margin-top:18px;
+padding:14px;
+
+font-size:15px;
+
+border-radius:14px;
+
+background:linear-gradient(135deg,#ff7a00,#ff9a3c);
+
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+#setupForm input,
+#setupForm textarea{
+background:white;
+border:none;
+
+padding:12px;
+
+border-radius:8px;
+
+box-shadow:0 5px 12px rgba(0,0,0,0.1);
+}
 </style>
 </head>
 <body>
+  <div class="bg-decor">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 <div class="section" id="setupSection">
-<h2 style="text-align:center;">Frame Setup</h2>
+<h2 style="text-align:center;color:white">Frame Setup</h2>
 <form id="setupForm">
 <input type="file" id="frameUpload" accept="image/*" required>
 <textarea id="defaultCaption" placeholder="Default professional caption"></textarea>
@@ -507,7 +878,7 @@ z-index:2;
 <div class="action-row">
   <button id="openCameraBtn">Open Camera</button>
   <button id="switchCameraBtn" class="hidden">🔄</button>
-  <button id="rotateBtn">↻</button>
+  <button id="rotateBtn" class="hidden">↻</button>
   <button id="retakeBtn" class="hidden">🔁</button>
 </div>
 
@@ -515,6 +886,7 @@ z-index:2;
     </div>
   </div>
 </div>
+<div id="notice" class="notice"></div>
 <div class="section hidden" id="previewSection">
 
   <button class="back-btn small-back-btn" id="backToEditorBtn">⬅</button>
@@ -573,12 +945,14 @@ const openCameraBtn=document.getElementById("openCameraBtn");
 const cameraPreview=document.getElementById("cameraPreview");
 const captureBtn=document.getElementById("captureBtn");
 const switchCameraBtn=document.getElementById("switchCameraBtn");
+const rotateBtn = document.getElementById("rotateBtn");
 const downloadBtn=document.getElementById("downloadBtn");
 const shareBtn=document.getElementById("shareBtn");
 const downloadFormat=document.getElementById("downloadFormat");
 const previewArea=document.getElementById("previewArea");
 const retakeBtn = document.getElementById("retakeBtn");
 const shutterWrapper = document.getElementById("shutterWrapper");
+
 let frameRatio = 1;
 let caption="", tags=[];
 
@@ -842,12 +1216,11 @@ openCameraBtn.onclick = async () => {
 
   await startCamera();
 
-  openCameraBtn.style.display = "none";
+  openCameraBtn.classList.add("hidden");
+  switchCameraBtn.classList.remove("hidden");
   shutterWrapper.style.display = "block";
-  switchCameraBtn.style.display = "inline-block";
-
-  rotateBtn.style.display = "none";
-  retakeBtn.style.display = "none";
+  rotateBtn.classList.add("hidden");
+  retakeBtn.classList.add("hidden");
   goToPreviewBtn.style.display = "none";
 };
 /* Switch camera */
@@ -884,34 +1257,34 @@ captureBtn.onclick = () => {
     stream = null;
   }
 
-cameraPreview.style.display = "none";
-shutterWrapper.style.display = "none";
-switchCameraBtn.style.display = "none";
+  cameraPreview.style.display = "none";
+  shutterWrapper.style.display = "none";
 
-userPhoto.style.display = "block";
+  userPhoto.style.display = "block";
 
-rotateBtn.style.display = "inline-block";
-retakeBtn.style.display = "inline-block";
-goToPreviewBtn.style.display = "block";
+  switchCameraBtn.classList.add("hidden");
+
+  rotateBtn.classList.remove("hidden");
+  retakeBtn.classList.remove("hidden");
+
+  goToPreviewBtn.style.display = "block";
 };
-retakeBtn.onclick = async () => {
+photoUpload.onchange = e => {
 
-  userPhoto.src = "";
-  userPhoto.style.display = "none";
+  const reader = new FileReader();
 
-  scale = 1;
-  posX = 0;
-  posY = 0;
-  rotation = 0;
-  render();
+  reader.onload = ev => {
 
-  rotateBtn.style.display = "none";
-  goToPreviewBtn.style.display = "none";
+    userPhoto.onload = fitImage;
+    userPhoto.src = ev.target.result;
 
-  await startCamera(false); // default camera again
+    userPhoto.style.display = "block";
 
-  shutterWrapper.style.display = "block";
-  switchCameraBtn.style.display = "inline-block";
+    rotateBtn.classList.remove("hidden");   // ✅ ADD
+    retakeBtn.classList.remove("hidden");   // ✅ ADD
+  };
+
+  reader.readAsDataURL(e.target.files[0]);
 };
 /* ===============================
    BACK TO EDITOR BUTTON FIX
@@ -991,16 +1364,29 @@ frameOverlay.onload = () => {
 });
 backBtn.onclick = () => showStep(setupSection);
 backToEditorBtn.onclick = () => showStep(photoEditorSection);
-photoUpload.onchange = e => {
-  const reader = new FileReader();
-  reader.onload = ev => {
-    userPhoto.onload = fitImage;
-    userPhoto.src = ev.target.result;
-    userPhoto.style.display = "block";
+retakeBtn.onclick = async () => {
 
-    retakeBtn.classList.add("hidden"); // Hide retake if uploaded manually
-  };
-  reader.readAsDataURL(e.target.files[0]);
+  userPhoto.src = "";
+  userPhoto.style.display = "none";
+
+  scale = 1;
+  posX = 0;
+  posY = 0;
+  rotation = 0;
+  render();
+
+  rotateBtn.classList.add("hidden");
+  retakeBtn.classList.add("hidden");
+
+  goToPreviewBtn.style.display = "none";
+
+  await startCamera();
+
+  cameraPreview.style.display = "block";
+
+  shutterWrapper.style.display = "block";
+
+  switchCameraBtn.classList.remove("hidden");
 };
 
 /* ===============================
