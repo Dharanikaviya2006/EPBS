@@ -387,13 +387,14 @@ box-shadow:0 6px 14px rgba(0,0,0,0.2);
 
 }
 .back-btn{
+
 position:fixed;
 
-top:20px;
-left:20px;
+top:14px;
+left:14px;
 
-width:48px;
-height:48px;
+width:44px;
+height:44px;
 
 border-radius:50%;
 
@@ -402,20 +403,17 @@ align-items:center;
 justify-content:center;
 
 background:white;
-color:#333;
 
-font-size:20px;
+font-size:18px;
 font-weight:600;
 
 box-shadow:0 8px 20px rgba(0,0,0,0.25);
 
 cursor:pointer;
 
-z-index:1000;
+z-index:9999;
 
-transition:all .2s ease;
 }
-
 .back-btn:hover{
 transform:scale(1.05);
 box-shadow:0 10px 25px rgba(0,0,0,0.35);
@@ -893,13 +891,9 @@ height:44px;
   }
 
 #previewSection .editor-layout{
-
-background:white;
-
-border-radius:22px;
-
-box-shadow:0 20px 60px rgba(0,0,0,0.25);
-
+  background-color:white;
+width:900px;
+max-width:95%;
 }
   #previewSection .left-panel,
   #previewSection .right-panel{
@@ -959,6 +953,33 @@ padding:20px;
 /* ===============================
    MOBILE SETUP PAGE
 =============================== */
+@media (max-width:600px){
+
+#previewSection .editor-layout{
+
+width:100%;
+
+max-width:100%;
+
+padding:22px;
+
+gap:22px;
+
+border-radius:22px;
+
+}
+
+#previewSection .frame-container{
+
+max-width:460px;
+
+}
+
+#previewSection .caption{
+max-width:95%;
+font-size:16px;
+}
+}
 
 @media (max-width:600px){
 
