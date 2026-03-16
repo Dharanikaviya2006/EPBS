@@ -17,11 +17,15 @@
   box-sizing:border-box;
 }
 html, body{
-width:100%;
+width:100vw;
 height:100dvh;
-overflow:hidden;
+
 margin:0;
 padding:0;
+
+overflow:hidden;
+
+position:fixed;
 }
 body{
 
@@ -45,7 +49,8 @@ position:fixed;
 inset:0;
 
 z-index:-3;
-
+pointer-events:none;
+will-change:transform;
 overflow:hidden;
 
 }
@@ -110,6 +115,8 @@ animation:waveMove2 18s infinite alternate ease-in-out;
 position:fixed;
 inset:0;
 pointer-events:none;
+pointer-events:none;
+will-change:transform;
 z-index:-2;
 }
 .rings span{
@@ -158,7 +165,8 @@ animation-delay:7s;
 position:fixed;
 top:0;
 left:0;
-
+pointer-events:none;
+will-change:transform;
 width:100%;
 height:100%;
 
@@ -177,11 +185,10 @@ z-index:-3;
 .shapes{
 
 position:fixed;
-
+pointer-events:none;
+will-change:transform;
 inset:0;
-
 z-index:-2;
-
 pointer-events:none;
 
 }
@@ -242,35 +249,26 @@ transform:rotate(45deg);
 
 }
 .dot-grid{
-
 position:fixed;
-
 bottom:8%;
 left:6%;
-
+pointer-events:none;
+will-change:transform;
 width:260px;
 height:180px;
-
 background-image:
 radial-gradient(rgba(0,0,0,0.45) 2px, transparent 2px);
-
 background-size:20px 20px;
-
 opacity:.6;
-
 z-index:-1;
-
 }
 .particles{
 
 position:fixed;
-
 inset:0;
-
-z-index:-2;
-
 pointer-events:none;
-
+will-change:transform;
+z-index:-2;
 }
 .particles span{
 
@@ -302,18 +300,23 @@ animation:particleFloat 14s linear infinite;
 
 }
 .section{
-  width:100%;
-  min-height:100vh;
-  transition:opacity .25s ease;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:1;
-  padding:20px;
 
-  position:absolute;
-  top:0;
-  left:0;
+position:fixed;
+
+top:0;
+left:0;
+
+width:100vw;
+height:100dvh;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+padding:20px;
+
+transition:opacity .25s ease;
+
 }
 .bg-decor{
 position:fixed;
@@ -390,33 +393,34 @@ box-shadow:0 6px 14px rgba(0,0,0,0.2);
 
 position:fixed;
 
-top:14px;
-left:14px;
+top:16px;
+left:16px;
 
-width:44px;
-height:44px;
-
-border-radius:50%;
+width:56px;
+height:56px;
 
 display:flex;
 align-items:center;
 justify-content:center;
 
+border-radius:50%;
+
 background:white;
 
-font-size:18px;
-font-weight:600;
+font-size:22px;
 
-box-shadow:0 8px 20px rgba(0,0,0,0.25);
+box-shadow:0 6px 18px rgba(0,0,0,0.25);
 
 cursor:pointer;
 
 z-index:9999;
 
+transition:transform .2s ease;
+
 }
+
 .back-btn:hover{
 transform:scale(1.05);
-box-shadow:0 10px 25px rgba(0,0,0,0.35);
 }
 /* ===== FRAME CONTAINER ===== */
 .frame-container{
@@ -458,8 +462,7 @@ border:6px solid white;
 
 width:100%;
 max-width:1200px;
-height:90vh;
-
+height:calc(100dvh - 40px);
 display:flex;
 
 background:white;
@@ -872,18 +875,6 @@ margin-top:10px;
 }
 
 /* BACK BUTTON */
-
-.back-btn{
-
-position:absolute;
-
-top:18px;
-left:18px;
-
-width:44px;
-height:44px;
-
-}
 
 }
   #previewSection{
