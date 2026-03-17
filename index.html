@@ -516,6 +516,10 @@ border:6px solid white;
   align-items:center;
   justify-content:center;
 }
+#photoEditorSection.section{
+  align-items:center;
+  justify-content:center;
+}
 .editor-layout{
  
 width:100%;
@@ -823,6 +827,12 @@ position:relative;
 height:100dvh;
 padding:78px 12px 12px;
 align-items:flex-start;
+}
+
+#photoEditorSection.section{
+padding:78px 12px 12px;
+align-items:center;
+justify-content:center;
 }
 
 .editor-layout{
@@ -1900,6 +1910,13 @@ align-items:center;
 justify-content:center;
 gap:12px;
 }
+.secondary-tool-row{
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+}
 .tool-btn{
 min-height:52px;
 width:100%;
@@ -2041,6 +2058,7 @@ gap:14px;
 justify-content:flex-start;
 }
 #photoEditorSection .right-panel{
+justify-content:center;
 gap:14px;
 }
 #photoEditorSection .tool-grid{
@@ -2053,13 +2071,20 @@ font-size:14px;
 }
 #photoEditorSection #rotateBtn,
 #photoEditorSection #retakeBtn{
-max-width:210px;
+max-width:unset;
 background:linear-gradient(135deg,#fff4ea,#ffd8b7);
 color:#8c4300;
 border:1px solid rgba(252,120,0,0.16);
 box-shadow:
 0 12px 28px rgba(252,120,0,0.12),
 inset 0 1px 0 rgba(255,255,255,0.75);
+}
+#photoEditorSection .secondary-tool-row #rotateBtn,
+#photoEditorSection .secondary-tool-row #retakeBtn{
+flex:1 1 0;
+width:calc(50% - 6px);
+max-width:150px;
+min-width:0;
 }
 #photoEditorSection #rotateBtn .icon,
 #photoEditorSection #retakeBtn .icon{
@@ -2294,6 +2319,9 @@ width:min(100%,460px);
   #photoEditorSection #retakeBtn{
     max-width:100%;
   }
+  #photoEditorSection .secondary-tool-row{
+    gap:10px;
+  }
   .back-btn{
     width:42px;
     height:42px;
@@ -2408,6 +2436,13 @@ width:min(100%,460px);
   }
   #photoEditorSection .editor-layout{
     height:calc(100dvh - 72px) !important;
+  }
+  #photoEditorSection .secondary-tool-row{
+    gap:8px;
+  }
+  #photoEditorSection .secondary-tool-row #rotateBtn,
+  #photoEditorSection .secondary-tool-row #retakeBtn{
+    max-width:none;
   }
 }
 .hidden{
@@ -2526,8 +2561,10 @@ opacity:0;
 <div class="tool-grid">
   <button id="openCameraBtn" class="tool-btn cta-btn"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a2 2 0 0 1 2-2h2l1.4-2h5.2L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path><circle cx="12" cy="12.5" r="3.5"></circle></svg></span><span>Open Camera</span></button>
   <button id="switchCameraBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h8"></path><path d="M12 4l3 3-3 3"></path><path d="M17 17H9"></path><path d="M12 14l-3 3 3 3"></path></svg></span><span>Switch</span></button>
-  <button id="rotateBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 1-2.3-5.7"></path><path d="M20 4v7h-7"></path></svg></span><span>Rotate</span></button>
-  <button id="retakeBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"></path><path d="M3 21v-5h5"></path></svg></span><span>Retake</span></button>
+  <div class="secondary-tool-row">
+    <button id="rotateBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 1-2.3-5.7"></path><path d="M20 4v7h-7"></path></svg></span><span>Rotate</span></button>
+    <button id="retakeBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"></path><path d="M3 21v-5h5"></path></svg></span><span>Retake</span></button>
+  </div>
 </div>
 
 <button id="goToPreviewBtn" class="cta-btn primary-cta" style="margin-top:12px;"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"></path></svg></span><span>Generate Preview</span></button>
