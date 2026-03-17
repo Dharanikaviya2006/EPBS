@@ -28,15 +28,15 @@ overflow:hidden;
 position:fixed;
 }
 body{
-
+ 
 background:
-linear-gradient(
-135deg,
-#ff7a00 0%,
-#fc7800 30%,
-#e56700 60%,
-#b84f00 100%
-);
+ linear-gradient(
+ 180deg,
+ #ffc67f 0%,
+ #ffa954 28%,
+ #f57a16 60%,
+ #ca5505 100%
+ );
 
 overflow:hidden;
 
@@ -53,6 +53,39 @@ pointer-events:none;
 will-change:transform;
 overflow:hidden;
 
+}
+.mountains{
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+height:38vh;
+pointer-events:none;
+z-index:-2;
+opacity:.9;
+}
+.mountain{
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+background-repeat:no-repeat;
+background-size:100% 100%;
+}
+.mountain.back{
+height:72%;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 420' preserveAspectRatio='none'%3E%3Cpath fill='%23876d7d' d='M0 330L84 280L130 222L196 326L286 246L360 190L432 312L512 242L590 198L668 292L740 228L812 286L900 246L980 314L1076 266L1160 332L1242 256L1322 282L1440 350V420H0Z'/%3E%3C/svg%3E");
+opacity:.42;
+}
+.mountain.mid{
+height:58%;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 360' preserveAspectRatio='none'%3E%3Cpath fill='%23625169' d='M0 306L92 246L162 282L254 208L340 306L438 236L548 164L646 274L760 198L850 246L964 178L1082 294L1208 224L1320 248L1440 318V360H0Z'/%3E%3C/svg%3E");
+opacity:.58;
+}
+.mountain.front{
+height:44%;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 300' preserveAspectRatio='none'%3E%3Cpath fill='%23433b58' d='M0 258L120 208L206 286L336 156L456 262L602 150L726 260L864 176L988 286L1138 166L1262 268L1360 210L1440 238V300H0Z'/%3E%3C/svg%3E");
+opacity:.88;
 }
 .wave{
 
@@ -481,12 +514,12 @@ border:6px solid white;
   justify-content:center;
 }
 .editor-layout{
-
+ 
 width:100%;
 max-width:1200px;
-height:calc(100dvh - 40px);
+height:min(calc(100dvh - 40px),860px);
 display:flex;
-
+ 
 background:white;
 
 border-radius:20px;
@@ -621,20 +654,20 @@ z-index:1;
 }
 .right-panel{
 width:380px;
-
+ 
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;   /* ⭐ center vertically */
 
 gap:22px;
-
+ 
 padding:40px 30px;
-
-background:rgba(255,255,255,0.85);
-backdrop-filter:blur(8px);
-
-border-left:1px solid rgba(0,0,0,0.05);
+ 
+background:linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,244,234,0.92));
+backdrop-filter:blur(10px);
+ 
+border-left:1px solid rgba(0,0,0,0.06);
 }
 .bg-decor{
 position:fixed;
@@ -701,7 +734,7 @@ background:white;
 border-radius:12px;
 
 box-shadow:0 10px 25px rgba(0,0,0,0.15);
-
+ 
 }
 .notice{ text-align:center; font-size:13px; color:var(--orange); margin-top:8px; height:18px; }
 .action-row{
@@ -1217,7 +1250,7 @@ position:relative;
   align-items:center;
   justify-content:center;
   border-right:2px solid #e6e6e6;
-  padding:20px;
+  padding:24px 28px;
 }
 
 /* RIGHT PANEL (Controls) */
@@ -1228,16 +1261,16 @@ position:relative;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  gap:18px;
-  padding:25px;
+  gap:20px;
+  padding:28px 26px;
 }
 
 /* Frame sizing */
 #previewSection .frame-container{
   width:100%;
-  max-width:550px;
-  max-height:80%;
-  border-radius:16px;
+  max-width:620px;
+  max-height:82%;
+  border-radius:18px;
 }
 
 #previewImage{
@@ -1261,13 +1294,13 @@ box-shadow:0 10px 25px rgba(0,0,0,0.15);
 
 text-align:center;
 
-max-width:420px;
+max-width:480px;
 }
 /* Button sizing */
 #previewSection select,
 #previewSection button{
-  width:260px;
-  max-width:90%;
+  width:100%;
+  max-width:292px;
 }
 #previewSection{
 
@@ -1275,16 +1308,16 @@ display:flex;
 align-items:center;
 justify-content:center;
 
-padding:40px;
+ padding:28px;
 }
 
 /* Preview Card */
 #previewSection .editor-layout{
 
-width:900px;
-max-width:95%;
-
-height:auto;
+ width:min(1180px,96vw);
+ max-width:96vw;
+ 
+ height:min(calc(100dvh - 56px),820px);
 
 display:flex;
 
@@ -1292,29 +1325,35 @@ background:rgba(255,255,255,0.25);
 
 backdrop-filter:blur(16px);
 
-border-radius:22px;
+ border-radius:28px;
 
 box-shadow:0 30px 80px rgba(0,0,0,0.3);
 
 overflow:hidden;
 
-padding:30px;
-
-gap:30px;
+ padding:26px;
+ 
+ gap:26px;
 }
 /* ---------- MOBILE PORTRAIT ONLY (STACKED) ---------- */
 
 @media (max-width:1023px) and (orientation:portrait){
 
   #previewSection{
-    padding:15px;
+    padding:64px 12px 12px;
+    align-items:center;
+    justify-content:center;
   }
 
   #previewSection .editor-layout{
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:20px;
+    gap:14px;
+    width:100%;
+    max-width:520px;
+    padding:14px;
+    height:min(calc(100dvh - 78px),760px);
   }
 
   #previewSection .left-panel,
@@ -1326,7 +1365,18 @@ gap:30px;
   }
 
   #previewSection .frame-container{
-    max-height:55vh;
+    max-height:42vh;
+  }
+
+  #previewSection .right-panel{
+    padding:4px 0 0;
+    gap:10px;
+  }
+
+  #previewSection select,
+  #previewSection button{
+    width:100%;
+    max-width:280px;
   }
 
 }
@@ -1340,7 +1390,6 @@ gap:30px;
 .setup-card{
 width:420px;
 max-width:95%;
-
 background:white;
 
 padding:35px;
@@ -1378,21 +1427,22 @@ display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-gap:25px;
+gap:clamp(10px,1.8vh,18px);
+padding:clamp(12px,2vh,22px) 18px;
 }
 #setupForm{
-
+ 
 position:relative;
-
-width:440px;
-max-width:92%;
-
-padding:55px 50px;
-
+ 
+width:min(460px,92vw);
+max-width:92vw;
+ 
+padding:clamp(20px,3vh,30px) clamp(20px,3vw,30px);
+ 
 display:flex;
 flex-direction:column;
-gap:20px;
-
+gap:clamp(10px,1.5vh,16px);
+ 
 background:linear-gradient(
 145deg,
 rgba(255,255,255,0.95),
@@ -1400,9 +1450,10 @@ rgba(255,255,255,0.85)
 );
 
 backdrop-filter:blur(25px);
-
+ 
 border-radius:28px;
-
+border:1px solid rgba(255,255,255,0.5);
+ 
 box-shadow:
 0 40px 90px rgba(0,0,0,0.30),
 inset 0 2px 8px rgba(255,255,255,0.5);
@@ -1526,6 +1577,617 @@ padding:18px;
 border-radius:14px;
 
 }
+.hero-badge{
+display:inline-flex;
+align-items:center;
+gap:10px;
+padding:8px 14px;
+border-radius:999px;
+background:rgba(255,255,255,0.18);
+border:1px solid rgba(255,255,255,0.3);
+color:white;
+font-size:12px;
+font-weight:600;
+letter-spacing:.04em;
+text-transform:uppercase;
+backdrop-filter:blur(12px);
+}
+.hero-badge .icon{
+width:28px;
+height:28px;
+border-radius:50%;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:rgba(255,255,255,0.2);
+box-shadow:inset 0 1px 0 rgba(255,255,255,0.35);
+}
+.icon svg{
+width:16px;
+height:16px;
+stroke:currentColor;
+stroke-width:1.9;
+stroke-linecap:round;
+stroke-linejoin:round;
+fill:none;
+}
+.hero-badge .icon svg{
+width:14px;
+height:14px;
+}
+.page-title{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:6px;
+text-align:center;
+}
+.page-title p{
+max-width:560px;
+font-size:13px;
+line-height:1.45;
+color:rgba(255,255,255,0.9);
+}
+.form-header,
+.preview-meta{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+.form-header h3,
+.panel-title h3{
+font-size:clamp(18px,2.2vw,24px);
+line-height:1.2;
+color:#202020;
+}
+.form-header p,
+.panel-title p{
+font-size:13px;
+line-height:1.45;
+color:#666;
+}
+.field-group{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+.field-label{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:12px;
+font-weight:600;
+color:#444;
+}
+.field-label .icon,
+.panel-title .icon,
+.cta-btn .icon,
+.option-card .icon,
+.tool-btn .icon{
+width:32px;
+height:32px;
+border-radius:12px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(145deg,#fff4ea,#ffd8ba);
+color:#bc5600;
+box-shadow:
+0 8px 18px rgba(252,120,0,0.16),
+inset 0 1px 0 rgba(255,255,255,0.65);
+flex-shrink:0;
+}
+.upload-hint{
+font-size:11px;
+line-height:1.4;
+color:#7a7a7a;
+margin-top:-2px;
+}
+.panel-title{
+width:100%;
+display:flex;
+align-items:flex-start;
+gap:12px;
+}
+.panel-title .icon{
+width:40px;
+height:40px;
+border-radius:14px;
+background:linear-gradient(145deg,#fff0e4,#ffc995);
+}
+.panel-title .copy,
+.option-card .copy{
+flex:1;
+min-width:0;
+}
+.panel-note{
+width:100%;
+padding:10px 12px;
+border-radius:16px;
+background:rgba(252,120,0,0.08);
+border:1px solid rgba(252,120,0,0.12);
+font-size:12px;
+line-height:1.45;
+color:#8a4a00;
+}
+.option-card{
+width:100%;
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px 14px;
+border-radius:18px;
+background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,242,228,0.96));
+border:1px solid rgba(252,120,0,0.12);
+box-shadow:
+0 14px 28px rgba(0,0,0,0.06),
+inset 0 1px 0 rgba(255,255,255,0.75);
+}
+.option-card .copy{
+display:flex;
+flex-direction:column;
+gap:3px;
+}
+.option-card .eyebrow{
+font-size:11px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+color:#c96a00;
+}
+.option-card .title{
+font-size:13px;
+font-weight:600;
+color:#202020;
+}
+.tool-grid{
+width:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:12px;
+}
+.tool-btn{
+min-height:52px;
+width:100%;
+max-width:250px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+padding:12px 14px;
+border-radius:20px;
+font-size:13px;
+font-weight:600;
+letter-spacing:.01em;
+border:1px solid rgba(255,255,255,0.22);
+background:
+linear-gradient(135deg,#ff7a00 0%,#ff982e 55%,#ffb45f 100%);
+box-shadow:
+0 18px 36px rgba(252,120,0,0.24),
+inset 0 1px 0 rgba(255,255,255,0.28);
+position:relative;
+overflow:hidden;
+}
+.tool-grid #openCameraBtn,
+.tool-grid #switchCameraBtn,
+.tool-grid #rotateBtn,
+.tool-grid #retakeBtn{
+width:min(100%,250px);
+border-radius:20px;
+margin-inline:auto;
+}
+.tool-btn::before,
+.primary-cta::before,
+#downloadBtn::before,
+#shareBtn::before{
+content:"";
+position:absolute;
+inset:1px;
+border-radius:inherit;
+background:linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0));
+pointer-events:none;
+}
+.tool-btn .icon{
+width:30px;
+height:30px;
+border-radius:12px;
+background:rgba(255,255,255,0.2);
+color:white;
+box-shadow:none;
+}
+.cta-btn{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+.cta-btn .icon{
+background:rgba(255,255,255,0.14);
+color:white;
+}
+.primary-cta{
+min-height:52px;
+font-size:15px;
+position:relative;
+overflow:hidden;
+border-radius:20px;
+background:
+linear-gradient(135deg,#ff8200 0%,#ff9930 48%,#ffb869 100%);
+box-shadow:
+0 18px 38px rgba(252,120,0,0.26),
+inset 0 1px 0 rgba(255,255,255,0.32);
+}
+.select-wrap{
+position:relative;
+width:100%;
+max-width:292px;
+}
+.select-wrap::after{
+content:"";
+position:absolute;
+right:20px;
+top:50%;
+width:12px;
+height:12px;
+border-right:2px solid #8b8b8b;
+border-bottom:2px solid #8b8b8b;
+transform:translateY(-62%) rotate(45deg);
+pointer-events:none;
+}
+.select-wrap select{
+appearance:none;
+padding:14px 48px 14px 18px;
+height:54px;
+line-height:1.2;
+border-radius:16px;
+border:1.5px solid rgba(25,25,25,0.24);
+background:rgba(255,255,255,0.96);
+box-shadow:
+0 10px 22px rgba(0,0,0,0.08),
+inset 0 1px 0 rgba(255,255,255,0.85);
+display:block;
+}
+.preview-actions{
+width:100%;
+display:grid;
+grid-template-columns:1fr;
+justify-items:center;
+gap:14px;
+}
+.secondary-btn{
+background:linear-gradient(135deg,#262626,#4a4a4a);
+box-shadow:0 14px 28px rgba(0,0,0,0.24);
+}
+#setupSection{
+padding:28px 20px;
+gap:22px;
+}
+#setupForm{
+animation:none;
+}
+#setupForm:hover{
+transform:none;
+}
+#setupForm button{
+margin-top:0;
+}
+#photoEditorSection{
+padding:28px;
+}
+#photoEditorSection .editor-layout,
+#previewSection .editor-layout{
+position:relative;
+}
+#photoEditorSection .left-panel,
+#previewSection .left-panel{
+gap:18px;
+}
+#photoEditorSection .right-panel,
+#previewSection .right-panel{
+justify-content:flex-start;
+}
+#photoEditorSection .right-panel{
+gap:18px;
+}
+#photoEditorSection .tool-grid{
+padding-top:4px;
+}
+#photoEditorSection #openCameraBtn,
+#photoEditorSection #switchCameraBtn{
+min-height:58px;
+font-size:14px;
+}
+#photoEditorSection #rotateBtn,
+#photoEditorSection #retakeBtn{
+max-width:210px;
+background:linear-gradient(135deg,#fff4ea,#ffd8b7);
+color:#8c4300;
+border:1px solid rgba(252,120,0,0.16);
+box-shadow:
+0 12px 28px rgba(252,120,0,0.12),
+inset 0 1px 0 rgba(255,255,255,0.75);
+}
+#photoEditorSection #rotateBtn .icon,
+#photoEditorSection #retakeBtn .icon{
+background:rgba(252,120,0,0.12);
+color:#c45b00;
+}
+#photoEditorSection #switchCameraBtn{
+background:linear-gradient(135deg,#ff8d12 0%,#ff9d2d 55%,#ffc071 100%);
+}
+#photoEditorSection #openCameraBtn{
+background:linear-gradient(135deg,#ff7900 0%,#ff9730 55%,#ffb865 100%);
+}
+#photoEditorSection .panel-title,
+#previewSection .panel-title{
+margin-bottom:4px;
+}
+#photoEditorSection .right-panel input[type="file"]{
+margin-top:0;
+}
+#shutterWrapper{
+width:100%;
+margin-top:0 !important;
+padding:6px 0 0;
+}
+#goToPreviewBtn{
+margin-top:0;
+}
+#previewSection .right-panel{
+gap:16px;
+}
+#previewSection .preview-meta,
+#previewSection .preview-actions{
+align-items:center;
+}
+#previewSection .option-card{
+width:100%;
+max-width:330px;
+}
+#previewSection #downloadBtn,
+#previewSection #shareBtn{
+width:100%;
+max-width:292px;
+min-height:56px;
+}
+#previewSection .caption{
+width:min(100%,460px);
+}
+@media (min-width:1024px){
+  #setupSection{
+    gap:10px;
+    padding:14px 18px;
+  }
+  #setupSection h2{
+    font-size:clamp(30px,3.3vw,38px);
+    margin-bottom:2px;
+  }
+  .page-title{
+    gap:6px;
+  }
+  .page-title p{
+    max-width:520px;
+    font-size:12px;
+    line-height:1.35;
+  }
+  .hero-badge{
+    padding:8px 14px;
+    font-size:11px;
+  }
+  .hero-badge .icon{
+    width:24px;
+    height:24px;
+    font-size:12px;
+  }
+  #setupForm{
+    width:min(470px,86vw);
+    padding:22px 24px;
+    gap:12px;
+  }
+  .form-header,
+  .preview-meta{
+    gap:8px;
+  }
+  .form-header h3,
+  .panel-title h3{
+    font-size:20px;
+  }
+  .form-header p,
+  .panel-title p,
+  .upload-hint{
+    font-size:11px;
+    line-height:1.35;
+  }
+  .field-group{
+    gap:6px;
+  }
+  .field-label{
+    font-size:12px;
+  }
+  .field-label .icon{
+    width:28px;
+    height:28px;
+    font-size:13px;
+  }
+  #setupForm input,
+  #setupForm textarea{
+    padding:12px 13px;
+    font-size:13px;
+  }
+  #setupForm textarea{
+    min-height:74px;
+  }
+  .primary-cta{
+    min-height:48px;
+    font-size:14px;
+  }
+  #photoEditorSection .editor-layout{
+    max-width:min(1240px,96vw);
+    gap:0;
+  }
+  #photoEditorSection .left-panel{
+    padding:36px;
+  }
+  #photoEditorSection .frame-container{
+    max-width:min(620px,100%);
+  }
+  #photoEditorSection .right-panel,
+  #previewSection .right-panel{
+    width:360px;
+    padding:24px 22px;
+  }
+  #previewSection .editor-layout{
+    width:min(1220px,96vw);
+    align-items:stretch;
+  }
+  #previewSection .frame-container{
+    max-width:min(660px,100%);
+  }
+  #previewSection .left-panel{
+    width:68%;
+  }
+  #previewSection .right-panel{
+    width:32%;
+  }
+}
+@media (max-width:1023px){
+  .section{
+    padding:14px;
+    align-items:center;
+    justify-content:center;
+  }
+  .editor-layout{
+    height:min(calc(100dvh - 28px),820px);
+  }
+  .mountains{
+    height:28vh;
+  }
+  .page-title p{
+    font-size:12px;
+    max-width:360px;
+  }
+  .panel-title{
+    align-items:center;
+  }
+}
+@media (max-width:600px){
+  #setupSection h2{
+    font-size:28px;
+    margin-bottom:2px;
+  }
+  .hero-badge{
+    font-size:11px;
+    padding:7px 12px;
+  }
+  .form-header h3,
+  .panel-title h3{
+    font-size:18px;
+  }
+  .tool-grid{
+    width:100%;
+    gap:10px;
+  }
+  .tool-btn,
+  .primary-cta,
+  #previewSection select,
+  #previewSection button{
+    max-width:none;
+  }
+  .select-wrap{
+    max-width:none;
+  }
+  #setupSection{
+    padding:14px 14px 12px;
+    gap:8px;
+  }
+  #setupForm{
+    width:100%;
+    max-width:100%;
+    padding:18px 16px;
+    gap:10px;
+    border-radius:22px;
+  }
+  #setupForm input,
+  #setupForm textarea{
+    padding:12px;
+    font-size:13px;
+  }
+  #setupForm textarea{
+    min-height:72px;
+  }
+  #photoEditorSection{
+    padding:12px;
+  }
+  #photoEditorSection .right-panel,
+  #previewSection .right-panel{
+    padding:14px;
+    gap:12px;
+  }
+  .option-card,
+  .panel-note{
+    padding:10px 12px;
+  }
+  .tool-btn,
+  .primary-cta{
+    min-height:46px;
+  }
+  .mountains{
+    height:23vh;
+  }
+  #photoEditorSection #openCameraBtn,
+  #photoEditorSection #switchCameraBtn,
+  #photoEditorSection #rotateBtn,
+  #photoEditorSection #retakeBtn{
+    max-width:100%;
+  }
+  .back-btn{
+    width:46px;
+    height:46px;
+    font-size:22px;
+  }
+}
+@media (max-height:800px){
+  #setupSection{
+    gap:8px;
+    padding:10px 14px;
+  }
+  .page-title{
+    gap:4px;
+  }
+  .page-title p{
+    font-size:11px;
+    line-height:1.3;
+  }
+  #setupForm{
+    padding:16px 18px;
+    gap:8px;
+  }
+  #setupForm textarea{
+    min-height:64px;
+  }
+  .form-header h3,
+  .panel-title h3{
+    font-size:17px;
+  }
+  .editor-layout{
+    height:min(calc(100dvh - 22px),760px);
+  }
+  #photoEditorSection .right-panel,
+  #previewSection .right-panel{
+    padding:16px;
+    gap:10px;
+  }
+  .option-card,
+  .panel-note{
+    padding:9px 11px;
+  }
+  .tool-btn,
+  .primary-cta{
+    min-height:42px;
+  }
+}
 .hidden{
 display:none !important;
 opacity:0;
@@ -1538,6 +2200,11 @@ opacity:0;
 <div class="wave wave1"></div>
 <div class="wave wave2"></div>
 
+</div>
+<div class="mountains">
+<div class="mountain back"></div>
+<div class="mountain mid"></div>
+<div class="mountain front"></div>
 </div>
 
 <div class="shapes">
@@ -1568,16 +2235,34 @@ opacity:0;
 </div>
 <div class="dot-grid"></div>
 <div class="section" id="setupSection">
+<div class="page-title">
+<div class="hero-badge"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg></span><span>HE5 Event Branding Studio</span></div>
 <h2 style="text-align:center;color:white">Frame Setup</h2>
+<p>Upload your frame, define the default message, and move through a cleaner creation flow that stays stable on both mobile and desktop.</p>
+</div>
 <form id="setupForm">
+<div class="form-header">
+<h3>Prepare Your Template</h3>
+<p>Set the visual frame and default copy that should appear in every generated event post.</p>
+</div>
+<div class="field-group">
+<label class="field-label" for="frameUpload"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"></rect><path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path></svg></span><span>Frame artwork</span></label>
 <input type="file" id="frameUpload" accept="image/*" required>
+<div class="upload-hint">Transparent PNG files usually give the cleanest overlay result.</div>
+</div>
+<div class="field-group">
+<label class="field-label" for="defaultCaption"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4.5-1 8.8-8.8a2.1 2.1 0 0 0-3-3L5.5 16 4 20z"></path><path d="M13 7l4 4"></path></svg></span><span>Default caption</span></label>
 <textarea id="defaultCaption" placeholder="Default professional caption"></textarea>
+</div>
+<div class="field-group">
+<label class="field-label" for="defaultTags"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4L7 20"></path><path d="M17 4l-2 16"></path><path d="M4 9h16"></path><path d="M3 15h16"></path></svg></span><span>Hashtags</span></label>
 <input type="text" id="defaultTags" placeholder="#HE5Solutions #Innovation">
-<button type="submit">Continue</button>
+</div>
+<button type="submit" class="cta-btn primary-cta"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></span><span>Continue to Editor</span></button>
 </form>
 </div>
 <div class="section hidden" id="photoEditorSection">
-  <button class="back-btn" id="backBtn">⬅</button>
+  <button class="back-btn" id="backBtn">&#8592;</button>
 
   <div class="editor-layout">
 
@@ -1598,25 +2283,40 @@ opacity:0;
 
     <!-- RIGHT SIDE -->
     <div class="right-panel">
+      <div class="panel-title">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a2 2 0 0 1 2-2h2l1.4-2h5.2L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path><circle cx="12" cy="12.5" r="3.5"></circle></svg></span>
+        <div class="copy">
+          <h3>Capture & Adjust</h3>
+          <p>Upload a photo or use the camera, then fine-tune the frame before moving to the final preview.</p>
+        </div>
+      </div>
+      <div class="option-card">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"></rect><path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path><circle cx="9" cy="9" r="1"></circle></svg></span>
+        <div class="copy">
+          <span class="eyebrow">Photo Input</span>
+          <span class="title">Choose an image from your device</span>
+        </div>
+      </div>
       <input type="file" id="photoUpload" accept="image/*">
+      <div class="panel-note">Tip: drag to reposition, pinch to zoom on mobile, and use rotate if the imported photo needs quick correction.</div>
       <div id="shutterWrapper" style="display:none; text-align:center; margin-top:10px;">
         <button id="captureBtn" class="shutter-btn"></button>
       </div>
-<div class="action-row">
-  <button id="openCameraBtn">Open Camera</button>
-  <button id="switchCameraBtn" class="hidden">🔄</button>
-  <button id="rotateBtn" class="hidden">↻</button>
-  <button id="retakeBtn" class="hidden">🔁</button>
+<div class="tool-grid">
+  <button id="openCameraBtn" class="tool-btn cta-btn"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a2 2 0 0 1 2-2h2l1.4-2h5.2L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path><circle cx="12" cy="12.5" r="3.5"></circle></svg></span><span>Open Camera</span></button>
+  <button id="switchCameraBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h8"></path><path d="M12 4l3 3-3 3"></path><path d="M17 17H9"></path><path d="M12 14l-3 3 3 3"></path></svg></span><span>Switch</span></button>
+  <button id="rotateBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 1-2.3-5.7"></path><path d="M20 4v7h-7"></path></svg></span><span>Rotate</span></button>
+  <button id="retakeBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"></path><path d="M3 21v-5h5"></path></svg></span><span>Retake</span></button>
 </div>
 
-<button id="goToPreviewBtn" style="margin-top:12px;">Next ➜</button>
+<button id="goToPreviewBtn" class="cta-btn primary-cta" style="margin-top:12px;"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"></path></svg></span><span>Generate Preview</span></button>
     </div>
   </div>
 </div>
 <div id="notice" class="notice"></div>
 <div class="section hidden" id="previewSection">
 
-<button class="back-btn" id="backToEditorBtn">←</button>
+<button class="back-btn" id="backToEditorBtn">&#8592;</button>
   <div class="editor-layout">
 
     <div class="left-panel">
@@ -1633,16 +2333,35 @@ opacity:0;
     </div>
 
     <div class="right-panel">
+      <div class="panel-title">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"></path><path d="M8 10l4 4 4-4"></path><path d="M5 19h14"></path></svg></span>
+        <div class="copy">
+          <h3>Export & Share</h3>
+          <p>Pick the output format, download the post, or share it directly from your device.</p>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <div class="option-card">
+          <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h6l4 4v14H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M14 3v5h5"></path></svg></span>
+          <div class="copy">
+            <span class="eyebrow">Output</span>
+            <span class="title">Choose the file type for export</span>
+          </div>
+        </div>
+        <div class="select-wrap">
+          <select id="downloadFormat">
+            <option value="png">PNG</option>
+            <option value="jpg">JPG</option>
+            <option value="jpeg">JPEG</option>
+            <option value="pdf">PDF</option>
+          </select>
+        </div>
+      </div>
 
-      <select id="downloadFormat">
-        <option value="png">PNG</option>
-        <option value="jpg">JPG</option>
-        <option value="jpeg">JPEG</option>
-        <option value="pdf">PDF</option>
-      </select>
-
-      <button id="downloadBtn">Download</button>
-      <button id="shareBtn">Share</button>
+      <div class="preview-actions">
+        <button id="downloadBtn" class="cta-btn"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"></path><path d="M8 10l4 4 4-4"></path><path d="M5 19h14"></path></svg></span><span>Download</span></button>
+        <button id="shareBtn" class="cta-btn secondary-btn"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2"></circle><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="19" r="2"></circle><path d="M8 12l8-6"></path><path d="M8 12l8 6"></path></svg></span><span>Share</span></button>
+      </div>
 
     </div>
 
