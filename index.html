@@ -456,15 +456,15 @@ transition:transform .2s ease;
 
 #photoEditorSection .back-btn,
 #previewSection .back-btn{
-top:20px;
-left:20px;
+top:12px;
+left:12px;
 }
 
 @media (max-width:1023px){
 #photoEditorSection .back-btn,
 #previewSection .back-btn{
-top:16px;
-left:16px;
+top:10px;
+left:10px;
 width:52px;
 height:52px;
 font-size:24px;
@@ -1240,6 +1240,72 @@ position:relative;
     margin-top:0 !important;
   }
   #photoEditorSection .back-btn{
+    top:10px;
+    left:10px;
+    width:40px;
+    height:40px;
+    font-size:20px;
+  }
+  #previewSection{
+    padding:8px;
+  }
+  #previewSection .editor-layout{
+    width:100%;
+    height:calc(100dvh - 16px);
+    max-width:none;
+    padding:12px;
+    gap:12px;
+    border-radius:22px;
+  }
+  #previewSection .left-panel{
+    flex:1 1 64%;
+    width:auto;
+    height:100%;
+    padding:10px 12px;
+    border-right:1px solid #e6e6e6;
+  }
+  #previewSection .frame-container{
+    max-width:100%;
+    max-height:100%;
+  }
+  #previewSection .caption{
+    max-width:100%;
+    margin-top:10px;
+    padding:10px 14px;
+    font-size:13px;
+  }
+  #previewSection .right-panel{
+    width:36%;
+    max-width:320px;
+    min-width:250px;
+    height:100%;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    padding:12px 10px;
+    overflow:hidden;
+  }
+  #previewSection .panel-title,
+  #previewSection .option-card{
+    display:none;
+  }
+  #previewSection .preview-meta,
+  #previewSection .preview-actions{
+    width:100%;
+  }
+  #previewSection .select-wrap{
+    max-width:none;
+  }
+  #previewSection select,
+  #previewSection button{
+    max-width:none;
+    min-height:42px;
+    font-size:12px;
+  }
+  #previewSection .cta-btn .icon{
+    display:none;
+  }
+  #previewSection .back-btn{
     top:10px;
     left:10px;
     width:40px;
@@ -2332,7 +2398,6 @@ opacity:0;
         </div>
       </div>
       <input type="file" id="photoUpload" accept="image/*">
-      <div class="panel-note">Tip: drag to reposition, pinch to zoom on mobile, and use rotate if the imported photo needs quick correction.</div>
       <div id="shutterWrapper" style="display:none; text-align:center; margin-top:10px;">
         <button id="captureBtn" class="shutter-btn"></button>
       </div>
