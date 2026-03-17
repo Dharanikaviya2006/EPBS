@@ -2342,23 +2342,46 @@ width:min(100%,460px);
 }
 @media (max-width:1023px) and (orientation:landscape){
   #setupSection{
-    padding:8px !important;
-    gap:0 !important;
+    flex-direction:row !important;
+    padding:56px 14px 12px !important;
+    gap:16px !important;
     align-items:center !important;
     justify-content:center !important;
   }
   #setupSection .page-title,
-  #setupSection .form-header,
   #setupSection .upload-hint,
   #setupSection .field-label,
-  #setupSection .hero-badge,
   #setupSection .cta-btn .icon{
     display:none !important;
   }
+  #setupSection .page-title{
+    display:flex !important;
+    width:min(240px,34vw);
+    max-width:min(240px,34vw);
+    align-items:flex-start !important;
+    justify-content:center !important;
+    text-align:left !important;
+    gap:8px !important;
+    padding:0 4px !important;
+  }
+  #setupSection .page-title .hero-badge,
+  #setupSection .page-title p{
+    display:none !important;
+  }
+  #setupSection h2{
+    display:block !important;
+    margin:0 !important;
+    font-size:clamp(28px,4.2vw,40px) !important;
+    line-height:1.05 !important;
+    text-align:left !important;
+  }
+  #setupSection .form-header{
+    display:none !important;
+  }
   #setupSection #setupForm{
-    width:min(360px,86vw) !important;
-    max-width:min(360px,86vw) !important;
-    padding:14px !important;
+    width:min(350px,48vw) !important;
+    max-width:min(350px,48vw) !important;
+    padding:14px 14px 12px !important;
     gap:8px !important;
     border-radius:18px !important;
   }
@@ -2379,6 +2402,12 @@ width:min(100%,460px);
     min-height:40px !important;
     padding:10px 12px !important;
     font-size:12px !important;
+  }
+  #photoEditorSection{
+    padding-top:56px !important;
+  }
+  #photoEditorSection .editor-layout{
+    height:calc(100dvh - 72px) !important;
   }
 }
 .hidden{
