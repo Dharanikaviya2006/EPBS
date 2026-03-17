@@ -2340,6 +2340,47 @@ width:min(100%,460px);
     min-height:42px;
   }
 }
+@media (max-width:1023px) and (orientation:landscape){
+  #setupSection{
+    padding:8px !important;
+    gap:0 !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+  #setupSection .page-title,
+  #setupSection .form-header,
+  #setupSection .upload-hint,
+  #setupSection .field-label,
+  #setupSection .hero-badge,
+  #setupSection .cta-btn .icon{
+    display:none !important;
+  }
+  #setupSection #setupForm{
+    width:min(360px,86vw) !important;
+    max-width:min(360px,86vw) !important;
+    padding:14px !important;
+    gap:8px !important;
+    border-radius:18px !important;
+  }
+  #setupSection .field-group{
+    gap:0 !important;
+  }
+  #setupSection #setupForm input,
+  #setupSection #setupForm textarea{
+    margin-top:8px !important;
+    padding:10px 12px !important;
+    font-size:12px !important;
+  }
+  #setupSection #setupForm textarea{
+    min-height:54px !important;
+  }
+  #setupSection #setupForm button{
+    margin-top:8px !important;
+    min-height:40px !important;
+    padding:10px 12px !important;
+    font-size:12px !important;
+  }
+}
 .hidden{
 display:none !important;
 opacity:0;
