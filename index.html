@@ -463,11 +463,11 @@ left:12px;
 @media (max-width:1023px){
 #photoEditorSection .back-btn,
 #previewSection .back-btn{
-top:10px;
-left:10px;
-width:52px;
-height:52px;
-font-size:24px;
+top:calc(env(safe-area-inset-top, 0px) + 8px);
+left:calc(env(safe-area-inset-left, 0px) + 8px);
+width:44px;
+height:44px;
+font-size:20px;
 padding:0;
 z-index:10000;
 }
@@ -821,7 +821,7 @@ position:relative;
 
 .section{
 height:100dvh;
-padding:64px 14px 14px;
+padding:78px 12px 12px;
 align-items:flex-start;
 }
 
@@ -846,7 +846,7 @@ box-shadow:0 25px 70px rgba(0,0,0,0.35);
 
 width:100%;
 
-padding:16px;
+padding:14px;
 
 display:flex;
 align-items:center;
@@ -876,9 +876,9 @@ box-shadow:
 
 width:100%;
 
-padding:18px 16px;
+padding:16px 14px;
 
-gap:18px;
+gap:12px;
 
 background:white;
 
@@ -936,7 +936,7 @@ margin-top:6px;
 
 }
   #previewSection{
-    padding:64px 14px 14px;
+    padding:78px 12px 12px;
   }
 
 #previewSection .editor-layout{
@@ -986,9 +986,9 @@ flex-direction:column;
 
 align-items:center;
 
-gap:12px;
+gap:10px;
 
-padding:16px;
+padding:14px;
 }
 #previewArea{
   background:
@@ -1147,6 +1147,40 @@ border-radius:14px;
     height:100dvh;
     padding:56px 8px 8px;
     gap:8px;
+  }
+
+  #setupSection{
+    padding:12px 10px 10px;
+    gap:6px;
+    justify-content:center;
+  }
+  #setupSection h2,
+  #setupSection .page-title p,
+  #setupSection .form-header p,
+  #setupSection .upload-hint{
+    display:none;
+  }
+  #setupSection .hero-badge{
+    padding:6px 10px;
+    font-size:10px;
+  }
+  #setupForm{
+    width:min(420px,92vw);
+    padding:16px 18px;
+    gap:8px;
+    border-radius:20px;
+  }
+  #setupForm input,
+  #setupForm textarea{
+    padding:10px 12px;
+    font-size:12px;
+  }
+  #setupForm textarea{
+    min-height:58px;
+  }
+  #setupForm button{
+    margin-top:2px;
+    padding:12px;
   }
 
   #photoEditorSection .editor-layout{
