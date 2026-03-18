@@ -1,3380 +1,4525 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HE5 Event Branding System</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<style>
-:root{ --orange:#fc7800; --orange-light:#ff9d3f; }
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-html, body{
-width:100vw;
-height:100dvh;
-
-margin:0;
-padding:0;
-
-overflow:hidden;
-
-position:fixed;
-}
-body{
- 
-background:
- linear-gradient(
- 180deg,
- #ffc67f 0%,
- #ffa954 28%,
- #f57a16 60%,
- #ca5505 100%
- );
-
-overflow:hidden;
-
-font-family:'Poppins',sans-serif;
-
-}
-.abstract-bg{
-
-position:fixed;
-inset:0;
-
-z-index:-3;
-pointer-events:none;
-will-change:transform;
-overflow:hidden;
-}
-.mountains{
-position:fixed;
-left:0;
-right:0;
-bottom:0;
-height:38vh;
-pointer-events:none;
-z-index:-2;
-opacity:.9;
-}
-.mountain{
-position:absolute;
-left:0;
-right:0;
-bottom:0;
-background-repeat:no-repeat;
-background-size:100% 100%;
-}
-.mountain.back{
-height:72%;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 420' preserveAspectRatio='none'%3E%3Cpath fill='%23876d7d' d='M0 330L84 280L130 222L196 326L286 246L360 190L432 312L512 242L590 198L668 292L740 228L812 286L900 246L980 314L1076 266L1160 332L1242 256L1322 282L1440 350V420H0Z'/%3E%3C/svg%3E");
-opacity:.42;
-}
-.mountain.mid{
-height:58%;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 360' preserveAspectRatio='none'%3E%3Cpath fill='%23625169' d='M0 306L92 246L162 282L254 208L340 306L438 236L548 164L646 274L760 198L850 246L964 178L1082 294L1208 224L1320 248L1440 318V360H0Z'/%3E%3C/svg%3E");
-opacity:.58;
-}
-.mountain.front{
-height:44%;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 300' preserveAspectRatio='none'%3E%3Cpath fill='%23433b58' d='M0 258L120 208L206 286L336 156L456 262L602 150L726 260L864 176L988 286L1138 166L1262 268L1360 210L1440 238V300H0Z'/%3E%3C/svg%3E");
-opacity:.88;
-}
-.wave{
-
-position:absolute;
-
-width:120%;
-height:120%;
-
-border-radius:45%;
-
-filter:blur(80px);
-
-opacity:.9;
-
-}
-
-.wave1{
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HE5 Event Branding System</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@400;600&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --orange: #fc7800;
+      --orange-light: #ff9d3f;
+      --navy: #123b6b;
+      --navy-deep: #0a2545;
+      --navy-soft: #e6f0fb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100vw;
+      height: 100dvh;
 
-background:linear-gradient(
-135deg,
-#ff7a00,
-#ff9a3c
-);
-
-top:-20%;
-left:-10%;
-
-animation:waveMove1 14s infinite alternate ease-in-out;
+      margin: 0;
+      padding: 0;
 
-}
-
-.wave2{
+      overflow: hidden;
 
-background:linear-gradient(
-135deg,
-#ff8c1a,
-#fc7800
-);
-
-bottom:-20%;
-right:-10%;
-
-animation:waveMove2 18s infinite alternate ease-in-out;
+      position: fixed;
+    }
 
-}
-@keyframes waveMove1{
+    body {
 
-0%{transform:translateY(0) rotate(0)}
-100%{transform:translateY(80px) rotate(25deg)}
+      background:
+        linear-gradient(180deg,
+          #ffc67f 0%,
+          #ffa954 28%,
+          #f57a16 60%,
+          #ca5505 100%);
 
-}
+      overflow: hidden;
 
-@keyframes waveMove2{
+      font-family: 'Poppins', sans-serif;
 
-0%{transform:translateY(0) rotate(0)}
-100%{transform:translateY(-80px) rotate(-25deg)}
+    }
 
-}
-.rings{
-position:fixed;
-inset:0;
-pointer-events:none;
-pointer-events:none;
-will-change:transform;
-z-index:-2;
-}
-.rings span{
+    .abstract-bg {
 
-position:absolute;
+      position: fixed;
+      inset: 0;
 
-border:2px solid rgba(0,0,0,0.35);
+      z-index: -3;
+      pointer-events: none;
+      will-change: transform;
+      overflow: hidden;
+    }
 
-border-radius:50%;
+    .mountains {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 38vh;
+      pointer-events: none;
+      z-index: -2;
+      opacity: .9;
+    }
 
-animation:ringFloat 12s ease-in-out infinite;
+    .mountain {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
 
-}
-.rings span:nth-child(1){
-width:420px;
-height:420px;
-top:10%;
-left:15%;
-}
+    .mountain.back {
+      height: 72%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 420' preserveAspectRatio='none'%3E%3Cpath fill='%23876d7d' d='M0 330L84 280L130 222L196 326L286 246L360 190L432 312L512 242L590 198L668 292L740 228L812 286L900 246L980 314L1076 266L1160 332L1242 256L1322 282L1440 350V420H0Z'/%3E%3C/svg%3E");
+      opacity: .42;
+    }
 
-.rings span:nth-child(2){
-width:300px;
-height:300px;
-bottom:10%;
-right:18%;
-animation-delay:4s;
-}
+    .mountain.mid {
+      height: 58%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 360' preserveAspectRatio='none'%3E%3Cpath fill='%23625169' d='M0 306L92 246L162 282L254 208L340 306L438 236L548 164L646 274L760 198L850 246L964 178L1082 294L1208 224L1320 248L1440 318V360H0Z'/%3E%3C/svg%3E");
+      opacity: .58;
+    }
 
-.rings span:nth-child(3){
-width:180px;
-height:180px;
-top:55%;
-left:40%;
-animation-delay:7s;
-}
+    .mountain.front {
+      height: 44%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 300' preserveAspectRatio='none'%3E%3Cpath fill='%23433b58' d='M0 258L120 208L206 286L336 156L456 262L602 150L726 260L864 176L988 286L1138 166L1262 268L1360 210L1440 238V300H0Z'/%3E%3C/svg%3E");
+      opacity: .88;
+    }
 
-@keyframes ringFloat{
+    .wave {
 
-0%{transform:scale(1) translateY(0)}
-50%{transform:scale(1.1) translateY(-30px)}
-100%{transform:scale(1) translateY(0)}
+      position: absolute;
 
-}
-.diagonal-lines{
+      width: 120%;
+      height: 120%;
 
-position:fixed;
-top:0;
-left:0;
-pointer-events:none;
-will-change:transform;
-width:100%;
-height:100%;
+      border-radius: 45%;
 
-background-image:
-repeating-linear-gradient(
-45deg,
-rgba(0,0,0,0.05) 0px,
-rgba(0,0,0,0.05) 2px,
-transparent 2px,
-transparent 26px
-);
+      filter: blur(80px);
 
-z-index:-3;
+      opacity: .9;
 
-}
-.shapes{
+    }
 
-position:fixed;
-pointer-events:none;
-will-change:transform;
-inset:0;
-z-index:-2;
-pointer-events:none;
+    .wave1 {
 
-}
-.shapes span{
+      background: linear-gradient(135deg,
+          #ff7a00,
+          #ff9a3c);
 
-position:absolute;
+      top: -20%;
+      left: -10%;
 
-border:2px solid rgba(0,0,0,0.6);
+      animation: waveMove1 14s infinite alternate ease-in-out;
 
-border-radius:8px;
+    }
 
-opacity:.35;
+    .wave2 {
 
-}
-.shapes span:nth-child(1){
+      background: linear-gradient(135deg,
+          #ff8c1a,
+          #fc7800);
 
-width:60px;
-height:60px;
+      bottom: -20%;
+      right: -10%;
 
-top:20%;
-left:10%;
+      animation: waveMove2 18s infinite alternate ease-in-out;
 
-transform:rotate(25deg);
+    }
 
-}
+    @keyframes waveMove1 {
 
-.shapes span:nth-child(2){
+      0% {
+        transform: translateY(0) rotate(0)
+      }
 
-width:30px;
-height:30px;
+      100% {
+        transform: translateY(80px) rotate(25deg)
+      }
 
-top:40%;
-right:12%;
+    }
 
-border-radius:50%;
+    @keyframes waveMove2 {
 
-}
+      0% {
+        transform: translateY(0) rotate(0)
+      }
 
-.shapes span:nth-child(3){
+      100% {
+        transform: translateY(-80px) rotate(-25deg)
+      }
 
-width:80px;
-height:80px;
+    }
 
-bottom:20%;
-left:15%;
+    .rings {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      pointer-events: none;
+      will-change: transform;
+      z-index: -2;
+    }
 
-}
+    .rings span {
 
-.shapes span:nth-child(4){
+      position: absolute;
 
-width:40px;
-height:40px;
+      border: 2px solid rgba(0, 0, 0, 0.35);
 
-bottom:25%;
-right:20%;
+      border-radius: 50%;
 
-transform:rotate(45deg);
+      animation: ringFloat 12s ease-in-out infinite;
 
-}
-.dot-grid{
-position:fixed;
-bottom:8%;
-left:6%;
-pointer-events:none;
-will-change:transform;
-width:260px;
-height:180px;
-background-image:
-radial-gradient(rgba(0,0,0,0.45) 2px, transparent 2px);
-background-size:20px 20px;
-opacity:.6;
-z-index:-1;
-}
-.particles{
+    }
 
-position:fixed;
-inset:0;
-pointer-events:none;
-will-change:transform;
-z-index:-2;
-}
-.particles span{
+    .rings span:nth-child(1) {
+      width: 420px;
+      height: 420px;
+      top: 10%;
+      left: 15%;
+    }
 
-position:absolute;
+    .rings span:nth-child(2) {
+      width: 300px;
+      height: 300px;
+      bottom: 10%;
+      right: 18%;
+      animation-delay: 4s;
+    }
 
-width:6px;
-height:6px;
+    .rings span:nth-child(3) {
+      width: 180px;
+      height: 180px;
+      top: 55%;
+      left: 40%;
+      animation-delay: 7s;
+    }
 
-background:#000;
+    @keyframes ringFloat {
 
-border-radius:50%;
+      0% {
+        transform: scale(1) translateY(0)
+      }
 
-opacity:.35;
+      50% {
+        transform: scale(1.1) translateY(-30px)
+      }
 
-animation:particleFloat 14s linear infinite;
+      100% {
+        transform: scale(1) translateY(0)
+      }
 
-}
-.particles span:nth-child(1){top:15%;left:25%;}
-.particles span:nth-child(2){top:40%;left:70%;}
-.particles span:nth-child(3){top:65%;left:35%;}
-.particles span:nth-child(4){top:75%;left:80%;}
-.particles span:nth-child(5){top:20%;left:55%;}
+    }
 
-@keyframes particleFloat{
+    .diagonal-lines {
 
-0%{transform:translateY(0)}
-50%{transform:translateY(-40px)}
-100%{transform:translateY(0)}
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      will-change: transform;
+      width: 100%;
+      height: 100%;
 
-}
-.section{
+      background-image:
+        repeating-linear-gradient(45deg,
+          rgba(0, 0, 0, 0.05) 0px,
+          rgba(0, 0, 0, 0.05) 2px,
+          transparent 2px,
+          transparent 26px);
 
-position:fixed;
+      z-index: -3;
 
-top:0;
-left:0;
+    }
 
-width:100vw;
-height:100dvh;
+    .shapes {
 
-display:flex;
-align-items:center;
-justify-content:center;
+      position: fixed;
+      pointer-events: none;
+      will-change: transform;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
 
-padding:16px;
+    }
 
-transition:opacity .25s ease;
+    .shapes span {
 
-}
-.bg-decor{
-position:fixed;
-inset:0;
-z-index:-1;
-pointer-events:none;
-}
-.bg-decor span{
-position:absolute;
-border-radius:50%;
-background:linear-gradient(135deg,#ff9a3c55,#ff7a0035);
-filter:blur(10px);
-animation:float 10s infinite ease-in-out;
-}
+      position: absolute;
 
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-30px)}
-100%{transform:translateY(0)}
-}
-#setupSection h2{
+      border: 2px solid rgba(0, 0, 0, 0.6);
 
-font-family:'Lora',serif;
+      border-radius: 8px;
 
-font-size:42px;
+      opacity: .35;
 
-font-weight:600;
+    }
 
-letter-spacing:1px;
+    .shapes span:nth-child(1) {
 
-color:white;
+      width: 60px;
+      height: 60px;
 
-text-shadow:
+      top: 20%;
+      left: 10%;
 
-0 6px 18px rgba(0,0,0,0.35);
+      transform: rotate(25deg);
 
-margin-bottom:20px;
+    }
 
-}
-input,textarea,select,button{
-width:100%;
-margin-top:12px;
-padding:12px;
-border-radius:10px;
-font-family:inherit;
-font-size:14px;
-box-sizing:border-box;
-}
-button{
+    .shapes span:nth-child(2) {
 
-background:linear-gradient(135deg,#fc7800,#ff9d3f);
+      width: 30px;
+      height: 30px;
 
-color:white;
+      top: 40%;
+      right: 12%;
 
-border:none;
+      border-radius: 50%;
 
-font-weight:600;
+    }
 
-cursor:pointer;
+    .shapes span:nth-child(3) {
 
-transition:.2s;
+      width: 80px;
+      height: 80px;
 
---webkit-tap-highlight-color:transparent;
-}
+      bottom: 20%;
+      left: 15%;
 
-button:hover{
+    }
 
-transform:translateY(-1px);
+    .shapes span:nth-child(4) {
 
-box-shadow:0 6px 14px rgba(0,0,0,0.2);
+      width: 40px;
+      height: 40px;
 
-}
-.back-btn{
+      bottom: 25%;
+      right: 20%;
 
-position:fixed;
+      transform: rotate(45deg);
 
-top:20px;
-left:20px;
+    }
 
-width:56px;
-height:56px;
+    .dot-grid {
+      position: fixed;
+      bottom: 8%;
+      left: 6%;
+      pointer-events: none;
+      will-change: transform;
+      width: 260px;
+      height: 180px;
+      background-image:
+        radial-gradient(rgba(0, 0, 0, 0.45) 2px, transparent 2px);
+      background-size: 20px 20px;
+      opacity: .6;
+      z-index: -1;
+    }
 
-display:flex;
-align-items:center;
-justify-content:center;
+    .particles {
 
-border-radius:50%;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      will-change: transform;
+      z-index: -2;
+    }
 
-background:white;
+    .particles span {
 
-color:#1f1f1f;
-font-size:28px;
-line-height:1;
-padding:0;
+      position: absolute;
 
-box-shadow:0 6px 18px rgba(0,0,0,0.25);
+      width: 6px;
+      height: 6px;
 
-cursor:pointer;
+      background: #000;
 
-z-index:9999;
+      border-radius: 50%;
 
-transition:transform .2s ease;
+      opacity: .35;
 
-}
+      animation: particleFloat 14s linear infinite;
 
-#photoEditorSection .back-btn,
-#previewSection .back-btn{
-top:12px;
-left:12px;
-}
+    }
 
-@media (max-width:1023px){
-#photoEditorSection .back-btn,
-#previewSection .back-btn{
-top:calc(env(safe-area-inset-top, 0px) + 8px);
-left:calc(env(safe-area-inset-left, 0px) + 8px);
-width:44px;
-height:44px;
-font-size:20px;
-padding:0;
-z-index:10000;
-}
-}
+    .particles span:nth-child(1) {
+      top: 15%;
+      left: 25%;
+    }
 
-.back-btn:hover{
-transform:scale(1.05);
-}
-/* ===== FRAME CONTAINER ===== */
-#photoEditorSection .frame-container{
+    .particles span:nth-child(2) {
+      top: 40%;
+      left: 70%;
+    }
 
-position:relative;
+    .particles span:nth-child(3) {
+      top: 65%;
+      left: 35%;
+    }
 
-width:100%;
-aspect-ratio: var(--frame-ratio, 1);
-transition:transform .2s ease,box-shadow .2s ease;
-margin:auto;
+    .particles span:nth-child(4) {
+      top: 75%;
+      left: 80%;
+    }
 
-overflow:hidden;
+    .particles span:nth-child(5) {
+      top: 20%;
+      left: 55%;
+    }
 
-border-radius:18px;
+    @keyframes particleFloat {
 
-background:#eaeaea;
+      0% {
+        transform: translateY(0)
+      }
 
-box-shadow:
+      50% {
+        transform: translateY(-40px)
+      }
 
-0 30px 70px rgba(0,0,0,0.25),
+      100% {
+        transform: translateY(0)
+      }
 
-inset 0 3px 10px rgba(0,0,0,0.12);
+    }
 
-display:flex;
-align-items:center;
-justify-content:center;
+    .section {
 
-transition:all .25s ease;
+      position: fixed;
 
-border:6px solid white;
- 
-}
-#captureArea,
-#userPhoto{
-  touch-action:none;
-}
-#photoEditorSection{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-#photoEditorSection.section{
-  align-items:center;
-  justify-content:center;
-}
-.editor-layout{
- 
-width:100%;
-max-width:1200px;
-height:min(calc(100dvh - 40px),860px);
-display:flex;
- 
-background:white;
+      top: 0;
+      left: 0;
 
-border-radius:20px;
+      width: 100vw;
+      height: 100dvh;
 
-box-shadow:
-0 40px 120px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
 
-overflow:hidden;
+      padding: 16px;
 
-}
-.editor-layout::before{
-content:"";
+      transition: opacity .25s ease;
 
-position:absolute;
-top:0;
-left:-100%;
+    }
 
-width:200%;
-height:100%;
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
 
-background:
-linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,0.2),
-transparent
-);
+    .bg-decor span {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff9a3c55, #ff7a0035);
+      filter: blur(10px);
+      animation: float 10s infinite ease-in-out;
+    }
 
-transform:skewX(-25deg);
+    @keyframes float {
+      0% {
+        transform: translateY(0)
+      }
 
-animation:shine 10s infinite;
-}
+      50% {
+        transform: translateY(-30px)
+      }
 
-@keyframes shine{
-0%{left:-150%}
-100%{left:150%}
-}
-.frame-container:hover{
-transform:scale(1.02);
-}
-/* ===== SHUTTER BUTTON ===== */
-input[type="file"]{
-  background:white;
-  border:2px dashed #ddd;
-  padding:16px;
-  text-align:center;
-}
-.shutter-btn{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  border:6px solid white;
-  background:white;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-  cursor:pointer;
-  position:relative;
-  transition:transform 0.1s ease;
-}
-
-.shutter-btn::after{
-  content:"";
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:50px;
-  height:50px;
-  background:#fc7800;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-}
-
-.shutter-btn:active{
-  transform:scale(0.9);
-}
-
-/* ===== LAYER ORDER ===== */
-
-/* Base photo */
-.photo{
-  position:absolute;
-  top:50%;
-  left:50%;
-
-  transform:translate(-50%, -50%);
-  max-width:none;
-  max-height:none;
-
-  user-select:none;
-  z-index:2;
-
-  cursor:grab;
-
-  transition:box-shadow 0.2s ease;
-}
-
-.photo:active{
-  cursor:grabbing;
-  z-index:2;
-  box-shadow:0 10px 30px rgba(0,0,0,0.25);
-}
-/* Camera preview */
-#cameraPreview{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:cover;
-border-radius:16px;
-z-index:1;
-}
-
-/* Frame always on top */
-.frame{
-  position:absolute;
-  inset:0;
-
-  width:100%;
-  height:100%;
-
-  object-fit:contain;
-  object-position:center;
-
-  pointer-events:none;
-
-  z-index:3;
-
-  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.25));
-}
-.right-panel > * {
-  flex-shrink:0;
-}
-.right-panel{
-width:380px;
- 
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;   /* ⭐ center vertically */
-
-gap:22px;
- 
-padding:40px 30px;
- 
-background:linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,244,234,0.92));
-backdrop-filter:blur(10px);
- 
-border-left:1px solid rgba(0,0,0,0.06);
-}
-.bg-decor{
-position:fixed;
-inset:0;
-z-index:0;
-pointer-events:none;
-overflow:hidden;
-}
-
-.bg-decor span{
-position:absolute;
-border-radius:50%;
-background:rgba(255,255,255,0.25);
-backdrop-filter:blur(6px);
-}
-
-/* top-left big circle */
-.bg-decor span:nth-child(1){
-width:320px;
-height:320px;
-top:-80px;
-left:-60px;
-opacity:.35;
-}
-
-/* top-right */
-.bg-decor span:nth-child(2){
-width:140px;
-height:140px;
-top:120px;
-right:140px;
-opacity:.45;
-}
-
-/* bottom-left */
-.bg-decor span:nth-child(3){
-width:120px;
-height:120px;
-bottom:120px;
-left:90px;
-opacity:.45;
-}
-
-/* bottom-right */
-.bg-decor span:nth-child(4){
-width:130px;
-height:130px;
-bottom:120px;
-right:80px;
-opacity:.4;
-}
-.caption{
-
-margin-top:18px;
-
-font-size:15px;
-
-text-align:center;
-
-padding:10px 16px;
-
-background:white;
-
-border-radius:12px;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
- 
-}
-.notice{ text-align:center; font-size:13px; color:var(--orange); margin-top:8px; height:18px; }
-.action-row{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:16px;
-width:100%;
-}
-.action-row button{
-  width:60px;
-  height:60px;
-  border-radius:50%;
-}
-#openCameraBtn{
-width:200px;
-border-radius:40px;
-padding:14px;
-font-size:15px;
-}
-@media (min-width:1024px){
-
-  .editor-layout{
-    display:flex;
-    height:100%;
-    width:100%;
-  }
-#photoEditorSection .left-panel{
-flex:1;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-padding:14px;
-
-background:
-radial-gradient(circle at center,#ffffff 40%,#f3f3f3);
-
-position:relative;
-}
-.right-panel{
-  width:420px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:16px;
-  padding:35px;
-  background:white;
-  box-shadow:inset 1px 0 0 #eee;
-}
-.right-panel input,
-.right-panel textarea{
-  max-width:320px;
-}
-  .frame-container{
-    width:100%;
-    max-width:650px;  /* prevent giant stretching */
-    max-height:90%;
-    border-radius:16px;
-  }
-.frame-container:hover{
-  transform:scale(1.01);
-  box-shadow:
-    0 25px 60px rgba(0,0,0,0.25),
-    inset 0 2px 10px rgba(0,0,0,0.08);
-}
-  #previewImage{
-    width:100%;
-    height:auto;
-    object-fit:contain;
-  }
-}
-/* ===== MOBILE PORTRAIT ===== */
-/* ===============================
+      100% {
+        transform: translateY(0)
+      }
+    }
+
+    #setupSection h2 {
+
+      font-family: 'Lora', serif;
+
+      font-size: 42px;
+
+      font-weight: 600;
+
+      letter-spacing: 1px;
+
+      color: white;
+
+      text-shadow:
+
+        0 6px 18px rgba(0, 0, 0, 0.35);
+
+      margin-bottom: 20px;
+
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+
+      background: linear-gradient(135deg, #fc7800, #ff9d3f);
+
+      color: white;
+
+      border: none;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: .2s;
+
+      --webkit-tap-highlight-color: transparent;
+    }
+
+    button:hover {
+
+      transform: translateY(-1px);
+
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+
+    }
+
+    .back-btn {
+
+      position: fixed;
+
+      top: 20px;
+      left: 20px;
+
+      width: 56px;
+      height: 56px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: white;
+
+      color: #1f1f1f;
+      font-size: 28px;
+      line-height: 1;
+      padding: 0;
+
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+      cursor: pointer;
+
+      z-index: 9999;
+
+      transition: transform .2s ease;
+
+    }
+
+    #photoEditorSection .back-btn,
+    #previewSection .back-btn {
+      top: 12px;
+      left: 12px;
+    }
+
+    @media (max-width:1023px) {
+
+      #photoEditorSection .back-btn,
+      #previewSection .back-btn {
+        top: calc(env(safe-area-inset-top, 0px) + 8px);
+        left: calc(env(safe-area-inset-left, 0px) + 8px);
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        padding: 0;
+        z-index: 10000;
+      }
+    }
+
+    .back-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* ===== FRAME CONTAINER ===== */
+    #photoEditorSection .frame-container {
+
+      position: relative;
+
+      width: 100%;
+      aspect-ratio: var(--frame-ratio, 1);
+      transition: transform .2s ease, box-shadow .2s ease;
+      margin: auto;
+
+      overflow: hidden;
+
+      border-radius: 18px;
+
+      background: #eaeaea;
+
+      box-shadow:
+
+        0 30px 70px rgba(0, 0, 0, 0.25),
+
+        inset 0 3px 10px rgba(0, 0, 0, 0.12);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transition: all .25s ease;
+
+      border: 6px solid white;
+
+    }
+
+    #captureArea,
+    #userPhoto {
+      touch-action: none;
+    }
+
+    #photoEditorSection {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #photoEditorSection.section {
+      align-items: center;
+      justify-content: center;
+    }
+
+    .editor-layout {
+
+      width: 100%;
+      max-width: 1200px;
+      height: min(calc(100dvh - 40px), 860px);
+      display: flex;
+      position: relative;
+
+      background: white;
+
+      border-radius: 20px;
+
+      box-shadow:
+        0 40px 120px rgba(0, 0, 0, 0.35);
+
+      overflow: hidden;
+
+    }
+
+    .editor-layout::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(18, 59, 107, 0.14);
+      pointer-events: none;
+    }
+
+    .editor-layout::before {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: -100%;
+
+      width: 200%;
+      height: 100%;
+
+      background:
+        linear-gradient(120deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent);
+
+      transform: skewX(-25deg);
+
+      animation: shine 10s infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -150%
+      }
+
+      100% {
+        left: 150%
+      }
+    }
+
+    .frame-container:hover {
+      transform: scale(1.02);
+    }
+
+    /* ===== SHUTTER BUTTON ===== */
+    input[type="file"] {
+      background: white;
+      border: 2px dashed #ddd;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .shutter-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 6px solid white;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.1s ease;
+    }
+
+    .shutter-btn::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50px;
+      height: 50px;
+      background: #fc7800;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .shutter-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* ===== LAYER ORDER ===== */
+
+    /* Base photo */
+    .photo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+      max-width: none;
+      max-height: none;
+
+      user-select: none;
+      z-index: 2;
+
+      cursor: grab;
+
+      transition: box-shadow 0.2s ease;
+    }
+
+    .photo:active {
+      cursor: grabbing;
+      z-index: 2;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Camera preview */
+    #cameraPreview {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      z-index: 1;
+    }
+
+    /* Frame always on top */
+    .frame {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+      object-position: center;
+
+      pointer-events: none;
+
+      z-index: 3;
+
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.25));
+    }
+
+    .right-panel>* {
+      flex-shrink: 0;
+    }
+
+    .right-panel {
+      width: 380px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      /* ⭐ center vertically */
+
+      gap: 22px;
+
+      padding: 40px 30px;
+
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 255, 0.95) 58%, rgba(231, 240, 252, 0.92)),
+        radial-gradient(circle at top right, rgba(18, 59, 107, 0.14), transparent 48%);
+      backdrop-filter: blur(10px);
+
+      border-left: 1px solid rgba(18, 59, 107, 0.1);
+      overflow: hidden;
+    }
+
+    .right-panel::before,
+    .right-panel::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .right-panel::before {
+      top: -42px;
+      right: -28px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 156, 62, 0.34) 0%, rgba(255, 156, 62, 0.08) 48%, transparent 72%);
+      filter: blur(8px);
+    }
+
+    .right-panel::after {
+      left: 18px;
+      right: 18px;
+      top: 18px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 153, 48, 0), rgba(255, 153, 48, 0.62), rgba(18, 59, 107, 0));
+      opacity: .9;
+    }
+
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-decor span {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(6px);
+    }
+
+    /* top-left big circle */
+    .bg-decor span:nth-child(1) {
+      width: 320px;
+      height: 320px;
+      top: -80px;
+      left: -60px;
+      opacity: .35;
+    }
+
+    /* top-right */
+    .bg-decor span:nth-child(2) {
+      width: 140px;
+      height: 140px;
+      top: 120px;
+      right: 140px;
+      opacity: .45;
+    }
+
+    /* bottom-left */
+    .bg-decor span:nth-child(3) {
+      width: 120px;
+      height: 120px;
+      bottom: 120px;
+      left: 90px;
+      opacity: .45;
+    }
+
+    /* bottom-right */
+    .bg-decor span:nth-child(4) {
+      width: 130px;
+      height: 130px;
+      bottom: 120px;
+      right: 80px;
+      opacity: .4;
+    }
+
+    .caption {
+
+      margin-top: 18px;
+
+      font-size: 15px;
+
+      text-align: center;
+
+      padding: 10px 16px;
+
+      background: white;
+
+      border-radius: 12px;
+
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+    }
+
+    .notice {
+      text-align: center;
+      font-size: 13px;
+      color: var(--orange);
+      margin-top: 8px;
+      height: 18px;
+    }
+
+    .action-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .action-row button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+
+    #openCameraBtn {
+      width: 200px;
+      border-radius: 40px;
+      padding: 14px;
+      font-size: 15px;
+    }
+
+    @media (min-width:1024px) {
+
+      .editor-layout {
+        display: flex;
+        height: 100%;
+        width: 100%;
+      }
+
+      #photoEditorSection .left-panel {
+        flex: 1;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 14px;
+
+        background:
+          radial-gradient(circle at center, #ffffff 40%, #f3f3f3);
+
+        position: relative;
+      }
+
+      .right-panel {
+        width: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 35px;
+        background: white;
+        box-shadow: inset 1px 0 0 #eee;
+      }
+
+      .right-panel input,
+      .right-panel textarea {
+        max-width: 320px;
+      }
+
+      .frame-container {
+        width: 100%;
+        max-width: 650px;
+        /* prevent giant stretching */
+        max-height: 90%;
+        border-radius: 16px;
+      }
+
+      .frame-container:hover {
+        transform: scale(1.01);
+        box-shadow:
+          0 25px 60px rgba(0, 0, 0, 0.25),
+          inset 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      #previewImage {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+    }
+
+    /* ===== MOBILE PORTRAIT ===== */
+    /* ===============================
    MOBILE PORTRAIT IMPROVED
 =============================== */
 
-@media (max-width:1023px) and (orientation:portrait){
+    @media (max-width:1023px) and (orientation:portrait) {
 
-.section{
-height:100dvh;
-padding:78px 12px 12px;
-align-items:flex-start;
-}
+      .section {
+        height: 100dvh;
+        padding: 78px 12px 12px;
+        align-items: flex-start;
+      }
 
-#photoEditorSection.section{
-padding:78px 12px 12px;
-align-items:center;
-justify-content:center;
-}
+      #photoEditorSection.section {
+        padding: 86px 12px 12px;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
 
-.editor-layout{
+      .editor-layout {
 
-flex-direction:column;
+        flex-direction: column;
 
-width:100%;
-height:auto;
+        width: 100%;
+        height: auto;
 
-border-radius:20px;
+        border-radius: 20px;
 
-overflow:hidden;
+        overflow: hidden;
 
-box-shadow:0 25px 70px rgba(0,0,0,0.35);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
 
-}
+      }
 
-/* FRAME AREA */
+      #photoEditorSection .editor-layout {
+        height: min(calc(100dvh - 108px), 760px);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(240, 246, 255, 0.96));
+      }
 
-#photoEditorSection .left-panel{
+      /* FRAME AREA */
 
-width:100%;
+      #photoEditorSection .left-panel {
 
-padding:14px;
+        width: 100%;
 
-display:flex;
-align-items:center;
-justify-content:center;
+        padding: 14px;
 
-background:linear-gradient(#ffffff,#f3f3f3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-border-bottom:1px solid #eee;
+        background:
+          radial-gradient(circle at top, rgba(18, 59, 107, 0.08), transparent 55%),
+          linear-gradient(#ffffff, #f4f7fb);
 
-}
+        border-bottom: 1px solid #eee;
 
-.frame-container{
+      }
 
-width:100%;
-max-width:420px;
+      .frame-container {
 
-border-radius:18px;
+        width: 100%;
+        max-width: 420px;
 
-box-shadow:
-0 15px 40px rgba(0,0,0,0.2);
+        border-radius: 18px;
 
-}
+        box-shadow:
+          0 15px 40px rgba(0, 0, 0, 0.2);
 
-/* CONTROL AREA */
+      }
 
-.right-panel{
+      /* CONTROL AREA */
 
-width:100%;
+      .right-panel {
 
-padding:16px 14px;
+        width: 100%;
 
-gap:12px;
+        padding: 18px 14px 16px;
 
-background:white;
+        gap: 10px;
 
-display:flex;
-flex-direction:column;
-align-items:center;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 245, 253, 0.96));
 
-}
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
 
-/* INPUT */
+      }
 
-.right-panel input{
+      /* INPUT */
 
-width:100%;
+      .right-panel input {
 
-max-width:320px;
+        width: 100%;
 
-}
+        max-width: 320px;
 
-/* BUTTON GROUP */
+      }
 
-.action-row{
+      #photoEditorSection .panel-title,
+      #photoEditorSection .panel-shell,
+      #photoEditorSection .option-card,
+      #photoEditorSection .editor-story,
+      #photoEditorSection .tool-grid,
+      #photoEditorSection #photoUpload,
+      #photoEditorSection #shutterWrapper,
+      #photoEditorSection #goToPreviewBtn {
+        width: min(100%, 320px);
+        margin-inline: auto;
+      }
 
-display:flex;
+      #photoEditorSection .panel-title {
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
 
-flex-direction:row;
+      #photoEditorSection .panel-title .copy {
+        align-items: center;
+      }
 
-justify-content:center;
+      #photoEditorSection .panel-title h3 {
+        font-size: 17px;
+        line-height: 1.1;
+      }
 
-gap:18px;
+      #photoEditorSection .panel-title p {
+        max-width: 240px;
+        font-size: 11px;
+        line-height: 1.3;
+      }
 
-}
+      #photoEditorSection .panel-kicker,
+      #photoEditorSection .editor-stats,
+      #photoEditorSection .panel-divider {
+        display: none;
+      }
 
-/* CAMERA BUTTON */
+      #photoEditorSection .option-card {
+        padding: 10px 12px;
+        text-align: left;
+      }
 
-#openCameraBtn{
+      #photoEditorSection .option-card .copy {
+        gap: 1px;
+      }
 
-width:220px;
+      #photoEditorSection .option-card .eyebrow {
+        font-size: 10px;
+      }
 
-border-radius:40px;
+      #photoEditorSection .option-card .title {
+        font-size: 12px;
+      }
 
-}
+      #photoEditorSection .editor-story {
+        display: none;
+      }
 
-/* NEXT BUTTON */
+      /* BUTTON GROUP */
 
-#goToPreviewBtn{
+      .action-row {
 
-width:240px;
+        display: flex;
 
-margin-top:6px;
+        flex-direction: row;
 
-}
+        justify-content: center;
 
-/* BACK BUTTON */
+        gap: 18px;
 
-}
-  #previewSection{
-    padding:78px 12px 12px;
-  }
+      }
 
-#previewSection .editor-layout{
-  background-color:white;
-width:900px;
-max-width:95%;
-}
-  #previewSection .left-panel,
-  #previewSection .right-panel{
-    width:100%;
-    border:none;
-    padding:0;
-  }
+      /* CAMERA BUTTON */
 
-  #previewSection .left-panel{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-  }
-#previewSection .frame-container{
+      #openCameraBtn {
 
-width:100%;
-max-width:420px;
+        width: 220px;
 
-border-radius:18px;
+        border-radius: 40px;
 
-box-shadow:0 15px 40px rgba(0,0,0,0.2);
-}
-  #previewImage{
-    width:100%;
-    height:auto;
-    object-fit:contain;
-  }
+      }
 
-  #previewSection .caption{
-    margin-top:18px;
-    text-align:center;
-  }
+      /* NEXT BUTTON */
 
-#previewSection .right-panel{
+      #goToPreviewBtn {
 
-width:260px;
+        width: 240px;
 
-display:flex;
-flex-direction:column;
+        margin-top: 6px;
 
-align-items:center;
+      }
 
-gap:10px;
+      /* BACK BUTTON */
 
-padding:14px;
-}
-#previewArea{
-  background:
-    linear-gradient(145deg,#ffffff,#f2f2f2);
+    }
 
-  box-shadow:
-    0 15px 40px rgba(0,0,0,0.18);
+    #previewSection {
+      padding: 78px 12px 12px;
+    }
 
-  border-radius:18px;
-}
-/* ===============================
+    #previewSection .editor-layout {
+      background-color: white;
+      width: 900px;
+      max-width: 95%;
+    }
+
+    #previewSection .left-panel,
+    #previewSection .right-panel {
+      width: 100%;
+      border: none;
+      padding: 0;
+    }
+
+    #previewSection .left-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #previewSection .frame-container {
+
+      width: 100%;
+      max-width: 420px;
+
+      border-radius: 18px;
+
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    #previewImage {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    #previewSection .caption {
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    #previewSection .right-panel {
+
+      width: 260px;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 14px;
+    }
+
+    #previewArea {
+      background:
+        linear-gradient(145deg, #ffffff, #f2f2f2);
+
+      box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.18);
+
+      border-radius: 18px;
+    }
+
+    /* ===============================
    MOBILE SETUP PAGE
 =============================== */
-@media (max-width:600px){
+    @media (max-width:600px) {
 
-#previewSection .editor-layout{
+      #previewSection .editor-layout {
 
-width:100%;
+        width: 100%;
 
-max-width:100%;
+        max-width: 100%;
 
-padding:22px;
+        padding: 22px;
 
-gap:22px;
+        gap: 22px;
 
-border-radius:22px;
+        border-radius: 22px;
 
-}
+      }
 
-#previewSection .frame-container{
+      #previewSection .frame-container {
 
-max-width:460px;
+        max-width: 460px;
 
-}
+      }
 
-#previewSection .caption{
-max-width:95%;
-font-size:16px;
-}
-}
+      #previewSection .caption {
+        max-width: 95%;
+        font-size: 16px;
+      }
+    }
 
-@media (max-width:600px){
+    @media (max-width:600px) {
 
-#setupSection h2{
+      #setupSection h2 {
 
-font-size:34px;
+        font-size: 34px;
 
-text-align:center;
+        text-align: center;
 
-margin-bottom:15px;
+        margin-bottom: 15px;
 
-}
+      }
 
-#setupForm{
+      #setupForm {
 
-width:100%;
+        width: 100%;
 
-max-width:360px;
+        max-width: 360px;
 
-padding:32px;
+        padding: 32px;
 
-gap:16px;
+        gap: 16px;
 
-}
+      }
 
-#setupForm input,
-#setupForm textarea{
+      #setupForm input,
+      #setupForm textarea {
 
-font-size:14px;
+        font-size: 14px;
 
-padding:14px;
+        padding: 14px;
 
-}
+      }
 
-#setupForm button{
+      #setupForm button {
 
-font-size:15px;
+        font-size: 15px;
 
-padding:16px;
+        padding: 16px;
 
-}
+      }
 
-}
-/* ===============================
+    }
+
+    /* ===============================
    MOBILE PREVIEW PAGE
 =============================== */
 
-@media (max-width:600px){
+    @media (max-width:600px) {
 
-#previewSection .editor-layout{
+      #previewSection .editor-layout {
 
-flex-direction:column;
+        flex-direction: column;
 
-padding:20px;
+        padding: 20px;
 
-gap:20px;
+        gap: 20px;
 
-}
+      }
 
-#previewSection .left-panel{
+      #previewSection .left-panel {
 
-border:none;
+        border: none;
 
-padding:10px;
+        padding: 10px;
 
-}
+      }
 
-#previewSection .frame-container{
+      #previewSection .frame-container {
 
-max-width:420px;
+        max-width: 420px;
 
-}
+      }
 
-#previewSection .right-panel{
+      #previewSection .right-panel {
 
-width:100%;
+        width: 100%;
 
-padding:10px;
+        padding: 10px;
 
-gap:16px;
+        gap: 16px;
 
-}
+      }
 
-#previewSection select,
-#previewSection button{
+      #previewSection select,
+      #previewSection button {
 
-width:220px;
+        width: 220px;
 
-}
+      }
 
-}
-@media (max-width:600px){
+    }
 
-button{
+    @media (max-width:600px) {
 
-font-size:15px;
+      button {
 
-padding:14px;
+        font-size: 15px;
 
-border-radius:14px;
+        padding: 14px;
 
-}
+        border-radius: 14px;
 
-}
-/* ===== MOBILE LANDSCAPE===== */
-@media (max-width:1023px) and (orientation:landscape){
+      }
 
-  html, body{
-    width:100vw;
-    height:100dvh;
-    overflow:hidden;
-  }
+    }
 
-  .section{
-    width:100vw;
-    height:100dvh;
-    padding:56px 8px 8px;
-    gap:8px;
-  }
+    /* ===== MOBILE LANDSCAPE===== */
+    @media (max-width:1023px) and (orientation:landscape) {
 
-  #setupSection{
-    padding:10px 10px 8px;
-    gap:4px;
-    justify-content:center;
-  }
-  #setupSection .page-title{
-    gap:0;
-  }
-  #setupSection h2,
-  #setupSection .page-title p,
-  #setupSection .form-header p,
-  #setupSection .upload-hint,
-  #setupSection .hero-badge,
-  #setupSection .field-label .icon,
-  #setupSection .cta-btn .icon{
-    display:none;
-  }
-  #setupForm{
-    width:min(390px,90vw);
-    padding:14px 16px;
-    gap:6px;
-    border-radius:18px;
-  }
-  #setupSection .form-header{
-    gap:4px;
-    margin-bottom:0;
-  }
-  #setupSection .form-header h3{
-    font-size:16px;
-    text-align:center;
-  }
-  #setupSection .field-group{
-    gap:4px;
-  }
-  #setupSection .field-label{
-    font-size:11px;
-  }
-  #setupForm input,
-  #setupForm textarea{
-    padding:9px 11px;
-    font-size:12px;
-  }
-  #setupForm textarea{
-    min-height:52px;
-  }
-  #setupForm button{
-    margin-top:0;
-    padding:10px 12px;
-    min-height:40px;
-    font-size:12px;
-  }
+      html,
+      body {
+        width: 100vw;
+        height: 100dvh;
+        overflow: hidden;
+      }
 
-  #photoEditorSection .editor-layout{
-    width:100%;
-    height:calc(100dvh - 64px);
-    display:flex;
-    gap:0;
-    border-radius:20px;
-  }
+      .section {
+        width: 100vw;
+        height: 100dvh;
+        padding: 56px 8px 8px;
+        gap: 8px;
+      }
 
-#photoEditorSection .left-panel{
+      #setupSection {
+        padding: 10px 10px 8px;
+        gap: 4px;
+        justify-content: center;
+      }
 
-flex:1 1 64%;
+      #setupSection .page-title {
+        gap: 0;
+      }
 
-display:flex;
-align-items:center;
-justify-content:center;
+      #setupSection h2,
+      #setupSection .page-title p,
+      #setupSection .form-header p,
+      #setupSection .upload-hint,
+      #setupSection .hero-badge,
+      #setupSection .field-label .icon,
+      #setupSection .cta-btn .icon {
+        display: none;
+      }
 
-padding:14px;
+      #setupForm {
+        width: min(390px, 90vw);
+        padding: 14px 16px;
+        gap: 6px;
+        border-radius: 18px;
+      }
 
-background:
-radial-gradient(circle at center,#ffffff 40%,#f3f3f3);
+      #setupSection .form-header {
+        gap: 4px;
+        margin-bottom: 0;
+      }
 
-border-right:1px solid #e6e6e6;
+      #setupSection .form-header h3 {
+        font-size: 16px;
+        text-align: center;
+      }
 
-position:relative;
+      #setupSection .field-group {
+        gap: 4px;
+      }
 
-}
+      #setupSection .field-label {
+        font-size: 11px;
+      }
 
-#photoEditorSection .frame-container{
-  width:100%;
-  max-width:100%;
-  max-height:100%;
-  height:auto;        /* 🔥 important */
-}
-  #photoEditorSection .right-panel{
-    width:36%;
-    max-width:320px;
-    min-width:250px;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-    padding:12px 10px;
-    overflow:hidden;
-  }
-  #photoEditorSection .panel-title,
-  #photoEditorSection .option-card,
-  #photoEditorSection .panel-note{
-    display:none;
-  }
-  #photoEditorSection .right-panel input[type="file"]{
-    width:100%;
-    margin-top:0;
-    padding:10px;
-    font-size:12px;
-  }
-  #photoEditorSection #shutterWrapper{
-    padding:0;
-  }
-  #photoEditorSection .tool-grid{
-    width:100%;
-    gap:8px;
-    padding-top:0;
-  }
-  #photoEditorSection .tool-btn,
-  #photoEditorSection .primary-cta{
-    min-height:42px;
-    width:100%;
-    max-width:none;
-    padding:10px 12px;
-    font-size:12px;
-  }
-  #photoEditorSection .tool-btn .icon,
-  #photoEditorSection .primary-cta .icon{
-    display:none;
-  }
-  #photoEditorSection #openCameraBtn,
-  #photoEditorSection #switchCameraBtn,
-  #photoEditorSection #rotateBtn,
-  #photoEditorSection #retakeBtn{
-    max-width:none;
-    min-height:42px;
-    font-size:12px;
-  }
-  #photoEditorSection #goToPreviewBtn{
-    width:100%;
-    max-width:none;
-    margin-top:0 !important;
-  }
-  #photoEditorSection .back-btn{
-    top:8px;
-    left:8px;
-    width:38px;
-    height:38px;
-    font-size:18px;
-  }
-  #previewSection{
-    padding:56px 8px 8px;
-  }
-  #previewSection .editor-layout{
-    width:100%;
-    height:calc(100dvh - 64px);
-    max-width:none;
-    padding:10px;
-    gap:10px;
-    border-radius:20px;
-  }
-  #previewSection .left-panel{
-    flex:1 1 64%;
-    width:auto;
-    height:100%;
-    padding:10px 12px;
-    border-right:1px solid #e6e6e6;
-  }
-  #previewSection .frame-container{
-    max-width:100%;
-    max-height:100%;
-  }
-  #previewSection .caption{
-    max-width:100%;
-    margin-top:10px;
-    padding:10px 14px;
-    font-size:13px;
-  }
-  #previewSection .right-panel{
-    width:36%;
-    max-width:320px;
-    min-width:250px;
-    height:100%;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-    padding:12px 10px;
-    overflow:hidden;
-  }
-  #previewSection .panel-title,
-  #previewSection .option-card{
-    display:none;
-  }
-  #previewSection .preview-meta,
-  #previewSection .preview-actions{
-    width:100%;
-  }
-  #previewSection .select-wrap{
-    max-width:none;
-  }
-  #previewSection select,
-  #previewSection button{
-    max-width:none;
-    min-height:42px;
-    font-size:12px;
-  }
-  #previewSection .cta-btn .icon{
-    display:none;
-  }
-  #previewSection .back-btn{
-    top:8px;
-    left:8px;
-    width:38px;
-    height:38px;
-    font-size:18px;
-  }
-  input, textarea, select{
-    padding:6px 8px;
-    font-size:12px;
-    margin-top:4px;
-  }
-  button{
-    padding:8px 10px;
-    font-size:12px;
-  }
-  .shutter-btn{
-    width:50px;
-    height:50px;
-    border:4px solid white;
-  }
-  .shutter-btn::after{
-    width:34px;
-    height:34px;
-  }
-}  
-/* ===============================
+      #setupForm input,
+      #setupForm textarea {
+        padding: 9px 11px;
+        font-size: 12px;
+      }
+
+      #setupForm textarea {
+        min-height: 52px;
+      }
+
+      #setupForm button {
+        margin-top: 0;
+        padding: 10px 12px;
+        min-height: 40px;
+        font-size: 12px;
+      }
+
+      #photoEditorSection .editor-layout {
+        width: 100%;
+        height: calc(100dvh - 64px);
+        display: flex;
+        gap: 0;
+        border-radius: 20px;
+      }
+
+      #photoEditorSection .left-panel {
+
+        flex: 1 1 64%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 14px;
+
+        background:
+          radial-gradient(circle at center, #ffffff 40%, #f3f3f3);
+
+        border-right: 1px solid #e6e6e6;
+
+        position: relative;
+
+      }
+
+      #photoEditorSection .frame-container {
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        height: auto;
+        /* 🔥 important */
+      }
+
+      #photoEditorSection .right-panel {
+        width: 36%;
+        max-width: 320px;
+        min-width: 250px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 10px;
+        overflow: hidden;
+      }
+
+      #photoEditorSection .panel-title,
+      #photoEditorSection .option-card,
+      #photoEditorSection .panel-note {
+        display: none;
+      }
+
+      #photoEditorSection .right-panel input[type="file"] {
+        width: 100%;
+        margin-top: 0;
+        padding: 10px;
+        font-size: 12px;
+      }
+
+      #photoEditorSection #shutterWrapper {
+        padding: 0;
+      }
+
+      #photoEditorSection .tool-grid {
+        width: 100%;
+        gap: 8px;
+        padding-top: 0;
+      }
+
+      #photoEditorSection .tool-btn,
+      #photoEditorSection .primary-cta {
+        min-height: 42px;
+        width: 100%;
+        max-width: none;
+        padding: 10px 12px;
+        font-size: 12px;
+      }
+
+      #photoEditorSection .tool-btn .icon,
+      #photoEditorSection .primary-cta .icon {
+        display: none;
+      }
+
+      #photoEditorSection #openCameraBtn,
+      #photoEditorSection #switchCameraBtn,
+      #photoEditorSection #rotateBtn,
+      #photoEditorSection #retakeBtn {
+        max-width: none;
+        min-height: 42px;
+        font-size: 12px;
+      }
+
+      #photoEditorSection #goToPreviewBtn {
+        width: 100%;
+        max-width: none;
+        margin-top: 0 !important;
+      }
+
+      #photoEditorSection .back-btn {
+        top: 8px;
+        left: 8px;
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+      }
+
+      #previewSection {
+        padding: 56px 8px 8px;
+      }
+
+      #previewSection .editor-layout {
+        width: 100%;
+        height: calc(100dvh - 64px);
+        max-width: none;
+        padding: 10px;
+        gap: 10px;
+        border-radius: 20px;
+      }
+
+      #previewSection .left-panel {
+        flex: 1 1 64%;
+        width: auto;
+        height: 100%;
+        padding: 10px 12px;
+        border-right: 1px solid #e6e6e6;
+      }
+
+      #previewSection .frame-container {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      #previewSection .caption {
+        max-width: 100%;
+        margin-top: 10px;
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+
+      #previewSection .right-panel {
+        width: 36%;
+        max-width: 320px;
+        min-width: 250px;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 10px;
+        overflow: hidden;
+      }
+
+      #previewSection .panel-title,
+      #previewSection .option-card {
+        display: none;
+      }
+
+      #previewSection .preview-meta,
+      #previewSection .preview-actions {
+        width: 100%;
+      }
+
+      #previewSection .select-wrap {
+        max-width: none;
+      }
+
+      #previewSection select,
+      #previewSection button {
+        max-width: none;
+        min-height: 42px;
+        font-size: 12px;
+      }
+
+      #previewSection .cta-btn .icon {
+        display: none;
+      }
+
+      #previewSection .back-btn {
+        top: 8px;
+        left: 8px;
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+      }
+
+      input,
+      textarea,
+      select {
+        padding: 6px 8px;
+        font-size: 12px;
+        margin-top: 4px;
+      }
+
+      button {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+
+      .shutter-btn {
+        width: 50px;
+        height: 50px;
+        border: 4px solid white;
+      }
+
+      .shutter-btn::after {
+        width: 34px;
+        height: 34px;
+      }
+    }
+
+    /* ===============================
    FINAL STABLE PREVIEW LAYOUT
 =============================== */
 
-/* ---------- DESKTOP & LANDSCAPE (STRICT SPLIT) ---------- */
-
-#previewSection{
-  padding:0;
-}
-/* LEFT PANEL (Frame Area) */
-#previewSection .left-panel{
-  width:65%;
-  height:100%;
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  border-right:2px solid #e6e6e6;
-  padding:24px 28px;
-}
-
-/* RIGHT PANEL (Controls) */
-#previewSection .right-panel{
-  width:35%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:20px;
-  padding:28px 26px;
-}
-
-/* Frame sizing */
-#previewSection .frame-container{
-  width:100%;
-  max-width:620px;
-  max-height:82%;
-  border-radius:18px;
-}
-
-#previewImage{
-  width:100%;
-  height:auto;
-  object-fit:contain;
-}
-#previewSection .caption{
-
-margin-top:18px;
-
-background:white;
-
-padding:14px 20px;
-
-border-radius:14px;
-
-font-size:15px;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
-
-text-align:center;
-
-max-width:480px;
-}
-/* Button sizing */
-#previewSection select,
-#previewSection button{
-  width:100%;
-  max-width:292px;
-}
-#previewSection{
-
-display:flex;
-align-items:center;
-justify-content:center;
-
- padding:28px;
-}
-
-/* Preview Card */
-#previewSection .editor-layout{
-
- width:min(1180px,96vw);
- max-width:96vw;
- 
- height:min(calc(100dvh - 56px),820px);
-
-display:flex;
-
-background:rgba(255,255,255,0.25);
-
-backdrop-filter:blur(16px);
-
- border-radius:28px;
-
-box-shadow:0 30px 80px rgba(0,0,0,0.3);
-
-overflow:hidden;
-
- padding:26px;
- 
- gap:26px;
-}
-/* ---------- MOBILE PORTRAIT ONLY (STACKED) ---------- */
-
-@media (max-width:1023px) and (orientation:portrait){
-
-  #previewSection{
-    padding:64px 12px 12px;
-    align-items:center;
-    justify-content:center;
-  }
-
-  #previewSection .editor-layout{
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:14px;
-    width:100%;
-    max-width:520px;
-    padding:14px;
-    height:min(calc(100dvh - 78px),760px);
-  }
-
-  #previewSection .left-panel,
-  #previewSection .right-panel{
-    width:100%;
-    height:auto;
-    border:none;
-    padding:0;
-  }
-
-  #previewSection .frame-container{
-    max-height:42vh;
-  }
-
-  #previewSection .right-panel{
-    padding:4px 0 0;
-    gap:10px;
-  }
-
-  #previewSection select,
-  #previewSection button{
-    width:100%;
-    max-width:280px;
-  }
-
-}
-#goToPreviewBtn{
-  width:320px;
-  max-width:90%;
-  margin-top:18px;
-  font-size:16px;
-  padding:14px;
-}
-.setup-card{
-width:420px;
-max-width:95%;
-background:white;
-
-padding:35px;
-
-border-radius:18px;
-
-box-shadow:
-0 25px 60px rgba(0,0,0,0.25);
-
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.setup-desc{
-font-size:13px;
-color:#666;
-margin-bottom:10px;
-}
-
-.input-label{
-font-size:12px;
-font-weight:600;
-color:#555;
-margin-top:10px;
-}
-
-.primary-btn{
-margin-top:20px;
-font-size:15px;
-}
-#setupSection{
-z-index:2;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:clamp(10px,1.8vh,18px);
-padding:clamp(12px,2vh,22px) 18px;
-}
-#setupForm{
- 
-position:relative;
- 
-width:min(460px,92vw);
-max-width:92vw;
- 
-padding:clamp(20px,3vh,30px) clamp(20px,3vw,30px);
- 
-display:flex;
-flex-direction:column;
-gap:clamp(10px,1.5vh,16px);
- 
-background:linear-gradient(
-145deg,
-rgba(255,255,255,0.95),
-rgba(255,255,255,0.85)
-);
-
-backdrop-filter:blur(25px);
- 
-border-radius:28px;
-border:1px solid rgba(255,255,255,0.5);
- 
-box-shadow:
-0 40px 90px rgba(0,0,0,0.30),
-inset 0 2px 8px rgba(255,255,255,0.5);
-animation:floatCard 6s ease-in-out infinite;
-transition:all .35s ease;
-}
-@keyframes floatCard{
-
-0%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
-100%{transform:translateY(0)}
-
-}
-#setupForm::before{
+    /* ---------- DESKTOP & LANDSCAPE (STRICT SPLIT) ---------- */
 
-content:"";
+    #previewSection {
+      padding: 0;
+    }
 
-position:absolute;
+    /* LEFT PANEL (Frame Area) */
+    #previewSection .left-panel {
+      width: 65%;
+      height: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px solid #e6e6e6;
+      padding: 24px 28px;
+    }
 
-inset:-60px;
+    /* RIGHT PANEL (Controls) */
+    #previewSection .right-panel {
+      width: 35%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 28px 26px;
+    }
 
-border-radius:40px;
+    /* Frame sizing */
+    #previewSection .frame-container {
+      width: 100%;
+      max-width: 620px;
+      max-height: 82%;
+      border-radius: 18px;
+    }
 
-background:
-radial-gradient(circle,
-rgba(255,255,255,0.35),
-transparent 70%);
+    #previewImage {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
 
-filter:blur(60px);
+    #previewSection .caption {
 
-z-index:-1;
+      margin-top: 18px;
 
-}
-#setupForm:hover{
-transform:translateY(-5px);
-}
-#setupForm button{
-
-margin-top:10px;
-
-padding:18px;
-
-font-size:16px;
-
-font-weight:600;
-
-border-radius:50px;
-
-background:
-linear-gradient(135deg,#ff7a00,#ff9a3c);
-
-box-shadow:
-0 12px 30px rgba(0,0,0,0.25);
-
-transition:all .25s ease;
-
-}
-
-#setupForm button:hover{
-
-transform:translateY(-2px) scale(1.04);
-
-box-shadow:
-0 18px 40px rgba(0,0,0,0.35);
-
-}
-
-#setupForm button:hover{
-
-transform:translateY(-2px) scale(1.03);
-
-box-shadow:
-0 20px 40px rgba(0,0,0,0.35);
-
-}
-#setupForm input,
-#setupForm textarea{
-
-background:#f9f9f9;
-
-border:none;
-
-padding:16px;
-
-border-radius:14px;
-
-font-size:14px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,0.08),
-inset 0 2px 4px rgba(0,0,0,0.05);
-
-transition:all .25s ease;
-
-}
-
-#setupForm input:focus,
-#setupForm textarea:focus{
-
-outline:none;
-
-background:white;
-
-box-shadow:
-0 0 0 2px #ff9a3c,
-0 12px 28px rgba(0,0,0,0.18);
-
-}
-#setupForm input[type="file"]{
-
-background:#f5f5f5;
-
-border:2px dashed #ff9a3c;
-
-text-align:center;
-
-cursor:pointer;
-
-padding:18px;
-
-border-radius:14px;
-
-}
-.hero-badge{
-display:inline-flex;
-align-items:center;
-gap:10px;
-padding:8px 14px;
-border-radius:999px;
-background:rgba(255,255,255,0.18);
-border:1px solid rgba(255,255,255,0.3);
-color:white;
-font-size:12px;
-font-weight:600;
-letter-spacing:.04em;
-text-transform:uppercase;
-backdrop-filter:blur(12px);
-}
-.hero-badge .icon{
-width:28px;
-height:28px;
-border-radius:50%;
-display:inline-flex;
-align-items:center;
-justify-content:center;
-background:rgba(255,255,255,0.2);
-box-shadow:inset 0 1px 0 rgba(255,255,255,0.35);
-}
-.icon svg{
-width:16px;
-height:16px;
-stroke:currentColor;
-stroke-width:1.9;
-stroke-linecap:round;
-stroke-linejoin:round;
-fill:none;
-}
-.hero-badge .icon svg{
-width:14px;
-height:14px;
-}
-.page-title{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-text-align:center;
-}
-.page-title p{
-max-width:560px;
-font-size:13px;
-line-height:1.45;
-color:rgba(255,255,255,0.9);
-}
-.form-header,
-.preview-meta{
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-.form-header h3,
-.panel-title h3{
-font-size:clamp(18px,2.2vw,24px);
-line-height:1.2;
-color:#202020;
-}
-.form-header p,
-.panel-title p{
-font-size:13px;
-line-height:1.45;
-color:#666;
-}
-.field-group{
-display:flex;
-flex-direction:column;
-gap:6px;
-}
-.field-label{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:12px;
-font-weight:600;
-color:#444;
-}
-.field-label .icon,
-.panel-title .icon,
-.cta-btn .icon,
-.option-card .icon,
-.tool-btn .icon{
-width:32px;
-height:32px;
-border-radius:12px;
-display:inline-flex;
-align-items:center;
-justify-content:center;
-background:linear-gradient(145deg,#fff4ea,#ffd8ba);
-color:#bc5600;
-box-shadow:
-0 8px 18px rgba(252,120,0,0.16),
-inset 0 1px 0 rgba(255,255,255,0.65);
-flex-shrink:0;
-}
-.upload-hint{
-font-size:11px;
-line-height:1.4;
-color:#7a7a7a;
-margin-top:-2px;
-}
-.panel-title{
-width:100%;
-display:flex;
-align-items:flex-start;
-gap:12px;
-}
-.panel-title .icon{
-width:40px;
-height:40px;
-border-radius:14px;
-background:linear-gradient(145deg,#fff0e4,#ffc995);
-}
-.panel-title .copy,
-.option-card .copy{
-flex:1 1 64%;
-min-width:0;
-}
-.panel-note{
-width:100%;
-padding:10px 12px;
-border-radius:16px;
-background:rgba(252,120,0,0.08);
-border:1px solid rgba(252,120,0,0.12);
-font-size:12px;
-line-height:1.45;
-color:#8a4a00;
-}
-.option-card{
-width:100%;
-display:flex;
-align-items:center;
-gap:12px;
-padding:12px 14px;
-border-radius:18px;
-background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,242,228,0.96));
-border:1px solid rgba(252,120,0,0.12);
-box-shadow:
-0 14px 28px rgba(0,0,0,0.06),
-inset 0 1px 0 rgba(255,255,255,0.75);
-}
-.option-card .copy{
-display:flex;
-flex-direction:column;
-gap:3px;
-}
-.option-card .eyebrow{
-font-size:11px;
-font-weight:700;
-letter-spacing:.08em;
-text-transform:uppercase;
-color:#c96a00;
-}
-.option-card .title{
-font-size:13px;
-font-weight:600;
-color:#202020;
-}
-.tool-grid{
-width:100%;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:12px;
-}
-.secondary-tool-row{
-width:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:12px;
-}
-.tool-btn{
-min-height:52px;
-width:100%;
-max-width:250px;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:10px;
-padding:12px 14px;
-border-radius:20px;
-font-size:13px;
-font-weight:600;
-letter-spacing:.01em;
-border:1px solid rgba(255,255,255,0.22);
-background:
-linear-gradient(135deg,#ff7a00 0%,#ff982e 55%,#ffb45f 100%);
-box-shadow:
-0 18px 36px rgba(252,120,0,0.24),
-inset 0 1px 0 rgba(255,255,255,0.28);
-position:relative;
-overflow:hidden;
-}
-.tool-grid #openCameraBtn,
-.tool-grid #switchCameraBtn,
-.tool-grid #rotateBtn,
-.tool-grid #retakeBtn{
-width:min(100%,250px);
-border-radius:20px;
-margin-inline:auto;
-}
-.tool-btn::before,
-.primary-cta::before,
-#downloadBtn::before,
-#shareBtn::before{
-content:"";
-position:absolute;
-inset:1px;
-border-radius:inherit;
-background:linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0));
-pointer-events:none;
-}
-.tool-btn .icon{
-width:30px;
-height:30px;
-border-radius:12px;
-background:rgba(255,255,255,0.2);
-color:white;
-box-shadow:none;
-}
-.cta-btn{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:10px;
-}
-.cta-btn .icon{
-background:rgba(255,255,255,0.14);
-color:white;
-}
-.primary-cta{
-min-height:52px;
-font-size:15px;
-position:relative;
-overflow:hidden;
-border-radius:20px;
-background:
-linear-gradient(135deg,#ff8200 0%,#ff9930 48%,#ffb869 100%);
-box-shadow:
-0 18px 38px rgba(252,120,0,0.26),
-inset 0 1px 0 rgba(255,255,255,0.32);
-}
-.select-wrap{
-position:relative;
-width:100%;
-max-width:292px;
-}
-.select-wrap::after{
-content:"";
-position:absolute;
-right:20px;
-top:50%;
-width:12px;
-height:12px;
-border-right:2px solid #8b8b8b;
-border-bottom:2px solid #8b8b8b;
-transform:translateY(-62%) rotate(45deg);
-pointer-events:none;
-}
-.select-wrap select{
-appearance:none;
-padding:14px 48px 14px 18px;
-height:54px;
-line-height:1.2;
-border-radius:16px;
-border:1.5px solid rgba(25,25,25,0.24);
-background:rgba(255,255,255,0.96);
-box-shadow:
-0 10px 22px rgba(0,0,0,0.08),
-inset 0 1px 0 rgba(255,255,255,0.85);
-display:block;
-}
-.preview-actions{
-width:100%;
-display:grid;
-grid-template-columns:1fr;
-justify-items:center;
-gap:14px;
-}
-.secondary-btn{
-background:linear-gradient(135deg,#262626,#4a4a4a);
-box-shadow:0 14px 28px rgba(0,0,0,0.24);
-}
-#setupSection{
-padding:28px 20px;
-gap:22px;
-}
-#setupForm{
-animation:none;
-}
-#setupForm:hover{
-transform:none;
-}
-#setupForm button{
-margin-top:0;
-}
-#photoEditorSection{
-padding:28px;
-}
-#photoEditorSection .editor-layout,
-#previewSection .editor-layout{
-position:relative;
-}
-#photoEditorSection .left-panel,
-#previewSection .left-panel{
-gap:14px;
-}
-#photoEditorSection .right-panel,
-#previewSection .right-panel{
-justify-content:flex-start;
-}
-#photoEditorSection .right-panel{
-justify-content:center;
-gap:14px;
-}
-#photoEditorSection .tool-grid{
-padding-top:4px;
-}
-#photoEditorSection #openCameraBtn,
-#photoEditorSection #switchCameraBtn{
-min-height:58px;
-font-size:14px;
-}
-#photoEditorSection #rotateBtn,
-#photoEditorSection #retakeBtn{
-max-width:unset;
-background:linear-gradient(135deg,#fff4ea,#ffd8b7);
-color:#8c4300;
-border:1px solid rgba(252,120,0,0.16);
-box-shadow:
-0 12px 28px rgba(252,120,0,0.12),
-inset 0 1px 0 rgba(255,255,255,0.75);
-}
-#photoEditorSection .secondary-tool-row #rotateBtn,
-#photoEditorSection .secondary-tool-row #retakeBtn{
-flex:1 1 0;
-width:calc(50% - 6px);
-max-width:150px;
-min-width:0;
-}
-#photoEditorSection #rotateBtn .icon,
-#photoEditorSection #retakeBtn .icon{
-background:rgba(252,120,0,0.12);
-color:#c45b00;
-}
-#photoEditorSection #switchCameraBtn{
-background:linear-gradient(135deg,#ff8d12 0%,#ff9d2d 55%,#ffc071 100%);
-}
-#photoEditorSection #openCameraBtn{
-background:linear-gradient(135deg,#ff7900 0%,#ff9730 55%,#ffb865 100%);
-}
-#photoEditorSection .panel-title,
-#previewSection .panel-title{
-margin-bottom:4px;
-}
-#photoEditorSection .right-panel input[type="file"]{
-margin-top:0;
-}
-#shutterWrapper{
-width:100%;
-margin-top:0 !important;
-padding:6px 0 0;
-}
-#goToPreviewBtn{
-margin-top:0;
-}
-#previewSection .right-panel{
-gap:12px;
-}
-#previewSection .preview-meta,
-#previewSection .preview-actions{
-align-items:center;
-}
-#previewSection .option-card{
-width:100%;
-max-width:330px;
-}
-#previewSection #downloadBtn,
-#previewSection #shareBtn{
-width:100%;
-max-width:292px;
-min-height:56px;
-}
-#previewSection .caption{
-width:min(100%,460px);
-}
-@media (min-width:1024px){
-  #setupSection{
-    gap:10px;
-    padding:14px 18px;
-  }
-  #setupSection h2{
-    font-size:clamp(30px,3.3vw,38px);
-    margin-bottom:2px;
-  }
-  .page-title{
-    gap:6px;
-  }
-  .page-title p{
-    max-width:520px;
-    font-size:12px;
-    line-height:1.35;
-  }
-  .hero-badge{
-    padding:8px 14px;
-    font-size:11px;
-  }
-  .hero-badge .icon{
-    width:24px;
-    height:24px;
-    font-size:12px;
-  }
-  #setupForm{
-    width:min(470px,86vw);
-    padding:22px 24px;
-    gap:12px;
-  }
-  .form-header,
-  .preview-meta{
-    gap:8px;
-  }
-  .form-header h3,
-  .panel-title h3{
-    font-size:20px;
-  }
-  .form-header p,
-  .panel-title p,
-  .upload-hint{
-    font-size:11px;
-    line-height:1.35;
-  }
-  .field-group{
-    gap:6px;
-  }
-  .field-label{
-    font-size:12px;
-  }
-  .field-label .icon{
-    width:28px;
-    height:28px;
-    font-size:13px;
-  }
-  #setupForm input,
-  #setupForm textarea{
-    padding:12px 13px;
-    font-size:13px;
-  }
-  #setupForm textarea{
-    min-height:74px;
-  }
-  .primary-cta{
-    min-height:48px;
-    font-size:14px;
-  }
-  #photoEditorSection .editor-layout{
-    max-width:min(1240px,96vw);
-    gap:0;
-  }
-  #photoEditorSection .left-panel{
-    padding:36px;
-  }
-  #photoEditorSection .frame-container{
-    max-width:min(620px,100%);
-  }
-  #photoEditorSection .right-panel,
-  #previewSection .right-panel{
-    width:360px;
-    padding:24px 22px;
-  }
-  #previewSection .editor-layout{
-    width:min(1220px,96vw);
-    align-items:stretch;
-  }
-  #previewSection .frame-container{
-    max-width:min(660px,100%);
-  }
-  #previewSection .left-panel{
-    width:68%;
-  }
-  #previewSection .right-panel{
-    width:32%;
-  }
-}
-@media (max-width:1023px){
-  .section{
-    padding:14px;
-    align-items:center;
-    justify-content:center;
-  }
-  .editor-layout{
-    height:min(calc(100dvh - 28px),820px);
-  }
-  .mountains{
-    height:28vh;
-  }
-  .page-title p{
-    font-size:12px;
-    max-width:360px;
-  }
-  .panel-title{
-    align-items:center;
-  }
-}
-@media (max-width:600px){
-  #setupSection h2{
-    font-size:28px;
-    margin-bottom:2px;
-  }
-  .hero-badge{
-    font-size:11px;
-    padding:7px 12px;
-  }
-  .form-header h3,
-  .panel-title h3{
-    font-size:18px;
-  }
-  .tool-grid{
-    width:100%;
-    gap:10px;
-  }
-  .tool-btn,
-  .primary-cta,
-  #previewSection select,
-  #previewSection button{
-    max-width:none;
-  }
-  .select-wrap{
-    max-width:none;
-  }
-  #setupSection{
-    padding:14px 14px 12px;
-    gap:8px;
-  }
-  #setupForm{
-    width:100%;
-    max-width:100%;
-    padding:18px 16px;
-    gap:10px;
-    border-radius:22px;
-  }
-  #setupForm input,
-  #setupForm textarea{
-    padding:12px;
-    font-size:13px;
-  }
-  #setupForm textarea{
-    min-height:72px;
-  }
-  #photoEditorSection{
-    padding:0;
-  }
-  #photoEditorSection .right-panel,
-  #previewSection .right-panel{
-    padding:12px;
-    gap:10px;
-  }
-  .option-card,
-  .panel-note{
-    padding:10px 12px;
-  }
-  .tool-btn,
-  .primary-cta{
-    min-height:46px;
-  }
-  .mountains{
-    height:23vh;
-  }
-  #photoEditorSection #openCameraBtn,
-  #photoEditorSection #switchCameraBtn,
-  #photoEditorSection #rotateBtn,
-  #photoEditorSection #retakeBtn{
-    max-width:100%;
-  }
-  #photoEditorSection .secondary-tool-row{
-    gap:10px;
-  }
-  .back-btn{
-    width:42px;
-    height:42px;
-    font-size:20px;
-  }
-}
-@media (max-height:800px){
-  #setupSection{
-    gap:8px;
-    padding:10px 14px;
-  }
-  .page-title{
-    gap:4px;
-  }
-  .page-title p{
-    font-size:11px;
-    line-height:1.3;
-  }
-  #setupForm{
-    padding:16px 18px;
-    gap:8px;
-  }
-  #setupForm textarea{
-    min-height:64px;
-  }
-  .form-header h3,
-  .panel-title h3{
-    font-size:17px;
-  }
-  .editor-layout{
-    height:min(calc(100dvh - 22px),760px);
-  }
-  #photoEditorSection .right-panel,
-  #previewSection .right-panel{
-    padding:16px;
-    gap:10px;
-  }
-  .option-card,
-  .panel-note{
-    padding:9px 11px;
-  }
-  .tool-btn,
-  .primary-cta{
-    min-height:42px;
-  }
-}
-@media (max-width:1023px) and (orientation:landscape){
-  #setupSection{
-    flex-direction:row !important;
-    padding:56px 14px 12px !important;
-    gap:16px !important;
-    align-items:center !important;
-    justify-content:center !important;
-  }
-  #setupSection .page-title,
-  #setupSection .upload-hint,
-  #setupSection .field-label,
-  #setupSection .cta-btn .icon{
-    display:none !important;
-  }
-  #setupSection .page-title{
-    display:flex !important;
-    width:min(240px,34vw);
-    max-width:min(240px,34vw);
-    align-items:flex-start !important;
-    justify-content:center !important;
-    text-align:left !important;
-    gap:8px !important;
-    padding:0 4px !important;
-  }
-  #setupSection .page-title .hero-badge,
-  #setupSection .page-title p{
-    display:none !important;
-  }
-  #setupSection h2{
-    display:block !important;
-    margin:0 !important;
-    font-size:clamp(28px,4.2vw,40px) !important;
-    line-height:1.05 !important;
-    text-align:left !important;
-  }
-  #setupSection .form-header{
-    display:none !important;
-  }
-  #setupSection #setupForm{
-    width:min(350px,48vw) !important;
-    max-width:min(350px,48vw) !important;
-    padding:14px 14px 12px !important;
-    gap:8px !important;
-    border-radius:18px !important;
-  }
-  #setupSection .field-group{
-    gap:0 !important;
-  }
-  #setupSection #setupForm input,
-  #setupSection #setupForm textarea{
-    margin-top:8px !important;
-    padding:10px 12px !important;
-    font-size:12px !important;
-  }
-  #setupSection #setupForm textarea{
-    min-height:54px !important;
-  }
-  #setupSection #setupForm button{
-    margin-top:8px !important;
-    min-height:40px !important;
-    padding:10px 12px !important;
-    font-size:12px !important;
-  }
-  #photoEditorSection{
-    padding-top:56px !important;
-  }
-  #photoEditorSection .editor-layout{
-    height:calc(100dvh - 72px) !important;
-  }
-  #photoEditorSection .secondary-tool-row{
-    gap:8px;
-  }
-  #photoEditorSection .secondary-tool-row #rotateBtn,
-  #photoEditorSection .secondary-tool-row #retakeBtn{
-    max-width:none;
-  }
-}
-.hidden{
-display:none !important;
-opacity:0;
-}
-</style>
+      background: white;
+
+      padding: 14px 20px;
+
+      border-radius: 14px;
+
+      font-size: 15px;
+
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+      text-align: center;
+
+      max-width: 480px;
+    }
+
+    /* Button sizing */
+    #previewSection select,
+    #previewSection button {
+      width: 100%;
+      max-width: 292px;
+    }
+
+    #previewSection {
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 28px;
+    }
+
+    /* Preview Card */
+    #previewSection .editor-layout {
+
+      width: min(1180px, 96vw);
+      max-width: 96vw;
+
+      height: min(calc(100dvh - 56px), 820px);
+
+      display: flex;
+
+      background: rgba(255, 255, 255, 0.25);
+
+      backdrop-filter: blur(16px);
+
+      border-radius: 28px;
+
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+
+      overflow: hidden;
+
+      padding: 26px;
+
+      gap: 26px;
+    }
+
+    /* ---------- MOBILE PORTRAIT ONLY (STACKED) ---------- */
+
+    @media (max-width:1023px) and (orientation:portrait) {
+
+      #previewSection {
+        padding: 64px 12px 12px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #previewSection .editor-layout {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        width: 100%;
+        max-width: 520px;
+        padding: 14px;
+        height: min(calc(100dvh - 78px), 760px);
+      }
+
+      #previewSection .left-panel,
+      #previewSection .right-panel {
+        width: 100%;
+        height: auto;
+        border: none;
+        padding: 0;
+      }
+
+      #previewSection .frame-container {
+        max-height: 42vh;
+      }
+
+      #previewSection .right-panel {
+        padding: 4px 0 0;
+        gap: 10px;
+      }
+
+      #previewSection select,
+      #previewSection button {
+        width: 100%;
+        max-width: 280px;
+      }
+
+    }
+
+    #goToPreviewBtn {
+      width: 320px;
+      max-width: 90%;
+      margin-top: 18px;
+      font-size: 16px;
+      padding: 14px;
+    }
+
+    .setup-card {
+      width: 420px;
+      max-width: 95%;
+      background: white;
+
+      padding: 35px;
+
+      border-radius: 18px;
+
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.25);
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .setup-desc {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .input-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .primary-btn {
+      margin-top: 20px;
+      font-size: 15px;
+    }
+
+    #setupSection {
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(10px, 1.8vh, 18px);
+      padding: clamp(12px, 2vh, 22px) 18px;
+    }
+
+    #setupForm {
+
+      position: relative;
+
+      width: min(460px, 92vw);
+      max-width: 92vw;
+
+      padding: clamp(20px, 3vh, 30px) clamp(20px, 3vw, 30px);
+
+      display: flex;
+      flex-direction: column;
+      gap: clamp(10px, 1.5vh, 16px);
+
+      background: linear-gradient(145deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.85));
+
+      backdrop-filter: blur(25px);
+
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+
+      box-shadow:
+        0 40px 90px rgba(0, 0, 0, 0.30),
+        inset 0 2px 8px rgba(255, 255, 255, 0.5);
+      animation: floatCard 6s ease-in-out infinite;
+      transition: all .35s ease;
+    }
+
+    @keyframes floatCard {
+
+      0% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-8px)
+      }
+
+      100% {
+        transform: translateY(0)
+      }
+
+    }
+
+    #setupForm::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: -60px;
+
+      border-radius: 40px;
+
+      background:
+        radial-gradient(circle,
+          rgba(255, 255, 255, 0.35),
+          transparent 70%);
+
+      filter: blur(60px);
+
+      z-index: -1;
+
+    }
+
+    #setupForm:hover {
+      transform: translateY(-5px);
+    }
+
+    #setupForm button {
+
+      margin-top: 10px;
+
+      padding: 18px;
+
+      font-size: 16px;
+
+      font-weight: 600;
+
+      border-radius: 50px;
+
+      background:
+        linear-gradient(135deg, #ff7a00, #ff9a3c);
+
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.25);
+
+      transition: all .25s ease;
+
+    }
+
+    #setupForm button:hover {
+
+      transform: translateY(-2px) scale(1.04);
+
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.35);
+
+    }
+
+    #setupForm button:hover {
+
+      transform: translateY(-2px) scale(1.03);
+
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.35);
+
+    }
+
+    #setupForm input,
+    #setupForm textarea {
+
+      background: #f9f9f9;
+
+      border: none;
+
+      padding: 16px;
+
+      border-radius: 14px;
+
+      font-size: 14px;
+
+      box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.08),
+        inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+      transition: all .25s ease;
+
+    }
+
+    #setupForm input:focus,
+    #setupForm textarea:focus {
+
+      outline: none;
+
+      background: white;
+
+      box-shadow:
+        0 0 0 2px #ff9a3c,
+        0 12px 28px rgba(0, 0, 0, 0.18);
+
+    }
+
+    #setupForm input[type="file"] {
+
+      background: #f5f5f5;
+
+      border: 2px dashed #ff9a3c;
+
+      text-align: center;
+
+      cursor: pointer;
+
+      padding: 18px;
+
+      border-radius: 14px;
+
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-badge .icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .hero-badge .icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .page-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+    }
+
+    .page-title p {
+      max-width: 560px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-header,
+    .preview-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form-header h3,
+    .panel-title h3 {
+      font-size: clamp(18px, 2.2vw, 24px);
+      line-height: 1.2;
+      color: #202020;
+    }
+
+    .form-header p,
+    .panel-title p {
+      font-size: 13px;
+      line-height: 1.45;
+      color: #666;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    .field-label .icon,
+    .panel-title .icon,
+    .cta-btn .icon,
+    .option-card .icon,
+    .tool-btn .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #fff4ea, #ffd8ba);
+      color: #bc5600;
+      box-shadow:
+        0 8px 18px rgba(252, 120, 0, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      flex-shrink: 0;
+    }
+
+    .upload-hint {
+      font-size: 11px;
+      line-height: 1.4;
+      color: #7a7a7a;
+      margin-top: -2px;
+    }
+
+    .panel-title {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .panel-shell {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 18px 18px 16px;
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 249, 242, 0.86)),
+        linear-gradient(145deg, rgba(255, 152, 46, 0.12), rgba(18, 59, 107, 0.06));
+      border: 1px solid rgba(255, 153, 48, 0.18);
+      box-shadow:
+        0 22px 46px rgba(132, 69, 6, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.24), transparent 42%),
+        radial-gradient(circle at top right, rgba(255, 163, 76, 0.16), transparent 34%);
+      pointer-events: none;
+    }
+
+    .panel-shell>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 153, 48, 0.16);
+      color: #9b4d00;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    }
+
+    .panel-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff7a00, #ffb45f);
+      box-shadow: 0 0 0 4px rgba(255, 122, 0, 0.12);
+    }
+
+    .panel-title .copy {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .panel-title h3 {
+      color: var(--navy-deep);
+    }
+
+    .panel-title p {
+      color: #39506b;
+    }
+
+    .panel-title .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #e7f1ff, #bfd7ff);
+      color: var(--navy);
+      box-shadow:
+        0 12px 24px rgba(18, 59, 107, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .panel-title .copy,
+    .option-card .copy {
+      flex: 1 1 64%;
+      min-width: 0;
+    }
+
+    .panel-note {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(252, 120, 0, 0.08);
+      border: 1px solid rgba(252, 120, 0, 0.12);
+      font-size: 12px;
+      line-height: 1.45;
+      color: #8a4a00;
+    }
+
+    .editor-story {
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px 16px 15px;
+      border-radius: 22px;
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.98), rgba(255, 244, 231, 0.96)),
+        linear-gradient(135deg, rgba(255, 145, 52, 0.16), rgba(255, 179, 105, 0.04));
+      border: 1px solid rgba(255, 153, 48, 0.22);
+      box-shadow:
+        0 20px 36px rgba(180, 94, 9, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.78);
+      overflow: hidden;
+    }
+
+    .editor-story::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #ff7a00, #ffb35b, #123b6b);
+    }
+
+    .editor-story::after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -32px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(18, 59, 107, 0.14) 0%, rgba(18, 59, 107, 0.02) 55%, transparent 70%);
+    }
+
+    .story-ribbon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: fit-content;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff8a14, #ffb35b);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 20px rgba(252, 120, 0, 0.22);
+      position: relative;
+      z-index: 1;
+    }
+
+    .editor-story h4 {
+      font-size: 16px;
+      line-height: 1.2;
+      color: #7b3900;
+      position: relative;
+      z-index: 1;
+    }
+
+    .editor-story p {
+      font-size: 12px;
+      line-height: 1.45;
+      color: #6b4b2f;
+      max-width: 30ch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .story-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .story-chip {
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 153, 48, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    .story-chip strong {
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy-deep);
+    }
+
+    .story-chip span {
+      font-size: 12px;
+      color: #6b4b2f;
+      line-height: 1.25;
+    }
+
+    .editor-stats {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat-card {
+      min-height: 74px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 247, 238, 0.88));
+      border: 1px solid rgba(255, 153, 48, 0.14);
+      box-shadow:
+        0 14px 26px rgba(178, 97, 15, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      text-align: left;
+    }
+
+    .stat-card strong {
+      font-size: 18px;
+      line-height: 1;
+      color: var(--navy-deep);
+      font-weight: 700;
+    }
+
+    .stat-card span {
+      font-size: 10px;
+      line-height: 1.35;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #9c5b14;
+      font-weight: 700;
+    }
+
+    .panel-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 153, 48, 0), rgba(255, 153, 48, 0.55), rgba(18, 59, 107, 0));
+      opacity: .7;
+    }
+
+    .option-card {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(235, 243, 252, 0.98)),
+        linear-gradient(135deg, rgba(18, 59, 107, 0.08), transparent);
+      border: 1px solid rgba(18, 59, 107, 0.14);
+      box-shadow:
+        0 16px 30px rgba(10, 37, 69, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+
+    #photoEditorSection .right-panel input[type="file"] {
+      width: 100%;
+      border: 1px dashed rgba(255, 143, 44, 0.38);
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 247, 240, 0.9));
+      box-shadow:
+        0 14px 24px rgba(161, 88, 10, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      color: #6a4421;
+    }
+
+    #photoEditorSection .right-panel input[type="file"]::file-selector-button {
+      margin-right: 12px;
+      padding: 9px 13px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ff8b18, #ffb760);
+      color: white;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .option-card .copy {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .option-card .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .option-card .title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #202020;
+    }
+
+    .tool-grid {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .secondary-tool-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .tool-btn {
+      min-height: 52px;
+      width: 100%;
+      max-width: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .01em;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background:
+        linear-gradient(135deg, #ff7a00 0%, #ff982e 55%, #ffb45f 100%);
+      box-shadow:
+        0 18px 36px rgba(252, 120, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-grid #openCameraBtn,
+    .tool-grid #switchCameraBtn,
+    .tool-grid #rotateBtn,
+    .tool-grid #retakeBtn {
+      width: min(100%, 250px);
+      border-radius: 20px;
+      margin-inline: auto;
+    }
+
+    .tool-btn::before,
+    .primary-cta::before,
+    #downloadBtn::before,
+    #shareBtn::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+
+    .tool-btn .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      box-shadow: none;
+    }
+
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .cta-btn .icon {
+      background: rgba(255, 255, 255, 0.14);
+      color: white;
+    }
+
+    .primary-cta {
+      min-height: 52px;
+      font-size: 15px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      background:
+        linear-gradient(135deg, #ff8200 0%, #ff9930 48%, #ffb869 100%);
+      box-shadow:
+        0 18px 38px rgba(252, 120, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+
+    .select-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 292px;
+    }
+
+    .select-wrap::after {
+      content: "";
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border-right: 2px solid #8b8b8b;
+      border-bottom: 2px solid #8b8b8b;
+      transform: translateY(-62%) rotate(45deg);
+      pointer-events: none;
+    }
+
+    .select-wrap select {
+      appearance: none;
+      padding: 14px 48px 14px 18px;
+      height: 54px;
+      line-height: 1.2;
+      border-radius: 16px;
+      border: 1.5px solid rgba(25, 25, 25, 0.24);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      display: block;
+    }
+
+    .preview-actions {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 14px;
+    }
+
+    .secondary-btn {
+      background: linear-gradient(135deg, #262626, #4a4a4a);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
+    }
+
+    #setupSection {
+      padding: 28px 20px;
+      gap: 22px;
+    }
+
+    #setupForm {
+      animation: none;
+    }
+
+    #setupForm:hover {
+      transform: none;
+    }
+
+    #setupForm button {
+      margin-top: 0;
+    }
+
+    #photoEditorSection {
+      padding: 28px;
+    }
+
+    #photoEditorSection::before {
+      content: "";
+      position: absolute;
+      inset: 3% auto auto 3%;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(18, 59, 107, 0.2) 0%, rgba(18, 59, 107, 0.05) 42%, transparent 72%);
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    #photoEditorSection .editor-layout,
+    #previewSection .editor-layout {
+      position: relative;
+    }
+
+    #photoEditorSection .left-panel,
+    #previewSection .left-panel {
+      gap: 14px;
+    }
+
+    #photoEditorSection .right-panel,
+    #previewSection .right-panel {
+      justify-content: flex-start;
+    }
+
+    #photoEditorSection .right-panel {
+      justify-content: center;
+      gap: 14px;
+    }
+
+    #photoEditorSection .right-panel>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    #photoEditorSection .tool-grid {
+      gap: 10px;
+    }
+
+    #photoEditorSection .panel-shell {
+      width: min(100%, 320px);
+    }
+
+    #photoEditorSection .tool-grid #openCameraBtn,
+    #photoEditorSection .tool-grid #switchCameraBtn,
+    #photoEditorSection .tool-grid #rotateBtn,
+    #photoEditorSection .tool-grid #retakeBtn,
+    #photoEditorSection #goToPreviewBtn {
+      width: min(100%, 240px);
+    }
+
+    #photoEditorSection .tool-grid {
+      padding-top: 4px;
+    }
+
+    #photoEditorSection #openCameraBtn,
+    #photoEditorSection #switchCameraBtn {
+      min-height: 58px;
+      font-size: 14px;
+    }
+
+    #photoEditorSection #rotateBtn,
+    #photoEditorSection #retakeBtn {
+      max-width: unset;
+      background: linear-gradient(135deg, #fff4ea, #ffd8b7);
+      color: #8c4300;
+      border: 1px solid rgba(252, 120, 0, 0.16);
+      box-shadow:
+        0 12px 28px rgba(252, 120, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+
+    #photoEditorSection .secondary-tool-row #rotateBtn,
+    #photoEditorSection .secondary-tool-row #retakeBtn {
+      flex: 1 1 0;
+      width: calc(50% - 6px);
+      max-width: 150px;
+      min-width: 0;
+    }
+
+    #photoEditorSection #rotateBtn .icon,
+    #photoEditorSection #retakeBtn .icon {
+      background: rgba(252, 120, 0, 0.12);
+      color: #c45b00;
+    }
+
+    #photoEditorSection #switchCameraBtn {
+      background: linear-gradient(135deg, #ff8d12 0%, #ff9d2d 55%, #ffc071 100%);
+    }
+
+    #photoEditorSection #openCameraBtn {
+      background: linear-gradient(135deg, #ff7900 0%, #ff9730 55%, #ffb865 100%);
+    }
+
+    #photoEditorSection .panel-title,
+    #previewSection .panel-title {
+      margin-bottom: 4px;
+    }
+
+    #photoEditorSection .right-panel input[type="file"] {
+      margin-top: 0;
+    }
+
+    #shutterWrapper {
+      width: 100%;
+      margin-top: 0 !important;
+      padding: 6px 0 0;
+    }
+
+    #goToPreviewBtn {
+      margin-top: 0;
+    }
+
+    #previewSection .right-panel {
+      gap: 12px;
+    }
+
+    #previewSection .preview-meta,
+    #previewSection .preview-actions {
+      align-items: center;
+    }
+
+    #previewSection .option-card {
+      width: 100%;
+      max-width: 330px;
+    }
+
+    #previewSection #downloadBtn,
+    #previewSection #shareBtn {
+      width: 100%;
+      max-width: 292px;
+      min-height: 56px;
+    }
+
+    #previewSection .caption {
+      width: min(100%, 460px);
+    }
+
+    @media (min-width:1024px) {
+      #setupSection {
+        gap: 10px;
+        padding: 14px 18px;
+      }
+
+      #setupSection h2 {
+        font-size: clamp(30px, 3.3vw, 38px);
+        margin-bottom: 2px;
+      }
+
+      .page-title {
+        gap: 6px;
+      }
+
+      .page-title p {
+        max-width: 520px;
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .hero-badge {
+        padding: 8px 14px;
+        font-size: 11px;
+      }
+
+      .hero-badge .icon {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+      }
+
+      #setupForm {
+        width: min(470px, 86vw);
+        padding: 22px 24px;
+        gap: 12px;
+      }
+
+      .form-header,
+      .preview-meta {
+        gap: 8px;
+      }
+
+      .form-header h3,
+      .panel-title h3 {
+        font-size: 20px;
+      }
+
+      .form-header p,
+      .panel-title p,
+      .upload-hint {
+        font-size: 11px;
+        line-height: 1.35;
+      }
+
+      .field-group {
+        gap: 6px;
+      }
+
+      .field-label {
+        font-size: 12px;
+      }
+
+      .field-label .icon {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
+
+      #setupForm input,
+      #setupForm textarea {
+        padding: 12px 13px;
+        font-size: 13px;
+      }
+
+      #setupForm textarea {
+        min-height: 74px;
+      }
+
+      .primary-cta {
+        min-height: 48px;
+        font-size: 14px;
+      }
+
+      #photoEditorSection .editor-layout {
+        max-width: min(1240px, 96vw);
+        gap: 0;
+      }
+
+      #photoEditorSection .left-panel {
+        padding: 36px;
+      }
+
+      #photoEditorSection .frame-container {
+        max-width: min(620px, 100%);
+      }
+
+      #photoEditorSection .right-panel,
+      #previewSection .right-panel {
+        width: 348px;
+        padding: 22px 18px;
+      }
+
+      #photoEditorSection .right-panel {
+        gap: 12px;
+      }
+
+      #photoEditorSection .panel-shell {
+        width: min(100%, 304px);
+        padding: 16px 15px 14px;
+        gap: 12px;
+      }
+
+      #previewSection .editor-layout {
+        width: min(1220px, 96vw);
+        align-items: stretch;
+      }
+
+      #previewSection .frame-container {
+        max-width: min(660px, 100%);
+      }
+
+      #previewSection .left-panel {
+        width: 68%;
+      }
+
+      #previewSection .right-panel {
+        width: 32%;
+      }
+    }
+
+    @media (max-width:1023px) {
+      .section {
+        padding: 14px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .editor-layout {
+        height: min(calc(100dvh - 28px), 820px);
+      }
+
+      .mountains {
+        height: 28vh;
+      }
+
+      .page-title p {
+        font-size: 12px;
+        max-width: 360px;
+      }
+
+      .panel-title {
+        align-items: center;
+      }
+    }
+
+    @media (max-width:600px) {
+      #setupSection h2 {
+        font-size: 28px;
+        margin-bottom: 2px;
+      }
+
+      .hero-badge {
+        font-size: 11px;
+        padding: 7px 12px;
+      }
+
+      .form-header h3,
+      .panel-title h3 {
+        font-size: 18px;
+      }
+
+      .tool-grid {
+        width: 100%;
+        gap: 10px;
+      }
+
+      .tool-btn,
+      .primary-cta,
+      #previewSection select,
+      #previewSection button {
+        max-width: none;
+      }
+
+      .select-wrap {
+        max-width: none;
+      }
+
+      #setupSection {
+        padding: 14px 14px 12px;
+        gap: 8px;
+      }
+
+      #setupForm {
+        width: 100%;
+        max-width: 100%;
+        padding: 18px 16px;
+        gap: 10px;
+        border-radius: 22px;
+      }
+
+      #setupForm input,
+      #setupForm textarea {
+        padding: 12px;
+        font-size: 13px;
+      }
+
+      #setupForm textarea {
+        min-height: 72px;
+      }
+
+      #photoEditorSection {
+        padding: 0;
+      }
+
+      #photoEditorSection.section {
+        padding: 78px 10px 10px;
+      }
+
+      #photoEditorSection .editor-layout {
+        height: min(calc(100dvh - 92px), 740px);
+        border-radius: 24px;
+      }
+
+      #photoEditorSection .left-panel {
+        padding: 12px 12px 10px;
+      }
+
+      #photoEditorSection .frame-container {
+        max-width: min(100%, 360px);
+      }
+
+      #photoEditorSection .right-panel,
+      #previewSection .right-panel {
+        padding: 12px;
+        gap: 10px;
+      }
+
+      #photoEditorSection .right-panel {
+        padding: 14px 12px 12px;
+      }
+
+      .option-card,
+      .panel-note {
+        padding: 10px 12px;
+      }
+
+      .tool-btn,
+      .primary-cta {
+        min-height: 46px;
+      }
+
+      .mountains {
+        height: 23vh;
+      }
+
+      #photoEditorSection #openCameraBtn,
+      #photoEditorSection #switchCameraBtn,
+      #photoEditorSection #rotateBtn,
+      #photoEditorSection #retakeBtn {
+        max-width: 100%;
+      }
+
+      #photoEditorSection .secondary-tool-row {
+        gap: 10px;
+      }
+
+      #photoEditorSection .panel-title {
+        gap: 8px;
+      }
+
+      #photoEditorSection .panel-title .icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      #photoEditorSection .panel-title h3 {
+        font-size: 16px;
+      }
+
+      #photoEditorSection .panel-title p {
+        max-width: 220px;
+        font-size: 10px;
+      }
+
+      #photoEditorSection .option-card {
+        width: min(100%, 300px);
+      }
+
+      #photoEditorSection .option-card .title {
+        font-size: 11px;
+      }
+
+      #photoEditorSection .editor-story {
+        display: none;
+      }
+
+      #photoEditorSection .panel-kicker,
+      #photoEditorSection .editor-stats,
+      #photoEditorSection .panel-divider {
+        display: none;
+      }
+
+      #photoEditorSection #openCameraBtn span:last-child {
+        font-size: 0;
+      }
+
+      #photoEditorSection #openCameraBtn span:last-child::after {
+        content: "Camera";
+        font-size: 12px;
+      }
+
+      #photoEditorSection #switchCameraBtn span:last-child {
+        font-size: 0;
+      }
+
+      #photoEditorSection #switchCameraBtn span:last-child::after {
+        content: "Switch";
+        font-size: 12px;
+      }
+
+      #photoEditorSection #rotateBtn span:last-child {
+        font-size: 0;
+      }
+
+      #photoEditorSection #rotateBtn span:last-child::after {
+        content: "Rotate";
+        font-size: 12px;
+      }
+
+      #photoEditorSection #retakeBtn span:last-child {
+        font-size: 0;
+      }
+
+      #photoEditorSection #retakeBtn span:last-child::after {
+        content: "Retake";
+        font-size: 12px;
+      }
+
+      #photoEditorSection #goToPreviewBtn span:last-child {
+        font-size: 0;
+      }
+
+      #photoEditorSection #goToPreviewBtn span:last-child::after {
+        content: "Preview";
+        font-size: 12px;
+      }
+
+      .back-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+      }
+    }
+
+    @media (max-height:800px) {
+      #setupSection {
+        gap: 8px;
+        padding: 10px 14px;
+      }
+
+      .page-title {
+        gap: 4px;
+      }
+
+      .page-title p {
+        font-size: 11px;
+        line-height: 1.3;
+      }
+
+      #setupForm {
+        padding: 16px 18px;
+        gap: 8px;
+      }
+
+      #setupForm textarea {
+        min-height: 64px;
+      }
+
+      .form-header h3,
+      .panel-title h3 {
+        font-size: 17px;
+      }
+
+      .editor-layout {
+        height: min(calc(100dvh - 22px), 760px);
+      }
+
+      #photoEditorSection .right-panel,
+      #previewSection .right-panel {
+        padding: 16px;
+        gap: 10px;
+      }
+
+      #photoEditorSection .right-panel {
+        gap: 9px;
+      }
+
+      #photoEditorSection .editor-story {
+        padding: 13px 14px;
+        gap: 9px;
+      }
+
+      #photoEditorSection .panel-shell {
+        padding: 14px 14px 13px;
+        gap: 10px;
+      }
+
+      #photoEditorSection .editor-story h4 {
+        font-size: 14px;
+      }
+
+      #photoEditorSection .editor-story p,
+      #photoEditorSection .story-chip span {
+        font-size: 11px;
+      }
+
+      #photoEditorSection .story-chip {
+        min-height: 54px;
+        padding: 8px 10px;
+      }
+
+      #photoEditorSection .stat-card {
+        min-height: 64px;
+        padding: 8px 10px;
+      }
+
+      #photoEditorSection .stat-card strong {
+        font-size: 16px;
+      }
+
+      .option-card,
+      .panel-note {
+        padding: 9px 11px;
+      }
+
+      .tool-btn,
+      .primary-cta {
+        min-height: 42px;
+      }
+    }
+
+    @media (max-width:1023px) and (orientation:landscape) {
+      #setupSection {
+        flex-direction: row !important;
+        padding: 56px 14px 12px !important;
+        gap: 16px !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      #setupSection .page-title,
+      #setupSection .upload-hint,
+      #setupSection .field-label,
+      #setupSection .cta-btn .icon {
+        display: none !important;
+      }
+
+      #setupSection .page-title {
+        display: flex !important;
+        width: min(240px, 34vw);
+        max-width: min(240px, 34vw);
+        align-items: flex-start !important;
+        justify-content: center !important;
+        text-align: left !important;
+        gap: 8px !important;
+        padding: 0 4px !important;
+      }
+
+      #setupSection .page-title .hero-badge,
+      #setupSection .page-title p {
+        display: none !important;
+      }
+
+      #setupSection h2 {
+        display: block !important;
+        margin: 0 !important;
+        font-size: clamp(28px, 4.2vw, 40px) !important;
+        line-height: 1.05 !important;
+        text-align: left !important;
+      }
+
+      #setupSection .form-header {
+        display: none !important;
+      }
+
+      #setupSection #setupForm {
+        width: min(350px, 48vw) !important;
+        max-width: min(350px, 48vw) !important;
+        padding: 14px 14px 12px !important;
+        gap: 8px !important;
+        border-radius: 18px !important;
+      }
+
+      #setupSection .field-group {
+        gap: 0 !important;
+      }
+
+      #setupSection #setupForm input,
+      #setupSection #setupForm textarea {
+        margin-top: 8px !important;
+        padding: 10px 12px !important;
+        font-size: 12px !important;
+      }
+
+      #setupSection #setupForm textarea {
+        min-height: 54px !important;
+      }
+
+      #setupSection #setupForm button {
+        margin-top: 8px !important;
+        min-height: 40px !important;
+        padding: 10px 12px !important;
+        font-size: 12px !important;
+      }
+
+      #photoEditorSection {
+        padding-top: 56px !important;
+      }
+
+      #photoEditorSection .editor-layout {
+        height: calc(100dvh - 72px) !important;
+        padding: 10px !important;
+        gap: 10px !important;
+        border-radius: 20px !important;
+      }
+
+      #photoEditorSection .left-panel {
+        flex: 1 1 auto;
+        width: auto;
+        padding: 10px 12px !important;
+        border-right: 1px solid #e6e6e6;
+      }
+
+      #photoEditorSection .frame-container {
+        max-width: 100% !important;
+        max-height: 100% !important;
+      }
+
+      #photoEditorSection .right-panel {
+        width: clamp(220px, 31vw, 280px) !important;
+        min-width: 220px !important;
+        max-width: 31vw !important;
+        height: 100%;
+        padding: 8px !important;
+        gap: 8px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: hidden;
+      }
+
+      #photoEditorSection .panel-shell,
+      #photoEditorSection .panel-title,
+      #photoEditorSection .editor-story,
+      #photoEditorSection .panel-kicker,
+      #photoEditorSection .editor-stats,
+      #photoEditorSection .panel-divider,
+      #photoEditorSection .option-card {
+        display: none !important;
+      }
+
+      #photoEditorSection #photoUpload,
+      #photoEditorSection #shutterWrapper,
+      #photoEditorSection .tool-grid,
+      #photoEditorSection #goToPreviewBtn {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+      }
+
+      #photoEditorSection .right-panel input[type="file"] {
+        padding: 8px 10px !important;
+        font-size: 11px !important;
+      }
+
+      #photoEditorSection .right-panel input[type="file"]::file-selector-button {
+        padding: 7px 11px;
+        margin-right: 8px;
+      }
+
+      #photoEditorSection .tool-grid {
+        gap: 6px !important;
+        padding-top: 0 !important;
+      }
+
+      #photoEditorSection .secondary-tool-row {
+        gap: 6px !important;
+      }
+
+      #photoEditorSection .tool-btn,
+      #photoEditorSection .primary-cta {
+        width: 100% !important;
+        max-width: none !important;
+        min-height: 40px !important;
+        padding: 9px 11px !important;
+        font-size: 12px !important;
+      }
+
+      #photoEditorSection .tool-btn .icon,
+      #photoEditorSection .primary-cta .icon {
+        display: none !important;
+      }
+
+      #previewSection {
+        padding: 44px 8px 6px !important;
+        align-items: flex-start !important;
+      }
+
+      #previewSection .editor-layout {
+        width: 100% !important;
+        height: calc(100dvh - 56px) !important;
+        max-width: none !important;
+        padding: 8px !important;
+        gap: 8px !important;
+        border-radius: 18px !important;
+      }
+
+      #previewSection .left-panel {
+        flex: 1 1 auto;
+        width: auto !important;
+        height: 100%;
+        padding: 8px 10px !important;
+        border-right: 1px solid #e6e6e6 !important;
+      }
+
+      #previewSection .frame-container {
+        max-width: 100% !important;
+        max-height: 100% !important;
+      }
+
+      #previewSection .caption,
+      #previewSection .panel-title,
+      #previewSection .option-card {
+        display: none !important;
+      }
+
+      #previewSection .right-panel {
+        width: clamp(208px, 29vw, 258px) !important;
+        min-width: 208px !important;
+        max-width: 29vw !important;
+        height: 100%;
+        padding: 6px !important;
+        gap: 6px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: hidden;
+      }
+
+      #previewSection .preview-meta,
+      #previewSection .preview-actions {
+        width: 100% !important;
+      }
+
+      #previewSection .preview-meta {
+        gap: 6px !important;
+      }
+
+      #previewSection .select-wrap {
+        width: 100% !important;
+        max-width: none !important;
+      }
+
+      #previewSection select,
+      #previewSection button {
+        width: 100% !important;
+        max-width: none !important;
+        min-height: 38px !important;
+        padding: 8px 10px !important;
+        font-size: 11px !important;
+      }
+
+      #previewSection .cta-btn .icon {
+        display: none !important;
+      }
+
+      #previewSection .preview-actions {
+        gap: 5px !important;
+      }
+
+      #previewSection .back-btn {
+        top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
+        left: calc(env(safe-area-inset-left, 0px) + 8px) !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-width: 38px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+        font-size: 18px !important;
+        line-height: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 10000 !important;
+      }
+
+      #photoEditorSection .secondary-tool-row {
+        gap: 8px;
+      }
+
+      #photoEditorSection .secondary-tool-row #rotateBtn,
+      #photoEditorSection .secondary-tool-row #retakeBtn {
+        max-width: none;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+      opacity: 0;
+    }
+  </style>
 </head>
+
 <body>
-<div class="abstract-bg">
+  <div class="abstract-bg">
 
-<div class="wave wave1"></div>
-<div class="wave wave2"></div>
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
 
-</div>
-<div class="mountains">
-<div class="mountain back"></div>
-<div class="mountain mid"></div>
-<div class="mountain front"></div>
-</div>
-
-<div class="shapes">
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-</div>
-<div class="corner-glow">
-<div></div>
-<div></div>
-</div>
-
-<div class="diagonal-lines"></div>
-
-<div class="rings">
-<span></span>
-<span></span>
-<span></span>
-</div>
-
-<div class="particles">
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-</div>
-<div class="dot-grid"></div>
-<div class="section" id="setupSection">
-<div class="page-title">
-<div class="hero-badge"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg></span><span>HE5 Event Branding Studio</span></div>
-<h2 style="text-align:center;color:white">Frame Setup</h2>
-<p>Upload your frame, define the default message, and move through a cleaner creation flow that stays stable on both mobile and desktop.</p>
-</div>
-<form id="setupForm">
-<div class="form-header">
-<h3>Prepare Your Template</h3>
-<p>Set the visual frame and default copy that should appear in every generated event post.</p>
-</div>
-<div class="field-group">
-<label class="field-label" for="frameUpload"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"></rect><path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path></svg></span><span>Frame artwork</span></label>
-<input type="file" id="frameUpload" accept="image/*" required>
-<div class="upload-hint">Transparent PNG files usually give the cleanest overlay result.</div>
-</div>
-<div class="field-group">
-<label class="field-label" for="defaultCaption"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4.5-1 8.8-8.8a2.1 2.1 0 0 0-3-3L5.5 16 4 20z"></path><path d="M13 7l4 4"></path></svg></span><span>Default caption</span></label>
-<textarea id="defaultCaption" placeholder="Default professional caption"></textarea>
-</div>
-<div class="field-group">
-<label class="field-label" for="defaultTags"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4L7 20"></path><path d="M17 4l-2 16"></path><path d="M4 9h16"></path><path d="M3 15h16"></path></svg></span><span>Hashtags</span></label>
-<input type="text" id="defaultTags" placeholder="#HE5Solutions #Innovation">
-</div>
-<button type="submit" class="cta-btn primary-cta"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></span><span>Continue to Editor</span></button>
-</form>
-</div>
-<div class="section hidden" id="photoEditorSection">
-  <button class="back-btn" id="backBtn">&#8592;</button>
-
-  <div class="editor-layout">
-
-    <!-- LEFT SIDE -->
-    <div class="left-panel">
-      <div class="frame-container" id="captureArea">
-        <img id="userPhoto" class="photo">
-        <video 
-  id="cameraPreview"
-  autoplay
-  playsinline
-  muted
-  style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-</video>
-        <img id="frameOverlay" class="frame">
-      </div>
-    </div>
-
-    <!-- RIGHT SIDE -->
-    <div class="right-panel">
-      <div class="panel-title">
-        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a2 2 0 0 1 2-2h2l1.4-2h5.2L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path><circle cx="12" cy="12.5" r="3.5"></circle></svg></span>
-        <div class="copy">
-          <h3>Capture & Adjust</h3>
-          <p>Upload a photo or use the camera, then fine-tune the frame before moving to the final preview.</p>
-        </div>
-      </div>
-      <div class="option-card">
-        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"></rect><path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path><circle cx="9" cy="9" r="1"></circle></svg></span>
-        <div class="copy">
-          <span class="eyebrow">Photo Input</span>
-          <span class="title">Choose an image from your device</span>
-        </div>
-      </div>
-      <input type="file" id="photoUpload" accept="image/*">
-      <div id="shutterWrapper" style="display:none; text-align:center; margin-top:10px;">
-        <button id="captureBtn" class="shutter-btn"></button>
-      </div>
-<div class="tool-grid">
-  <button id="openCameraBtn" class="tool-btn cta-btn"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a2 2 0 0 1 2-2h2l1.4-2h5.2L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path><circle cx="12" cy="12.5" r="3.5"></circle></svg></span><span>Open Camera</span></button>
-  <button id="switchCameraBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h8"></path><path d="M12 4l3 3-3 3"></path><path d="M17 17H9"></path><path d="M12 14l-3 3 3 3"></path></svg></span><span>Switch</span></button>
-  <div class="secondary-tool-row">
-    <button id="rotateBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 1-2.3-5.7"></path><path d="M20 4v7h-7"></path></svg></span><span>Rotate</span></button>
-    <button id="retakeBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"></path><path d="M3 21v-5h5"></path></svg></span><span>Retake</span></button>
   </div>
-</div>
-
-<button id="goToPreviewBtn" class="cta-btn primary-cta" style="margin-top:12px;"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"></path></svg></span><span>Generate Preview</span></button>
-    </div>
+  <div class="mountains">
+    <div class="mountain back"></div>
+    <div class="mountain mid"></div>
+    <div class="mountain front"></div>
   </div>
-</div>
-<div id="notice" class="notice"></div>
-<div class="section hidden" id="previewSection">
 
-<button class="back-btn" id="backToEditorBtn">&#8592;</button>
-  <div class="editor-layout">
+  <div class="shapes">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="corner-glow">
+    <div></div>
+    <div></div>
+  </div>
 
-    <div class="left-panel">
+  <div class="diagonal-lines"></div>
 
-      <div class="frame-container" id="previewArea">
-      <img id="previewImage">
-      </div>
+  <div class="rings">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-      <div class="caption">
-        <div id="previewCaption"></div>
-        <div id="previewHash"></div>
-      </div>
-
+  <div class="particles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="dot-grid"></div>
+  <div class="section" id="setupSection">
+    <div class="page-title">
+      <div class="hero-badge"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path>
+          </svg></span><span>HE5 Event Branding Studio</span></div>
+      <h2 style="text-align:center;color:white">Frame Setup</h2>
+      <p>Upload your frame, define the default message, and move through a cleaner creation flow that stays stable on
+        both mobile and desktop.</p>
     </div>
+    <form id="setupForm">
+      <div class="form-header">
+        <h3>Prepare Your Template</h3>
+        <p>Set the visual frame and default copy that should appear in every generated event post.</p>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="frameUpload"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="5" width="16" height="14" rx="2"></rect>
+              <path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path>
+            </svg></span><span>Frame artwork</span></label>
+        <input type="file" id="frameUpload" accept="image/*" required>
+        <div class="upload-hint">Transparent PNG files usually give the cleanest overlay result.</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="defaultCaption"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 20l4.5-1 8.8-8.8a2.1 2.1 0 0 0-3-3L5.5 16 4 20z"></path>
+              <path d="M13 7l4 4"></path>
+            </svg></span><span>Default caption</span></label>
+        <textarea id="defaultCaption" placeholder="Default professional caption"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="defaultTags"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 4L7 20"></path>
+              <path d="M17 4l-2 16"></path>
+              <path d="M4 9h16"></path>
+              <path d="M3 15h16"></path>
+            </svg></span><span>Hashtags</span></label>
+        <input type="text" id="defaultTags" placeholder="#HE5Solutions #Innovation">
+      </div>
+      <button type="submit" class="cta-btn primary-cta"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="M13 6l6 6-6 6"></path>
+          </svg></span><span>Continue to Editor</span></button>
+    </form>
+  </div>
+  <div class="section hidden" id="photoEditorSection">
+    <button class="back-btn" id="backBtn">&#8592;</button>
 
-    <div class="right-panel">
-      <div class="panel-title">
-        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"></path><path d="M8 10l4 4 4-4"></path><path d="M5 19h14"></path></svg></span>
-        <div class="copy">
-          <h3>Export & Share</h3>
-          <p>Pick the output format, download the post, or share it directly from your device.</p>
+    <div class="editor-layout">
+
+      <!-- LEFT SIDE -->
+      <div class="left-panel">
+        <div class="frame-container" id="captureArea">
+          <img id="userPhoto" class="photo">
+          <video id="cameraPreview" autoplay playsinline muted
+            style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+          </video>
+          <img id="frameOverlay" class="frame">
         </div>
       </div>
-      <div class="preview-meta">
-        <div class="option-card">
-          <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h6l4 4v14H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M14 3v5h5"></path></svg></span>
-          <div class="copy">
-            <span class="eyebrow">Output</span>
-            <span class="title">Choose the file type for export</span>
+
+      <!-- RIGHT SIDE -->
+      <div class="right-panel">
+        <div class="panel-shell">
+          <span class="panel-kicker">Editor Workspace</span>
+          <div class="panel-title">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 8a2 2 0 0 1 2-2h2l1.4-2h5.2L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+                <circle cx="12" cy="12.5" r="3.5"></circle>
+              </svg></span>
+            <div class="copy">
+              <h3>Capture & Align</h3>
+              <p>Use your gallery or camera, then fine-tune the frame and move to preview.</p>
+            </div>
+          </div>
+          <div class="editor-stats">
+            <div class="stat-card">
+              <strong>01</strong>
+              <span>Upload or Camera</span>
+            </div>
+            <div class="stat-card">
+              <strong>02</strong>
+              <span>Adjust Frame</span>
+            </div>
+            <div class="stat-card">
+              <strong>03</strong>
+              <span>Preview Output</span>
+            </div>
+          </div>
+          <div class="panel-divider"></div>
+          <div class="editor-story">
+            <span class="story-ribbon">Frame Setup Flow</span>
+            <h4>Built to keep every event post polished and aligned.</h4>
+            <p>Upload your frame, define the default message, and move through a cleaner creation flow that stays stable on both mobile and desktop.</p>
+            <div class="story-points">
+              <div class="story-chip">
+                <strong>Balanced</strong>
+                <span>Clean spacing for photo, frame, and controls.</span>
+              </div>
+              <div class="story-chip">
+                <strong>Ready</strong>
+                <span>Quick capture, retake, rotate, and preview actions.</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="select-wrap">
-          <select id="downloadFormat">
-            <option value="png">PNG</option>
-            <option value="jpg">JPG</option>
-            <option value="jpeg">JPEG</option>
-            <option value="pdf">PDF</option>
-          </select>
+        <div class="option-card">
+          <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="5" width="16" height="14" rx="2"></rect>
+              <path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path>
+              <circle cx="9" cy="9" r="1"></circle>
+            </svg></span>
+          <div class="copy">
+            <span class="eyebrow">Photo Input</span>
+            <span class="title">Choose a photo from your device</span>
+          </div>
         </div>
+        <input type="file" id="photoUpload" accept="image/*">
+        <div id="shutterWrapper" style="display:none; text-align:center; margin-top:10px;">
+          <button id="captureBtn" class="shutter-btn"></button>
+        </div>
+        <div class="tool-grid">
+          <button id="openCameraBtn" class="tool-btn cta-btn"><span class="icon"><svg viewBox="0 0 24 24"
+                aria-hidden="true">
+                <path d="M4 8a2 2 0 0 1 2-2h2l1.4-2h5.2L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+                <circle cx="12" cy="12.5" r="3.5"></circle>
+              </svg></span><span>Open Camera</span></button>
+          <button id="switchCameraBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24"
+                aria-hidden="true">
+                <path d="M7 7h8"></path>
+                <path d="M12 4l3 3-3 3"></path>
+                <path d="M17 17H9"></path>
+                <path d="M12 14l-3 3 3 3"></path>
+              </svg></span><span>Switch</span></button>
+          <div class="secondary-tool-row">
+            <button id="rotateBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <path d="M20 11a8 8 0 1 1-2.3-5.7"></path>
+                  <path d="M20 4v7h-7"></path>
+                </svg></span><span>Rotate</span></button>
+            <button id="retakeBtn" class="tool-btn hidden"><span class="icon"><svg viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"></path>
+                  <path d="M21 3v5h-5"></path>
+                  <path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"></path>
+                  <path d="M3 21v-5h5"></path>
+                </svg></span><span>Retake</span></button>
+          </div>
+        </div>
+
+        <button id="goToPreviewBtn" class="cta-btn primary-cta" style="margin-top:12px;"><span class="icon"><svg
+              viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12.5l4.2 4.2L19 7"></path>
+            </svg></span><span>Generate Preview</span></button>
+      </div>
+    </div>
+  </div>
+  <div id="notice" class="notice"></div>
+  <div class="section hidden" id="previewSection">
+
+    <button class="back-btn" id="backToEditorBtn">&#8592;</button>
+    <div class="editor-layout">
+
+      <div class="left-panel">
+
+        <div class="frame-container" id="previewArea">
+          <img id="previewImage">
+        </div>
+
+        <div class="caption">
+          <div id="previewCaption"></div>
+          <div id="previewHash"></div>
+        </div>
+
       </div>
 
-      <div class="preview-actions">
-        <button id="downloadBtn" class="cta-btn"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"></path><path d="M8 10l4 4 4-4"></path><path d="M5 19h14"></path></svg></span><span>Download</span></button>
-        <button id="shareBtn" class="cta-btn secondary-btn"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2"></circle><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="19" r="2"></circle><path d="M8 12l8-6"></path><path d="M8 12l8 6"></path></svg></span><span>Share</span></button>
+      <div class="right-panel">
+        <div class="panel-title">
+          <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v11"></path>
+              <path d="M8 10l4 4 4-4"></path>
+              <path d="M5 19h14"></path>
+            </svg></span>
+          <div class="copy">
+            <h3>Export & Share</h3>
+            <p>Pick the output format, download the post, or share it directly from your device.</p>
+          </div>
+        </div>
+        <div class="preview-meta">
+          <div class="option-card">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 3h6l4 4v14H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
+                <path d="M14 3v5h5"></path>
+              </svg></span>
+            <div class="copy">
+              <span class="eyebrow">Output</span>
+              <span class="title">Choose the file type for export</span>
+            </div>
+          </div>
+          <div class="select-wrap">
+            <select id="downloadFormat">
+              <option value="png">PNG</option>
+              <option value="jpg">JPG</option>
+              <option value="jpeg">JPEG</option>
+              <option value="pdf">PDF</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="preview-actions">
+          <button id="downloadBtn" class="cta-btn"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v11"></path>
+                <path d="M8 10l4 4 4-4"></path>
+                <path d="M5 19h14"></path>
+              </svg></span><span>Download</span></button>
+          <button id="shareBtn" class="cta-btn secondary-btn"><span class="icon"><svg viewBox="0 0 24 24"
+                aria-hidden="true">
+                <circle cx="18" cy="5" r="2"></circle>
+                <circle cx="6" cy="12" r="2"></circle>
+                <circle cx="18" cy="19" r="2"></circle>
+                <path d="M8 12l8-6"></path>
+                <path d="M8 12l8 6"></path>
+              </svg></span><span>Share</span></button>
+        </div>
+
       </div>
 
     </div>
-
   </div>
-</div>
-<script>
-const DEFAULT_TAGS=["#HE5Solutions","#EventBranding","#Innovation"];
-const frameUpload=document.getElementById("frameUpload");
-const defaultCaption=document.getElementById("defaultCaption");
-const defaultTags=document.getElementById("defaultTags");
-const setupSection=document.getElementById("setupSection");
-const photoEditorSection=document.getElementById("photoEditorSection");
-const previewSection=document.getElementById("previewSection");
-const goToPreviewBtn=document.getElementById("goToPreviewBtn");
-const backToEditorBtn=document.getElementById("backToEditorBtn");
-const previewImage=document.getElementById("previewImage");
-const previewCaption=document.getElementById("previewCaption");
-const previewHash=document.getElementById("previewHash");
-const frameOverlay=document.getElementById("frameOverlay");
-const userPhoto=document.getElementById("userPhoto");
-const photoUpload=document.getElementById("photoUpload");
-const captureArea=document.getElementById("captureArea");
-const notice=document.getElementById("notice");
-const backBtn=document.getElementById("backBtn");
-const openCameraBtn=document.getElementById("openCameraBtn");
-const cameraPreview=document.getElementById("cameraPreview");
-const captureBtn=document.getElementById("captureBtn");
-const switchCameraBtn=document.getElementById("switchCameraBtn");
-const rotateBtn = document.getElementById("rotateBtn");
-const downloadBtn=document.getElementById("downloadBtn");
-const shareBtn=document.getElementById("shareBtn");
-const downloadFormat=document.getElementById("downloadFormat");
-const previewArea=document.getElementById("previewArea");
-const retakeBtn = document.getElementById("retakeBtn");
-const shutterWrapper = document.getElementById("shutterWrapper");
+  <script>
+    const DEFAULT_TAGS = ["#HE5Solutions", "#EventBranding", "#Innovation"];
+    const frameUpload = document.getElementById("frameUpload");
+    const defaultCaption = document.getElementById("defaultCaption");
+    const defaultTags = document.getElementById("defaultTags");
+    const setupSection = document.getElementById("setupSection");
+    const photoEditorSection = document.getElementById("photoEditorSection");
+    const previewSection = document.getElementById("previewSection");
+    const goToPreviewBtn = document.getElementById("goToPreviewBtn");
+    const backToEditorBtn = document.getElementById("backToEditorBtn");
+    const previewImage = document.getElementById("previewImage");
+    const previewCaption = document.getElementById("previewCaption");
+    const previewHash = document.getElementById("previewHash");
+    const frameOverlay = document.getElementById("frameOverlay");
+    const userPhoto = document.getElementById("userPhoto");
+    const photoUpload = document.getElementById("photoUpload");
+    const captureArea = document.getElementById("captureArea");
+    const notice = document.getElementById("notice");
+    const backBtn = document.getElementById("backBtn");
+    const openCameraBtn = document.getElementById("openCameraBtn");
+    const cameraPreview = document.getElementById("cameraPreview");
+    const captureBtn = document.getElementById("captureBtn");
+    const switchCameraBtn = document.getElementById("switchCameraBtn");
+    const rotateBtn = document.getElementById("rotateBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const shareBtn = document.getElementById("shareBtn");
+    const downloadFormat = document.getElementById("downloadFormat");
+    const previewArea = document.getElementById("previewArea");
+    const retakeBtn = document.getElementById("retakeBtn");
+    const shutterWrapper = document.getElementById("shutterWrapper");
 
-let frameRatio = 1;
-let caption="", tags=[];
+    let frameRatio = 1;
+    let caption = "", tags = [];
 
-function enterFullscreen() {
-  const el = document.documentElement;
+    function enterFullscreen() {
+      const el = document.documentElement;
 
-  if (el.requestFullscreen) {
-    el.requestFullscreen();
-  } else if (el.webkitRequestFullscreen) {
-    el.webkitRequestFullscreen();
-  } else if (el.msRequestFullscreen) {
-    el.msRequestFullscreen();
-  }
-}
-function showStep(sectionToShow){
+      if (el.requestFullscreen) {
+        el.requestFullscreen();
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+      } else if (el.msRequestFullscreen) {
+        el.msRequestFullscreen();
+      }
+    }
+    function showStep(sectionToShow) {
 
-setupSection.classList.add("hidden");
-photoEditorSection.classList.add("hidden");
-previewSection.classList.add("hidden");
+      setupSection.classList.add("hidden");
+      photoEditorSection.classList.add("hidden");
+      previewSection.classList.add("hidden");
 
-sectionToShow.classList.remove("hidden");
+      sectionToShow.classList.remove("hidden");
 
-window.scrollTo(0,0);
-}
-/* ======================================================
-   TRUE FREE STYLE IMAGE ENGINE (CANVAS-LIKE)
-====================================================== */
-rotateBtn.onclick = () => {
-  rotation = (rotation + 90) % 360;
-  render();
-};
+      window.scrollTo(0, 0);
+    }
+    /* ======================================================
+       TRUE FREE STYLE IMAGE ENGINE (CANVAS-LIKE)
+    ====================================================== */
+    rotateBtn.onclick = () => {
+      rotation = (rotation + 90) % 360;
+      render();
+    };
 
-/* ======================================================
-   PROFESSIONAL FREE MOVE + SMART ZOOM ENGINE
-====================================================== */
+    /* ======================================================
+       PROFESSIONAL FREE MOVE + SMART ZOOM ENGINE
+    ====================================================== */
 
-let baseScale = 1;
-let scale = 1;
-let posX = 0;
-let posY = 0;
-let rotation = 0;
+    let baseScale = 1;
+    let scale = 1;
+    let posX = 0;
+    let posY = 0;
+    let rotation = 0;
 
-let startX = 0;
-let startY = 0;
+    let startX = 0;
+    let startY = 0;
 
-const pointers = new Map();
-let isDragging = false;
-let pinchStartDistance = 0;
-let pinchStartScale = 1;
+    const pointers = new Map();
+    let isDragging = false;
+    let pinchStartDistance = 0;
+    let pinchStartScale = 1;
 
-captureArea.style.touchAction = "none";
-userPhoto.draggable = false;
-captureArea.addEventListener("dragstart", e => e.preventDefault());
-userPhoto.addEventListener("dragstart", e => e.preventDefault());
+    captureArea.style.touchAction = "none";
+    userPhoto.draggable = false;
+    captureArea.addEventListener("dragstart", e => e.preventDefault());
+    userPhoto.addEventListener("dragstart", e => e.preventDefault());
 
-/* GPU Smooth Render */
-function render(){
-  requestAnimationFrame(()=>{
-    userPhoto.style.transform =
-      `translate(-50%, -50%) 
+    /* GPU Smooth Render */
+    function render() {
+      requestAnimationFrame(() => {
+        userPhoto.style.transform =
+          `translate(-50%, -50%) 
        translate3d(${posX}px, ${posY}px, 0) 
        scale(${scale}) 
        rotate(${rotation}deg)`;
-  });
-}
-
-/* Better Fit Logic */
-function fitImage(){
-
-  const rect = captureArea.getBoundingClientRect();
-
-  const imgW = userPhoto.naturalWidth;
-  const imgH = userPhoto.naturalHeight;
-
-  const containerRatio = rect.width / rect.height;
-  const imageRatio = imgW / imgH;
-
-  if (imageRatio > containerRatio) {
-    baseScale = rect.height / imgH;
-  } else {
-    baseScale = rect.width / imgW;
-  }
-
-  scale = baseScale;
-  posX = 0;
-  posY = 0;
-  rotation = 0;
-
-  render();
-}
-
-/* Zoom centered at pointer */
-function zoomAt(clientX, clientY, newScale){
-
-  newScale = Math.min(Math.max(newScale, baseScale * 0.2), baseScale * 8);
-
-  const rect = captureArea.getBoundingClientRect();
-
-  const cx = clientX - rect.left;
-  const cy = clientY - rect.top;
-
-  const dx = cx - rect.width / 2;
-  const dy = cy - rect.height / 2;
-
-  const ratio = newScale / scale;
-
-  posX -= dx * (ratio - 1);
-  posY -= dy * (ratio - 1);
-
-  scale = newScale;
-
-  render();
-}
-
-/* POINTER DOWN */
-captureArea.addEventListener("pointerdown", e=>{
-  if (e.pointerType !== "mouse") e.preventDefault();
-  captureArea.setPointerCapture(e.pointerId);
-  pointers.set(e.pointerId, e);
-
-  if(pointers.size === 1){
-    isDragging = true;
-    startX = e.clientX - posX;
-    startY = e.clientY - posY;
-  }
-});
-
-/* POINTER MOVE */
-captureArea.addEventListener("pointermove", e=>{
-  if(!pointers.has(e.pointerId)) return;
-  if (e.pointerType !== "mouse") e.preventDefault();
-
-  pointers.set(e.pointerId, e);
-
-  /* DRAG */
-  if(pointers.size === 1 && isDragging){
-    posX = e.clientX - startX;
-    posY = e.clientY - startY;
-    render();
-  }
-
-  /* PINCH ZOOM */
-  if(pointers.size === 2){
-    isDragging = false;
-
-    const pts = [...pointers.values()];
-    const dx = pts[1].clientX - pts[0].clientX;
-    const dy = pts[1].clientY - pts[0].clientY;
-    const distance = Math.hypot(dx, dy);
-
-    if(!pinchStartDistance){
-      pinchStartDistance = distance;
-      pinchStartScale = scale;
+      });
     }
 
-    const midX = (pts[0].clientX + pts[1].clientX) / 2;
-    const midY = (pts[0].clientY + pts[1].clientY) / 2;
+    /* Better Fit Logic */
+    function fitImage() {
 
-    zoomAt(midX, midY, pinchStartScale * (distance / pinchStartDistance));
-  }
-});
+      const rect = captureArea.getBoundingClientRect();
 
-/* POINTER UP */
-captureArea.addEventListener("pointerup", e=>{
-  pointers.delete(e.pointerId);
-  if (captureArea.hasPointerCapture(e.pointerId)) {
-    captureArea.releasePointerCapture(e.pointerId);
-  }
-  if(pointers.size < 2) pinchStartDistance = 0;
-  if(pointers.size === 0) isDragging = false;
-});
-captureArea.addEventListener("pointercancel", e=>{
-  pointers.delete(e.pointerId);
-  if (captureArea.hasPointerCapture(e.pointerId)) {
-    captureArea.releasePointerCapture(e.pointerId);
-  }
-  pinchStartDistance = 0;
-  if (pointers.size === 0) isDragging = false;
-});
-captureArea.addEventListener("lostpointercapture", e=>{
-  pointers.delete(e.pointerId);
-  pinchStartDistance = 0;
-  if (pointers.size === 0) isDragging = false;
-});
+      const imgW = userPhoto.naturalWidth;
+      const imgH = userPhoto.naturalHeight;
 
-/* WHEEL ZOOM (Desktop) */
-captureArea.addEventListener("wheel", e=>{
-  e.preventDefault();
-  zoomAt(e.clientX, e.clientY, scale * (1 - Math.sign(e.deltaY) * 0.1));
-},{passive:false});
-/* ======================================================
-   ADVANCED SECURE CAMERA ENGINE
-====================================================== */
-let currentFacing = "user";
+      const containerRatio = rect.width / rect.height;
+      const imageRatio = imgW / imgH;
 
-/* Secure camera start */
-let stream = null;
-let currentDeviceId = null;
-let availableCameras = [];
+      if (imageRatio > containerRatio) {
+        baseScale = rect.height / imgH;
+      } else {
+        baseScale = rect.width / imgW;
+      }
 
-async function getLocalCameras() {
+      scale = baseScale;
+      posX = 0;
+      posY = 0;
+      rotation = 0;
 
-  const devices = await navigator.mediaDevices.enumerateDevices();
-
-  const videoDevices = devices.filter(d => d.kind === "videoinput");
-
-  // Filter out virtual / phone cameras by label keywords
-  availableCameras = videoDevices.filter(device => {
-    const label = device.label.toLowerCase();
-
-    return !(
-      label.includes("virtual") ||
-      label.includes("droidcam") ||
-      label.includes("epoccam") ||
-      label.includes("continuity") ||
-      label.includes("phone") ||
-      label.includes("snap camera") ||
-      label.includes("obs")
-    );
-  });
-
-  return availableCameras;
-}
-
-async function startCamera() {
-
-  if (!navigator.mediaDevices?.getUserMedia) {
-    alert("Camera not supported.");
-    return;
-  }
-
-  try {
-
-    // Stop old stream
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      stream = null;
+      render();
     }
 
-    // 🔥 Get real local cameras
-    const cameras = await getLocalCameras();
+    /* Zoom centered at pointer */
+    function zoomAt(clientX, clientY, newScale) {
 
-    if (!cameras.length) {
-      alert("No local camera found.");
-      return;
+      newScale = Math.min(Math.max(newScale, baseScale * 0.2), baseScale * 8);
+
+      const rect = captureArea.getBoundingClientRect();
+
+      const cx = clientX - rect.left;
+      const cy = clientY - rect.top;
+
+      const dx = cx - rect.width / 2;
+      const dy = cy - rect.height / 2;
+
+      const ratio = newScale / scale;
+
+      posX -= dx * (ratio - 1);
+      posY -= dy * (ratio - 1);
+
+      scale = newScale;
+
+      render();
     }
 
-    // If first time, use first real camera
-    if (!currentDeviceId) {
-      currentDeviceId = cameras[0].deviceId;
+    /* POINTER DOWN */
+    captureArea.addEventListener("pointerdown", e => {
+      if (e.pointerType !== "mouse") e.preventDefault();
+      captureArea.setPointerCapture(e.pointerId);
+      pointers.set(e.pointerId, e);
+
+      if (pointers.size === 1) {
+        isDragging = true;
+        startX = e.clientX - posX;
+        startY = e.clientY - posY;
+      }
+    });
+
+    /* POINTER MOVE */
+    captureArea.addEventListener("pointermove", e => {
+      if (!pointers.has(e.pointerId)) return;
+      if (e.pointerType !== "mouse") e.preventDefault();
+
+      pointers.set(e.pointerId, e);
+
+      /* DRAG */
+      if (pointers.size === 1 && isDragging) {
+        posX = e.clientX - startX;
+        posY = e.clientY - startY;
+        render();
+      }
+
+      /* PINCH ZOOM */
+      if (pointers.size === 2) {
+        isDragging = false;
+
+        const pts = [...pointers.values()];
+        const dx = pts[1].clientX - pts[0].clientX;
+        const dy = pts[1].clientY - pts[0].clientY;
+        const distance = Math.hypot(dx, dy);
+
+        if (!pinchStartDistance) {
+          pinchStartDistance = distance;
+          pinchStartScale = scale;
+        }
+
+        const midX = (pts[0].clientX + pts[1].clientX) / 2;
+        const midY = (pts[0].clientY + pts[1].clientY) / 2;
+
+        zoomAt(midX, midY, pinchStartScale * (distance / pinchStartDistance));
+      }
+    });
+
+    /* POINTER UP */
+    captureArea.addEventListener("pointerup", e => {
+      pointers.delete(e.pointerId);
+      if (captureArea.hasPointerCapture(e.pointerId)) {
+        captureArea.releasePointerCapture(e.pointerId);
+      }
+      if (pointers.size < 2) pinchStartDistance = 0;
+      if (pointers.size === 0) isDragging = false;
+    });
+    captureArea.addEventListener("pointercancel", e => {
+      pointers.delete(e.pointerId);
+      if (captureArea.hasPointerCapture(e.pointerId)) {
+        captureArea.releasePointerCapture(e.pointerId);
+      }
+      pinchStartDistance = 0;
+      if (pointers.size === 0) isDragging = false;
+    });
+    captureArea.addEventListener("lostpointercapture", e => {
+      pointers.delete(e.pointerId);
+      pinchStartDistance = 0;
+      if (pointers.size === 0) isDragging = false;
+    });
+
+    /* WHEEL ZOOM (Desktop) */
+    captureArea.addEventListener("wheel", e => {
+      e.preventDefault();
+      zoomAt(e.clientX, e.clientY, scale * (1 - Math.sign(e.deltaY) * 0.1));
+    }, { passive: false });
+    /* ======================================================
+       ADVANCED SECURE CAMERA ENGINE
+    ====================================================== */
+    let currentFacing = "user";
+
+    /* Secure camera start */
+    let stream = null;
+    let currentDeviceId = null;
+    let availableCameras = [];
+
+    async function getLocalCameras() {
+
+      const devices = await navigator.mediaDevices.enumerateDevices();
+
+      const videoDevices = devices.filter(d => d.kind === "videoinput");
+
+      // Filter out virtual / phone cameras by label keywords
+      availableCameras = videoDevices.filter(device => {
+        const label = device.label.toLowerCase();
+
+        return !(
+          label.includes("virtual") ||
+          label.includes("droidcam") ||
+          label.includes("epoccam") ||
+          label.includes("continuity") ||
+          label.includes("phone") ||
+          label.includes("snap camera") ||
+          label.includes("obs")
+        );
+      });
+
+      return availableCameras;
     }
 
-    const constraints = {
-      video: {
-        deviceId: { exact: currentDeviceId },
-        width: { ideal: 1280 },
-        height: { ideal: 720 }
-      },
-      audio: false
+    async function startCamera() {
+
+      if (!navigator.mediaDevices?.getUserMedia) {
+        alert("Camera not supported.");
+        return;
+      }
+
+      try {
+
+        // Stop old stream
+        if (stream) {
+          stream.getTracks().forEach(track => track.stop());
+          stream = null;
+        }
+
+        // 🔥 Get real local cameras
+        const cameras = await getLocalCameras();
+
+        if (!cameras.length) {
+          alert("No local camera found.");
+          return;
+        }
+
+        // If first time, use first real camera
+        if (!currentDeviceId) {
+          currentDeviceId = cameras[0].deviceId;
+        }
+
+        const constraints = {
+          video: {
+            deviceId: { exact: currentDeviceId },
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          },
+          audio: false
+        };
+
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+        cameraPreview.srcObject = stream;
+
+        await new Promise(resolve => {
+          cameraPreview.onloadedmetadata = resolve;
+        });
+
+        await cameraPreview.play();
+
+        cameraPreview.style.display = "block";
+        userPhoto.style.display = "none";
+
+      } catch (err) {
+        console.error("Camera error:", err);
+        alert("Unable to access local camera.");
+      }
+    }
+    /* Open camera */
+    openCameraBtn.onclick = async () => {
+
+      await startCamera();
+
+      openCameraBtn.classList.add("hidden");
+      switchCameraBtn.classList.remove("hidden");
+      shutterWrapper.style.display = "block";
+      rotateBtn.classList.add("hidden");
+      retakeBtn.classList.add("hidden");
+      goToPreviewBtn.style.display = "none";
+    };
+    /* Switch camera */
+    switchCameraBtn.onclick = async () => {
+
+      if (availableCameras.length < 2) return;
+
+      const currentIndex = availableCameras.findIndex(
+        cam => cam.deviceId === currentDeviceId
+      );
+
+      const nextIndex = (currentIndex + 1) % availableCameras.length;
+
+      currentDeviceId = availableCameras[nextIndex].deviceId;
+
+      await startCamera();
     };
 
-    stream = await navigator.mediaDevices.getUserMedia(constraints);
+    /* Capture image */
+    captureBtn.onclick = () => {
 
-    cameraPreview.srcObject = stream;
+      const canvas = document.createElement("canvas");
+      canvas.width = cameraPreview.videoWidth;
+      canvas.height = cameraPreview.videoHeight;
 
-    await new Promise(resolve => {
-      cameraPreview.onloadedmetadata = resolve;
-    });
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(cameraPreview, 0, 0);
 
-    await cameraPreview.play();
+      userPhoto.onload = fitImage;
+      userPhoto.src = canvas.toDataURL("image/png");
 
-    cameraPreview.style.display = "block";
-    userPhoto.style.display = "none";
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
 
-  } catch (err) {
-    console.error("Camera error:", err);
-    alert("Unable to access local camera.");
-  }
-}
-/* Open camera */
-openCameraBtn.onclick = async () => {
+      cameraPreview.style.display = "none";
+      shutterWrapper.style.display = "none";
 
-  await startCamera();
+      userPhoto.style.display = "block";
 
-  openCameraBtn.classList.add("hidden");
-  switchCameraBtn.classList.remove("hidden");
-  shutterWrapper.style.display = "block";
-  rotateBtn.classList.add("hidden");
-  retakeBtn.classList.add("hidden");
-  goToPreviewBtn.style.display = "none";
-};
-/* Switch camera */
-switchCameraBtn.onclick = async () => {
+      switchCameraBtn.classList.add("hidden");
 
-  if (availableCameras.length < 2) return;
+      rotateBtn.classList.remove("hidden");
+      retakeBtn.classList.remove("hidden");
 
-  const currentIndex = availableCameras.findIndex(
-    cam => cam.deviceId === currentDeviceId
-  );
+      goToPreviewBtn.style.display = "block";
+    };
+    photoUpload.onchange = e => {
 
-  const nextIndex = (currentIndex + 1) % availableCameras.length;
+      const reader = new FileReader();
 
-  currentDeviceId = availableCameras[nextIndex].deviceId;
+      reader.onload = ev => {
 
-  await startCamera();
-};
+        userPhoto.onload = fitImage;
+        userPhoto.src = ev.target.result;
 
-/* Capture image */
-captureBtn.onclick = () => {
+        userPhoto.style.display = "block";
 
-  const canvas = document.createElement("canvas");
-  canvas.width = cameraPreview.videoWidth;
-  canvas.height = cameraPreview.videoHeight;
+        rotateBtn.classList.remove("hidden");   // ✅ ADD
+        retakeBtn.classList.remove("hidden");   // ✅ ADD
+      };
 
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(cameraPreview, 0, 0);
-
-  userPhoto.onload = fitImage;
-  userPhoto.src = canvas.toDataURL("image/png");
-
-  if (stream) {
-    stream.getTracks().forEach(track => track.stop());
-    stream = null;
-  }
-
-  cameraPreview.style.display = "none";
-  shutterWrapper.style.display = "none";
-
-  userPhoto.style.display = "block";
-
-  switchCameraBtn.classList.add("hidden");
-
-  rotateBtn.classList.remove("hidden");
-  retakeBtn.classList.remove("hidden");
-
-  goToPreviewBtn.style.display = "block";
-};
-photoUpload.onchange = e => {
-
-  const reader = new FileReader();
-
-  reader.onload = ev => {
-
-    userPhoto.onload = fitImage;
-    userPhoto.src = ev.target.result;
-
-    userPhoto.style.display = "block";
-
-    rotateBtn.classList.remove("hidden");   // ✅ ADD
-    retakeBtn.classList.remove("hidden");   // ✅ ADD
-  };
-
-  reader.readAsDataURL(e.target.files[0]);
-};
-/* ===============================
-   BACK TO EDITOR BUTTON FIX
-=============================== */
-
-backToEditorBtn.addEventListener("click", () => {
-
-  // Hide preview section
-  previewSection.classList.add("hidden");
-
-  // Show editor section
-  photoEditorSection.classList.remove("hidden");
-
-  // Clear notice message
-  notice.textContent = "";
-
-});
-function fixViewportHeight() {
-  document.documentElement.style.setProperty(
-    '--vh',
-    `${window.innerHeight * 0.01}px`
-  );
-}
-
-window.addEventListener('resize', fixViewportHeight);
-fixViewportHeight();
-
-/* ======================================================
-   FORM
-====================================================== */
-document.getElementById("setupForm").addEventListener("submit", e => {
-  e.preventDefault();
-
-  const file = frameUpload.files[0];
-  if (!file) {
-    alert("Upload frame image");
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = ev => {
-
-frameOverlay.onload = () => {
-
-  const naturalWidth = frameOverlay.naturalWidth;
-  const naturalHeight = frameOverlay.naturalHeight;
-
-  if (!naturalWidth || !naturalHeight) {
-    alert("Invalid frame image.");
-    return;
-  }
-
-  frameRatio = naturalWidth / naturalHeight;
-
-  // Apply globally via CSS variable
-  document.documentElement.style.setProperty(
-    "--frame-ratio",
-    frameRatio
-  );
-
-  caption = defaultCaption.value;
-  tags = [
-    ...DEFAULT_TAGS,
-    ...defaultTags.value.split(" ").filter(Boolean)
-  ];
-
-  showStep(photoEditorSection);
-  enterFullscreen();
-};
-
-    // ✅ Set image source AFTER defining onload
-    frameOverlay.src = ev.target.result;
-  };
-
-  reader.readAsDataURL(file);
-});
-backBtn.onclick = () => showStep(setupSection);
-backToEditorBtn.onclick = () => showStep(photoEditorSection);
-retakeBtn.onclick = async () => {
-
-  userPhoto.src = "";
-  userPhoto.style.display = "none";
-
-  scale = 1;
-  posX = 0;
-  posY = 0;
-  rotation = 0;
-  render();
-
-  rotateBtn.classList.add("hidden");
-  retakeBtn.classList.add("hidden");
-
-  goToPreviewBtn.style.display = "none";
-
-  await startCamera();
-
-  cameraPreview.style.display = "block";
-
-  shutterWrapper.style.display = "block";
-
-  switchCameraBtn.classList.remove("hidden");
-};
-
-/* ===============================
-   STEP 2 → STEP 3
-================================= */
-let finalCanvas = null;
-goToPreviewBtn.onclick = async () => {
-
-  if (!userPhoto.complete || !userPhoto.naturalWidth){
-    alert("Please upload or capture a photo first.");
-    return;
-  }
-
-  try {
-
-    finalCanvas = await generateCanvas(); // ✅ REMOVE "let"
-
-    previewImage.src = finalCanvas.toDataURL("image/png");
-
-    previewCaption.textContent = caption;
-    previewHash.textContent = tags.join(" ");
-
-showStep(previewSection);
-
-  } catch (err) {
-    console.error(err);
-    alert("Failed to generate preview.");
-  }
-
-};
-/* ======================================================
-   EXPORT
-====================================================== */
-async function generateCanvas() {
-
-  if (!userPhoto.src || !userPhoto.naturalWidth) {
-    alert("No image loaded.");
-    throw new Error("Image not loaded");
-  }
-
-  // Wait for layout to fully stabilize
-  await new Promise(resolve => setTimeout(resolve, 50));
-
-  const canvas = await html2canvas(captureArea, {
-    useCORS: true,
-    scale: window.devicePixelRatio, // fixed scale
-    backgroundColor: "#ffffff", // IMPORTANT FIX
-    removeContainer: true,
-    logging: false
-  });
-
-  if (!canvas.width || !canvas.height) {
-    throw new Error("Canvas render failed");
-  }
-
-  return canvas;
-}
-downloadBtn.onclick = async () => {
-
-  try {
-
-    if (!finalCanvas) {
-      alert("Preview not generated.");
-      return;
-    }
-
-    const format = downloadFormat.value;
-
-    if (format === "pdf") {
-
-  const { jsPDF } = window.jspdf;
-
-  const imgData = finalCanvas.toDataURL("image/png");
-
-  // Determine orientation automatically
-  const orientation =
-    finalCanvas.width > finalCanvas.height ? "landscape" : "portrait";
-
-  const pdf = new jsPDF({
-    orientation: orientation,
-    unit: "mm",
-    format: "a4"
-  });
-
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-
-  // Convert canvas pixels to proportional PDF size
-  const ratio = Math.min(
-    pageWidth / finalCanvas.width,
-    pageHeight / finalCanvas.height
-  );
-
-  const imgWidth = finalCanvas.width * ratio;
-  const imgHeight = finalCanvas.height * ratio;
-
-  const x = (pageWidth - imgWidth) / 2;
-  const y = (pageHeight - imgHeight) / 2;
-
-  pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
-
-  pdf.save("event-frame.pdf");
-  return;
-}
-    let mime = "image/png";
-    if (format === "jpg" || format === "jpeg") {
-      mime = "image/jpeg";
-    }
-
-    const blob = await new Promise(resolve =>
-      finalCanvas.toBlob(resolve, mime, 0.95)
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `event-frame.${format}`;
-    document.body.appendChild(a);
-    a.click();
-
-    URL.revokeObjectURL(url);
-    a.remove();
-
-  } catch (err) {
-    console.error(err);
-    alert("Download failed.");
-  }
-
-};
-shareBtn.addEventListener("click", async () => {
-
-  try {
-
-    if (!finalCanvas) {
-      alert("Preview not generated.");
-      return;
-    }
-
-    const format = downloadFormat.value.toLowerCase();
-
-    const formattedText = caption.trim()
-      ? `${caption.trim()}\n\n${tags.join(" ").trim()}`
-      : tags.join(" ").trim();
-
-    let blob;
-    let mime;
-    let extension;
-
+      reader.readAsDataURL(e.target.files[0]);
+    };
     /* ===============================
-       DETERMINE FORMAT PROPERLY
+       BACK TO EDITOR BUTTON FIX
     =============================== */
 
-    if (format === "png") {
-      
-      mime = "image/png";
-      extension = "png";
+    backToEditorBtn.addEventListener("click", () => {
+
+      // Hide preview section
+      previewSection.classList.add("hidden");
+
+      // Show editor section
+      photoEditorSection.classList.remove("hidden");
+
+      // Clear notice message
+      notice.textContent = "";
+
+    });
+    function fixViewportHeight() {
+      document.documentElement.style.setProperty(
+        '--vh',
+        `${window.innerHeight * 0.01}px`
+      );
     }
-    else if (format === "jpg" || format === "jpeg") {
-      mime = "image/jpeg";
-      extension = "jpg";
-    }
-    else if (format === "pdf") {
 
-  const { jsPDF } = window.jspdf;
+    window.addEventListener('resize', fixViewportHeight);
+    fixViewportHeight();
 
-  const imgData = finalCanvas.toDataURL("image/png");
+    /* ======================================================
+       FORM
+    ====================================================== */
+    document.getElementById("setupForm").addEventListener("submit", e => {
+      e.preventDefault();
 
-  const pdf = new jsPDF({
-    orientation: finalCanvas.width > finalCanvas.height ? "landscape" : "portrait",
-    unit: "px",
-    format: [finalCanvas.width, finalCanvas.height]
-  });
+      const file = frameUpload.files[0];
+      if (!file) {
+        alert("Upload frame image");
+        return;
+      }
 
-  pdf.addImage(
-    imgData,
-    "PNG",
-    0,
-    0,
-    finalCanvas.width,
-    finalCanvas.height
-  );
+      const reader = new FileReader();
 
-  const blob = pdf.output("blob");
+      reader.onload = ev => {
 
-  const file = new File([blob], "he5-event.pdf", {
-    type: "application/pdf"
-  });
+        frameOverlay.onload = () => {
 
-  await copyCaption(formattedText);
-  await shareFile(file, formattedText);
+          const naturalWidth = frameOverlay.naturalWidth;
+          const naturalHeight = frameOverlay.naturalHeight;
 
-  return;
-}
-    else {
-      mime = "image/png";
-      extension = "png";
-    }
+          if (!naturalWidth || !naturalHeight) {
+            alert("Invalid frame image.");
+            return;
+          }
+
+          frameRatio = naturalWidth / naturalHeight;
+
+          // Apply globally via CSS variable
+          document.documentElement.style.setProperty(
+            "--frame-ratio",
+            frameRatio
+          );
+
+          caption = defaultCaption.value;
+          tags = [
+            ...DEFAULT_TAGS,
+            ...defaultTags.value.split(" ").filter(Boolean)
+          ];
+
+          showStep(photoEditorSection);
+          enterFullscreen();
+        };
+
+        // ✅ Set image source AFTER defining onload
+        frameOverlay.src = ev.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    });
+    backBtn.onclick = () => showStep(setupSection);
+    backToEditorBtn.onclick = () => showStep(photoEditorSection);
+    retakeBtn.onclick = async () => {
+
+      userPhoto.src = "";
+      userPhoto.style.display = "none";
+
+      scale = 1;
+      posX = 0;
+      posY = 0;
+      rotation = 0;
+      render();
+
+      rotateBtn.classList.add("hidden");
+      retakeBtn.classList.add("hidden");
+
+      goToPreviewBtn.style.display = "none";
+
+      await startCamera();
+
+      cameraPreview.style.display = "block";
+
+      shutterWrapper.style.display = "block";
+
+      switchCameraBtn.classList.remove("hidden");
+    };
 
     /* ===============================
-       FORCE MIME CORRECTLY
+       STEP 2 → STEP 3
+    ================================= */
+    let finalCanvas = null;
+    goToPreviewBtn.onclick = async () => {
+
+      if (!userPhoto.complete || !userPhoto.naturalWidth) {
+        alert("Please upload or capture a photo first.");
+        return;
+      }
+
+      try {
+
+        finalCanvas = await generateCanvas(); // ✅ REMOVE "let"
+
+        previewImage.src = finalCanvas.toDataURL("image/png");
+
+        previewCaption.textContent = caption;
+        previewHash.textContent = tags.join(" ");
+
+        showStep(previewSection);
+
+      } catch (err) {
+        console.error(err);
+        alert("Failed to generate preview.");
+      }
+
+    };
+    /* ======================================================
+       EXPORT
+    ====================================================== */
+    async function generateCanvas() {
+
+      if (!userPhoto.src || !userPhoto.naturalWidth) {
+        alert("No image loaded.");
+        throw new Error("Image not loaded");
+      }
+
+      // Wait for layout to fully stabilize
+      await new Promise(resolve => setTimeout(resolve, 50));
+
+      const canvas = await html2canvas(captureArea, {
+        useCORS: true,
+        scale: window.devicePixelRatio, // fixed scale
+        backgroundColor: "#ffffff", // IMPORTANT FIX
+        removeContainer: true,
+        logging: false
+      });
+
+      if (!canvas.width || !canvas.height) {
+        throw new Error("Canvas render failed");
+      }
+
+      return canvas;
+    }
+    downloadBtn.onclick = async () => {
+
+      try {
+
+        if (!finalCanvas) {
+          alert("Preview not generated.");
+          return;
+        }
+
+        const format = downloadFormat.value;
+
+        if (format === "pdf") {
+
+          const { jsPDF } = window.jspdf;
+
+          const imgData = finalCanvas.toDataURL("image/png");
+
+          // Determine orientation automatically
+          const orientation =
+            finalCanvas.width > finalCanvas.height ? "landscape" : "portrait";
+
+          const pdf = new jsPDF({
+            orientation: orientation,
+            unit: "mm",
+            format: "a4"
+          });
+
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+
+          // Convert canvas pixels to proportional PDF size
+          const ratio = Math.min(
+            pageWidth / finalCanvas.width,
+            pageHeight / finalCanvas.height
+          );
+
+          const imgWidth = finalCanvas.width * ratio;
+          const imgHeight = finalCanvas.height * ratio;
+
+          const x = (pageWidth - imgWidth) / 2;
+          const y = (pageHeight - imgHeight) / 2;
+
+          pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
+
+          pdf.save("event-frame.pdf");
+          return;
+        }
+        let mime = "image/png";
+        if (format === "jpg" || format === "jpeg") {
+          mime = "image/jpeg";
+        }
+
+        const blob = await new Promise(resolve =>
+          finalCanvas.toBlob(resolve, mime, 0.95)
+        );
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `event-frame.${format}`;
+        document.body.appendChild(a);
+        a.click();
+
+        URL.revokeObjectURL(url);
+        a.remove();
+
+      } catch (err) {
+        console.error(err);
+        alert("Download failed.");
+      }
+
+    };
+    shareBtn.addEventListener("click", async () => {
+
+      try {
+
+        if (!finalCanvas) {
+          alert("Preview not generated.");
+          return;
+        }
+
+        const format = downloadFormat.value.toLowerCase();
+
+        const formattedText = caption.trim()
+          ? `${caption.trim()}\n\n${tags.join(" ").trim()}`
+          : tags.join(" ").trim();
+
+        let blob;
+        let mime;
+        let extension;
+
+        /* ===============================
+           DETERMINE FORMAT PROPERLY
+        =============================== */
+
+        if (format === "png") {
+
+          mime = "image/png";
+          extension = "png";
+        }
+        else if (format === "jpg" || format === "jpeg") {
+          mime = "image/jpeg";
+          extension = "jpg";
+        }
+        else if (format === "pdf") {
+
+          const { jsPDF } = window.jspdf;
+
+          const imgData = finalCanvas.toDataURL("image/png");
+
+          const pdf = new jsPDF({
+            orientation: finalCanvas.width > finalCanvas.height ? "landscape" : "portrait",
+            unit: "px",
+            format: [finalCanvas.width, finalCanvas.height]
+          });
+
+          pdf.addImage(
+            imgData,
+            "PNG",
+            0,
+            0,
+            finalCanvas.width,
+            finalCanvas.height
+          );
+
+          const blob = pdf.output("blob");
+
+          const file = new File([blob], "he5-event.pdf", {
+            type: "application/pdf"
+          });
+
+          await copyCaption(formattedText);
+          await shareFile(file, formattedText);
+
+          return;
+        }
+        else {
+          mime = "image/png";
+          extension = "png";
+        }
+
+        /* ===============================
+           FORCE MIME CORRECTLY
+        =============================== */
+
+        blob = await new Promise((resolve, reject) => {
+          finalCanvas.toBlob((b) => {
+            if (!b) reject("Blob failed");
+            else resolve(b);
+          }, mime, 0.95);
+        });
+
+        const file = new File(
+          [blob],
+          `he5-event.${extension}`,
+          { type: mime }
+        );
+
+        await copyCaption(formattedText);
+        await shareFile(file, formattedText);
+
+      } catch (err) {
+        console.error(err);
+        alert("Share failed or cancelled.");
+      }
+
+    });
+
+
+    /* ===============================
+       SHARE HELPER
     =============================== */
 
-    blob = await new Promise((resolve, reject) => {
-      finalCanvas.toBlob((b) => {
-        if (!b) reject("Blob failed");
-        else resolve(b);
-      }, mime, 0.95);
-    });
+    async function shareFile(file, text) {
 
-    const file = new File(
-      [blob],
-      `he5-event.${extension}`,
-      { type: mime }
-    );
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
 
-    await copyCaption(formattedText);
-    await shareFile(file, formattedText);
+        await navigator.share({
+          files: [file],
+          text: text
+        });
 
-  } catch (err) {
-    console.error(err);
-    alert("Share failed or cancelled.");
-  }
+      } else {
 
-});
+        await navigator.share({
+          text: text
+        });
+
+        alert("File sharing not supported. Caption copied.");
+      }
+    }
 
 
-/* ===============================
-   SHARE HELPER
-=============================== */
+    /* ===============================
+       CLIPBOARD HELPER
+    =============================== */
 
-async function shareFile(file, text) {
+    async function copyCaption(text) {
 
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-
-    await navigator.share({
-      files: [file],
-      text: text
-    });
-
-  } else {
-
-    await navigator.share({
-      text: text
-    });
-
-    alert("File sharing not supported. Caption copied.");
-  }
-}
-
-
-/* ===============================
-   CLIPBOARD HELPER
-=============================== */
-
-async function copyCaption(text) {
-
-  if (navigator.clipboard && window.isSecureContext) {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch {}
-  }
-}
-</script>
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch { }
+      }
+    }
+  </script>
 
 </body>
+
 </html>
