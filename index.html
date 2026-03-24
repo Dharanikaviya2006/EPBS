@@ -4160,8 +4160,6 @@
             <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path>
           </svg></span><span>HE5 Event Branding Studio</span></div>
       <h2 style="text-align:center;color:white">Frame Setup</h2>
-      <p>Upload your frame, define the default message, and move through a cleaner creation flow that stays stable on
-        both mobile and desktop.</p>
     </div>
     <form id="setupForm">
       <div class="form-header">
@@ -4190,7 +4188,6 @@
             <span class="upload-drop-status" id="frameUploadStatus" aria-live="polite">PNG preferred for transparent frames.</span>
           </label>
         </div>
-        <div class="upload-hint">Transparent PNG files usually give the cleanest overlay result.</div>
       </div>
       <div class="field-group">
         <label class="field-label" for="defaultCaption"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
@@ -5224,43 +5221,30 @@
 
         await copyCaption(formattedText);
         await shareFile(file, formattedText);
-
       } catch (err) {
         console.error(err);
         alert("Share failed or cancelled.");
       }
-
     });
-
-
     /* ===============================
        SHARE HELPER
     =============================== */
-
     async function shareFile(file, text) {
-
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-
         await navigator.share({
           files: [file],
           text: text
         });
-
       } else {
-
         await navigator.share({
           text: text
         });
-
         alert("File sharing not supported. Caption copied.");
       }
     }
-
-
     /* ===============================
        CLIPBOARD HELPER
     =============================== */
-
     async function copyCaption(text) {
 
       if (navigator.clipboard && window.isSecureContext) {
@@ -5271,5 +5255,4 @@
     }
   </script>
 </body>
-
 </html>
