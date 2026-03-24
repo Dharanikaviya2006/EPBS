@@ -1249,6 +1249,7 @@
       gap: 10px;
 
       padding: 14px;
+      overflow: visible;
     }
 
     #previewArea {
@@ -4195,7 +4196,9 @@
       box-shadow: 0 10px 24px rgba(10, 37, 69, 0.12);
       z-index: 10002;
       pointer-events: none;
-      white-space: nowrap;
+      max-width: min(calc(100vw - 24px), 560px);
+      text-align: center;
+      white-space: normal;
     }
 
     #notice:empty {
@@ -4227,16 +4230,16 @@
 
       #photoEditorSection .editor-layout,
       #previewSection .editor-layout {
-        width: min(1220px, calc(100vw - 32px));
-        max-width: calc(100vw - 32px);
-        height: min(calc(100dvh - 32px), 820px);
+        width: min(1240px, calc(100vw - 24px));
+        max-width: calc(100vw - 24px);
+        height: min(calc(100dvh - 24px), 836px);
       }
 
       #photoEditorSection .right-panel,
       #previewSection .right-panel {
         width: clamp(320px, 28vw, 360px);
-        padding: 20px 18px;
-        gap: 12px;
+        padding: 18px 16px;
+        gap: 10px;
       }
 
       .tool-btn,
@@ -4653,6 +4656,544 @@
       }
     }
 
+    /* ===== CAMERA LIVE MODE ===== */
+    #photoEditorSection.camera-live.section {
+      --camera-live-shell-pad: 10px;
+      min-height: var(--camera-live-height, 100dvh);
+      height: var(--camera-live-height, 100dvh);
+      padding:
+        calc(env(safe-area-inset-top, 0px) + var(--camera-live-shell-pad))
+        calc(env(safe-area-inset-right, 0px) + var(--camera-live-shell-pad))
+        calc(env(safe-area-inset-bottom, 0px) + var(--camera-live-shell-pad))
+        calc(env(safe-area-inset-left, 0px) + var(--camera-live-shell-pad));
+      align-items: stretch;
+      justify-content: stretch;
+      overflow: hidden;
+    }
+
+    #photoEditorSection.camera-live .editor-layout {
+      width: calc(
+        var(--camera-live-width, 100vw) -
+        env(safe-area-inset-left, 0px) -
+        env(safe-area-inset-right, 0px) -
+        (var(--camera-live-shell-pad) * 2)
+      );
+      max-width: none;
+      height: calc(
+        var(--camera-live-height, 100dvh) -
+        env(safe-area-inset-top, 0px) -
+        env(safe-area-inset-bottom, 0px) -
+        (var(--camera-live-shell-pad) * 2)
+      );
+      min-height: 0;
+      margin: 0 auto;
+      border-radius: clamp(22px, 2vw, 30px);
+    }
+
+    #photoEditorSection.camera-live .left-panel {
+      min-width: 0;
+      min-height: 0;
+      flex: 1 1 0;
+      height: 100%;
+      padding: clamp(10px, 1.2vw, 18px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #photoEditorSection.camera-live .frame-container {
+      width: min(100%, var(--camera-fit-width, 100%)) !important;
+      max-width: none !important;
+      max-height: var(--camera-fit-height, calc(100dvh - 90px)) !important;
+      border-radius: clamp(20px, 2vw, 28px);
+      box-shadow:
+        0 36px 90px rgba(10, 37, 69, 0.18),
+        inset 0 2px 12px rgba(255, 255, 255, 0.42);
+    }
+
+    #photoEditorSection.camera-live .frame-container:hover {
+      transform: none;
+    }
+
+    #photoEditorSection.camera-live .right-panel {
+      width: clamp(320px, 28vw, 360px);
+      max-width: 360px;
+      height: 100%;
+      justify-content: center;
+      gap: 12px;
+      padding: clamp(16px, 1.5vw, 22px) clamp(14px, 1.25vw, 18px);
+      align-self: stretch;
+    }
+
+    #photoEditorSection.camera-live .tool-grid,
+    #photoEditorSection.camera-live #shutterWrapper {
+      width: 100%;
+      margin-inline: auto;
+    }
+
+    #photoEditorSection.camera-live #shutterWrapper {
+      margin-top: 0 !important;
+    }
+
+    @media (max-width:1023px) and (orientation:portrait) {
+      #photoEditorSection.camera-live.section {
+        --camera-live-shell-pad: 6px;
+      }
+
+      #photoEditorSection.camera-live .editor-layout {
+        width: calc(
+          var(--camera-live-width, 100vw) -
+          env(safe-area-inset-left, 0px) -
+          env(safe-area-inset-right, 0px) -
+          (var(--camera-live-shell-pad) * 2)
+        );
+        height: calc(
+          var(--camera-live-height, 100dvh) -
+          env(safe-area-inset-top, 0px) -
+          env(safe-area-inset-bottom, 0px) -
+          (var(--camera-live-shell-pad) * 2)
+        );
+        min-height: 0;
+        border-radius: 22px;
+      }
+
+      #photoEditorSection.camera-live .left-panel {
+        padding: 8px 8px 4px;
+      }
+
+      #photoEditorSection.camera-live .right-panel {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        padding: 8px 10px 10px;
+        gap: 8px;
+        justify-content: flex-end;
+        align-items: stretch;
+        border-left: none;
+        border-top: 1px solid rgba(18, 59, 107, 0.08);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 247, 255, 0.94)),
+          radial-gradient(circle at top center, rgba(255, 153, 48, 0.12), transparent 48%);
+        overflow: hidden;
+      }
+
+      #photoEditorSection.camera-live .right-panel::before,
+      #photoEditorSection.camera-live .right-panel::after {
+        display: none;
+      }
+
+      #photoEditorSection.camera-live .panel-shell,
+      #photoEditorSection.camera-live #photoUpload {
+        display: none !important;
+      }
+
+      #photoEditorSection.camera-live .secondary-tool-row {
+        display: none;
+      }
+
+      #photoEditorSection.camera-live .tool-grid,
+      #photoEditorSection.camera-live #shutterWrapper {
+        width: 100%;
+        max-width: none;
+      }
+
+      #photoEditorSection.camera-live .tool-grid {
+        gap: 8px;
+        padding-top: 0;
+      }
+
+      #photoEditorSection.camera-live #switchCameraBtn {
+        width: 100%;
+        max-width: none;
+        min-height: 48px;
+        border-radius: 18px;
+      }
+
+      #photoEditorSection.camera-live #shutterWrapper {
+        padding: 0 0 2px;
+      }
+
+      #photoEditorSection.camera-live .shutter-btn {
+        width: 64px;
+        height: 64px;
+      }
+
+      #photoEditorSection.camera-live .shutter-btn::after {
+        width: 44px;
+        height: 44px;
+      }
+    }
+
+    @media (max-width:1023px) and (orientation:landscape) {
+      #photoEditorSection.camera-live .editor-layout {
+        height: calc(100dvh - 16px);
+      }
+
+      #photoEditorSection.camera-live .left-panel {
+        padding: 8px;
+      }
+
+      #photoEditorSection.camera-live .right-panel {
+        width: clamp(176px, 23vw, 220px);
+        padding: 8px;
+        gap: 8px;
+      }
+
+      #photoEditorSection.camera-live .panel-shell,
+      #photoEditorSection.camera-live #photoUpload {
+        display: none !important;
+      }
+
+      #photoEditorSection.camera-live .secondary-tool-row {
+        display: none;
+      }
+
+      #photoEditorSection.camera-live .tool-grid,
+      #photoEditorSection.camera-live #shutterWrapper {
+        width: 100%;
+      }
+    }
+
+    /* ===== CUSTOM EXPORT DROPDOWN ===== */
+    #previewSection .export-format-card {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 246, 255, 0.94)),
+        linear-gradient(145deg, rgba(255, 153, 48, 0.14), rgba(18, 59, 107, 0.08));
+      border: 1px solid rgba(18, 59, 107, 0.12);
+      box-shadow:
+        0 22px 42px rgba(10, 37, 69, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.82);
+      position: relative;
+      overflow: visible;
+    }
+
+    #previewSection .export-format-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #ff7a00, #ffb35b, #123b6b);
+    }
+
+    #previewSection .export-format-card>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    #previewSection .export-format-kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid rgba(255, 153, 48, 0.18);
+      color: #9b4d00;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    }
+
+    #previewSection .select-wrap {
+      width: 100%;
+      max-width: none;
+      position: relative;
+      --menu-gap: 10px;
+    }
+
+    #previewSection .select-wrap.is-open {
+      z-index: 15;
+    }
+
+    #previewSection .select-wrap::before,
+    #previewSection .select-wrap::after {
+      display: none;
+    }
+
+    #previewSection .select-trigger,
+    #previewSection .select-option {
+      width: 100%;
+      margin-top: 0;
+      text-align: left;
+      border: none;
+      background: none;
+      box-shadow: none;
+      transform: none;
+      color: inherit;
+    }
+
+    #previewSection .select-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 90px;
+      padding: 18px 20px 18px 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(18, 59, 107, 0.14);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 250, 255, 0.95)),
+        radial-gradient(circle at top right, rgba(18, 59, 107, 0.08), transparent 44%);
+      box-shadow:
+        0 18px 34px rgba(10, 37, 69, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+      cursor: pointer;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+
+    #previewSection .select-trigger:hover {
+      transform: translateY(-1px);
+      border-color: rgba(18, 59, 107, 0.22);
+      box-shadow:
+        0 24px 40px rgba(10, 37, 69, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    #previewSection .select-trigger:focus-visible,
+    #previewSection .select-option:focus-visible {
+      outline: none;
+      box-shadow:
+        0 0 0 4px rgba(18, 59, 107, 0.12),
+        0 20px 36px rgba(10, 37, 69, 0.12);
+    }
+
+    #previewSection .select-wrap.is-open .select-trigger {
+      border-color: rgba(18, 59, 107, 0.22);
+      box-shadow:
+        0 24px 40px rgba(10, 37, 69, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    #previewSection .select-trigger-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    #previewSection .select-trigger-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #6d7d8f;
+    }
+
+    #previewSection .select-trigger-value {
+      font-size: clamp(22px, 2.1vw, 30px);
+      line-height: 1;
+      font-weight: 700;
+      color: var(--navy-deep);
+      letter-spacing: .01em;
+    }
+
+    #previewSection .select-trigger-hint {
+      font-size: 12px;
+      line-height: 1.35;
+      color: #55687a;
+    }
+
+    #previewSection .select-trigger-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      border-right: 3px solid #243d5d;
+      border-bottom: 3px solid #243d5d;
+      transform: rotate(45deg);
+      transition: transform .2s ease;
+      margin-right: 4px;
+    }
+
+    #previewSection .select-wrap.is-open .select-trigger-icon {
+      transform: rotate(225deg);
+    }
+
+    #previewSection .select-menu {
+      position: absolute;
+      top: calc(100% + var(--menu-gap));
+      left: 0;
+      right: 0;
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(244, 248, 255, 0.98));
+      border: 1px solid rgba(18, 59, 107, 0.12);
+      box-shadow:
+        0 24px 44px rgba(10, 37, 69, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+      z-index: 12;
+      max-height: min(320px, calc(100dvh - 160px));
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(18, 59, 107, 0.3) rgba(255, 255, 255, 0.55);
+    }
+
+    #previewSection .select-wrap.menu-up .select-menu {
+      top: auto;
+      bottom: calc(100% + var(--menu-gap));
+    }
+
+    #previewSection .select-menu::-webkit-scrollbar {
+      width: 9px;
+    }
+
+    #previewSection .select-menu::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 999px;
+    }
+
+    #previewSection .select-menu::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(18, 59, 107, 0.42), rgba(255, 153, 48, 0.48));
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.82);
+    }
+
+    #previewSection .select-option {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      min-height: 62px;
+      padding: 13px 15px;
+      border-radius: 18px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    #previewSection .select-option:hover {
+      transform: none;
+      background:
+        linear-gradient(180deg, rgba(255, 247, 239, 0.98), rgba(255, 255, 255, 0.98));
+      border-color: rgba(255, 153, 48, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    }
+
+    #previewSection .select-option.is-active {
+      background:
+        linear-gradient(180deg, rgba(255, 245, 233, 0.98), rgba(255, 255, 255, 0.98));
+      border-color: rgba(255, 153, 48, 0.22);
+      box-shadow:
+        0 12px 20px rgba(255, 153, 48, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.88);
+    }
+
+    #previewSection .select-option-title {
+      font-size: 18px;
+      line-height: 1.05;
+      font-weight: 700;
+      color: var(--navy-deep);
+    }
+
+    #previewSection .select-option-hint {
+      font-size: 12px;
+      line-height: 1.35;
+      color: #5e7081;
+    }
+
+    @media (max-width:1023px) {
+      #previewSection .export-format-card {
+        padding: 14px;
+        border-radius: 22px;
+      }
+
+      #previewSection .select-trigger {
+        min-height: 76px;
+        padding: 14px 16px 14px 18px;
+        border-radius: 20px;
+      }
+
+      #previewSection .select-trigger-value {
+        font-size: 20px;
+      }
+
+      #previewSection .select-trigger-hint,
+      #previewSection .select-option-hint {
+        font-size: 11px;
+      }
+
+      #previewSection .select-menu {
+        top: calc(100% + 8px);
+        padding: 8px;
+        border-radius: 20px;
+        max-height: min(260px, calc(100dvh - 132px));
+      }
+
+      #previewSection .select-option {
+        min-height: 54px;
+        padding: 11px 13px;
+        border-radius: 16px;
+      }
+
+      #previewSection .select-option-title {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width:1023px) and (orientation:landscape) {
+      #previewSection .export-format-card {
+        padding: 0;
+        background: none;
+        border: none;
+        box-shadow: none;
+      }
+
+      #previewSection .export-format-card::before,
+      #previewSection .export-format-kicker,
+      #previewSection .select-trigger-label,
+      #previewSection .select-trigger-hint,
+      #previewSection .select-option-hint {
+        display: none;
+      }
+
+      #previewSection .select-trigger {
+        min-height: 38px !important;
+        padding: 8px 10px 8px 12px !important;
+        border-radius: 14px !important;
+      }
+
+      #previewSection .select-trigger-value {
+        font-size: 12px !important;
+      }
+
+      #previewSection .select-trigger-icon {
+        width: 10px;
+        height: 10px;
+        border-right-width: 2px;
+        border-bottom-width: 2px;
+      }
+
+      #previewSection .select-menu {
+        top: calc(100% + 6px);
+        padding: 6px;
+        border-radius: 16px;
+        max-height: min(180px, calc(100dvh - 88px));
+      }
+
+      #previewSection .select-option {
+        min-height: 38px !important;
+        padding: 8px 10px !important;
+        border-radius: 12px !important;
+      }
+
+      #previewSection .select-option-title {
+        font-size: 12px !important;
+      }
+    }
+
     .hidden {
       display: none !important;
       opacity: 0;
@@ -4819,17 +5360,6 @@
             </div>
           </div>
         </div>
-        <div class="option-card">
-          <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="4" y="5" width="16" height="14" rx="2"></rect>
-              <path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path>
-              <circle cx="9" cy="9" r="1"></circle>
-            </svg></span>
-          <div class="copy">
-            <span class="eyebrow">Photo Input</span>
-            <span class="title">Choose a photo from your device</span>
-          </div>
-        </div>
         <input type="file" id="photoUpload" accept="image/*">
         <div id="shutterWrapper" style="display:none; text-align:center; margin-top:10px;">
           <button id="captureBtn" class="shutter-btn"></button>
@@ -4902,23 +5432,44 @@
           </div>
         </div>
         <div class="preview-meta">
-          <div class="option-card">
-            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 3h6l4 4v14H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-                <path d="M14 3v5h5"></path>
-              </svg></span>
-            <div class="copy">
-              <span class="eyebrow">Output</span>
-              <span class="title">Choose the file type for export</span>
+          <div class="export-format-card">
+            <span class="export-format-kicker">Output Format</span>
+            <div class="select-wrap" id="downloadFormatWrap">
+              <select id="downloadFormat" class="hidden" aria-hidden="true" tabindex="-1">
+                <option value="png">PNG</option>
+                <option value="jpg">JPG</option>
+                <option value="jpeg">JPEG</option>
+                <option value="pdf">PDF</option>
+              </select>
+              <button type="button" id="downloadFormatTrigger" class="select-trigger" aria-haspopup="listbox"
+                aria-expanded="false" aria-controls="downloadFormatMenu">
+                <span class="select-trigger-copy">
+                  <span class="select-trigger-label">Choose your export type</span>
+                  <span class="select-trigger-value" id="downloadFormatValue">PNG</span>
+                  <span class="select-trigger-hint" id="downloadFormatHint">Lossless image for crisp frame exports</span>
+                </span>
+                <span class="select-trigger-icon" aria-hidden="true"></span>
+              </button>
+              <div class="select-menu hidden" id="downloadFormatMenu" role="listbox"
+                aria-labelledby="downloadFormatTrigger">
+                <button type="button" class="select-option" data-value="png" role="option" aria-selected="false">
+                  <span class="select-option-title">PNG</span>
+                  <span class="select-option-hint">Lossless image for crisp frame exports</span>
+                </button>
+                <button type="button" class="select-option" data-value="jpg" role="option" aria-selected="false">
+                  <span class="select-option-title">JPG</span>
+                  <span class="select-option-hint">Balanced quality with a smaller shareable file</span>
+                </button>
+                <button type="button" class="select-option" data-value="jpeg" role="option" aria-selected="false">
+                  <span class="select-option-title">JPEG</span>
+                  <span class="select-option-hint">Compact image format for quick posting</span>
+                </button>
+                <button type="button" class="select-option" data-value="pdf" role="option" aria-selected="false">
+                  <span class="select-option-title">PDF</span>
+                  <span class="select-option-hint">Document-ready export for printing and sharing</span>
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="select-wrap">
-            <select id="downloadFormat">
-              <option value="png">PNG</option>
-              <option value="jpg">JPG</option>
-              <option value="jpeg">JPEG</option>
-              <option value="pdf">PDF</option>
-            </select>
           </div>
         </div>
 
@@ -4956,6 +5507,7 @@
     const setupSection = document.getElementById("setupSection");
     const photoEditorSection = document.getElementById("photoEditorSection");
     const previewSection = document.getElementById("previewSection");
+    const photoEditorLeftPanel = photoEditorSection.querySelector(".left-panel");
     const goToPreviewBtn = document.getElementById("goToPreviewBtn");
     const backToEditorBtn = document.getElementById("backToEditorBtn");
     const previewImage = document.getElementById("previewImage");
@@ -4975,6 +5527,14 @@
     const downloadBtn = document.getElementById("downloadBtn");
     const shareBtn = document.getElementById("shareBtn");
     const downloadFormat = document.getElementById("downloadFormat");
+    const downloadFormatWrap = document.getElementById("downloadFormatWrap");
+    const downloadFormatTrigger = document.getElementById("downloadFormatTrigger");
+    const downloadFormatMenu = document.getElementById("downloadFormatMenu");
+    const downloadFormatValue = document.getElementById("downloadFormatValue");
+    const downloadFormatHint = document.getElementById("downloadFormatHint");
+    const downloadFormatOptions = Array.from(
+      document.querySelectorAll("#downloadFormatMenu .select-option")
+    );
     const previewArea = document.getElementById("previewArea");
     const retakeBtn = document.getElementById("retakeBtn");
     const shutterWrapper = document.getElementById("shutterWrapper");
@@ -5009,6 +5569,140 @@
       frameUploadPrompt.textContent = "Drag and drop file here";
       frameUploadAction.textContent = "Browse for file";
       frameUploadStatus.textContent = helperText;
+    }
+
+    function syncDownloadFormatUI() {
+      const activeOption = downloadFormatOptions.find(
+        option => option.dataset.value === downloadFormat.value
+      ) || downloadFormatOptions[0];
+
+      if (!activeOption) {
+        return;
+      }
+
+      downloadFormatValue.textContent =
+        activeOption.querySelector(".select-option-title").textContent;
+      downloadFormatHint.textContent =
+        activeOption.querySelector(".select-option-hint").textContent;
+
+      downloadFormatOptions.forEach(option => {
+        const isSelected = option.dataset.value === downloadFormat.value;
+        option.classList.toggle("is-active", isSelected);
+        option.setAttribute("aria-selected", isSelected ? "true" : "false");
+        option.tabIndex = isSelected ? 0 : -1;
+      });
+    }
+
+    function openDownloadFormatMenu() {
+      syncDownloadFormatMenuLayout();
+      downloadFormatWrap.classList.add("is-open");
+      downloadFormatMenu.classList.remove("hidden");
+      downloadFormatTrigger.setAttribute("aria-expanded", "true");
+    }
+
+    function closeDownloadFormatMenu() {
+      downloadFormatWrap.classList.remove("is-open");
+      downloadFormatWrap.classList.remove("menu-up");
+      downloadFormatMenu.classList.add("hidden");
+      downloadFormatTrigger.setAttribute("aria-expanded", "false");
+    }
+
+    function focusSelectedDownloadFormatOption() {
+      const activeOption = downloadFormatOptions.find(
+        option => option.dataset.value === downloadFormat.value
+      ) || downloadFormatOptions[0];
+
+      if (activeOption) {
+        activeOption.focus();
+      }
+    }
+
+    function syncDownloadFormatMenuLayout() {
+      const viewport = getViewportMetrics();
+      const triggerRect = downloadFormatTrigger.getBoundingClientRect();
+      const viewportPadding = 12;
+      const gap = viewport.width <= 1023 ? 8 : 10;
+      const minimumSpace = 140;
+      const spaceBelow = viewport.height - triggerRect.bottom - viewportPadding;
+      const spaceAbove = triggerRect.top - viewportPadding;
+      const shouldOpenUp = spaceBelow < minimumSpace && spaceAbove > spaceBelow;
+      const availableSpace = shouldOpenUp ? spaceAbove : spaceBelow;
+
+      downloadFormatWrap.classList.toggle("menu-up", shouldOpenUp);
+      downloadFormatWrap.style.setProperty("--menu-gap", `${gap}px`);
+      downloadFormatMenu.style.maxHeight = `${Math.max(96, availableSpace - gap)}px`;
+    }
+
+    function getViewportMetrics() {
+      const viewport = window.visualViewport;
+      return {
+        width: Math.round(viewport ? viewport.width : window.innerWidth),
+        height: Math.round(viewport ? viewport.height : window.innerHeight)
+      };
+    }
+
+    function syncCameraViewportVars() {
+      const viewport = getViewportMetrics();
+      photoEditorSection.style.setProperty("--camera-live-width", `${viewport.width}px`);
+      photoEditorSection.style.setProperty("--camera-live-height", `${viewport.height}px`);
+    }
+
+    function getFullscreenElement() {
+      return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || null;
+    }
+
+    function isFullscreenActive() {
+      return Boolean(getFullscreenElement());
+    }
+
+    function syncLiveCameraFit() {
+      syncCameraViewportVars();
+
+      if (!photoEditorSection.classList.contains("camera-live")) {
+        captureArea.style.removeProperty("--camera-fit-width");
+        captureArea.style.removeProperty("--camera-fit-height");
+        return;
+      }
+
+      const panelRect = photoEditorLeftPanel.getBoundingClientRect();
+      const panelStyles = getComputedStyle(photoEditorLeftPanel);
+      const horizontalPadding =
+        (parseFloat(panelStyles.paddingLeft) || 0) +
+        (parseFloat(panelStyles.paddingRight) || 0);
+      const verticalPadding =
+        (parseFloat(panelStyles.paddingTop) || 0) +
+        (parseFloat(panelStyles.paddingBottom) || 0);
+      const availableWidth = Math.max(0, panelRect.width - horizontalPadding);
+      const availableHeight = Math.max(0, panelRect.height - verticalPadding);
+
+      if (!availableWidth || !availableHeight) {
+        return;
+      }
+
+      const ratio = Math.max(frameRatio || 1, 0.1);
+      let nextWidth = availableWidth;
+      let nextHeight = nextWidth / ratio;
+
+      if (nextHeight > availableHeight) {
+        nextHeight = availableHeight;
+        nextWidth = nextHeight * ratio;
+      }
+
+      captureArea.style.setProperty("--camera-fit-width", `${nextWidth}px`);
+      captureArea.style.setProperty("--camera-fit-height", `${nextHeight}px`);
+    }
+
+    function setCameraLiveMode(isLive) {
+      photoEditorSection.classList.toggle("camera-live", isLive);
+      syncCameraViewportVars();
+
+      if (!isLive) {
+        captureArea.style.removeProperty("--camera-fit-width");
+        captureArea.style.removeProperty("--camera-fit-height");
+        return;
+      }
+
+      requestAnimationFrame(syncLiveCameraFit);
     }
 
     function setFrameFile(file) {
@@ -5047,6 +5741,200 @@
       syncFrameUploadState(file);
       return true;
     }
+
+    downloadFormatTrigger.addEventListener("click", () => {
+      if (downloadFormatWrap.classList.contains("is-open")) {
+        closeDownloadFormatMenu();
+        return;
+      }
+
+      openDownloadFormatMenu();
+      focusSelectedDownloadFormatOption();
+    });
+
+    downloadFormatTrigger.addEventListener("keydown", event => {
+      if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openDownloadFormatMenu();
+        focusSelectedDownloadFormatOption();
+      }
+    });
+
+    downloadFormatOptions.forEach((option, index) => {
+      option.addEventListener("click", () => {
+        downloadFormat.value = option.dataset.value;
+        syncDownloadFormatUI();
+        closeDownloadFormatMenu();
+        downloadFormatTrigger.focus();
+      });
+
+      option.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closeDownloadFormatMenu();
+          downloadFormatTrigger.focus();
+          return;
+        }
+
+        if (event.key === "ArrowDown") {
+          event.preventDefault();
+          downloadFormatOptions[(index + 1) % downloadFormatOptions.length].focus();
+        }
+
+        if (event.key === "ArrowUp") {
+          event.preventDefault();
+          downloadFormatOptions[
+            (index - 1 + downloadFormatOptions.length) % downloadFormatOptions.length
+          ].focus();
+        }
+      });
+    });
+
+    downloadFormatMenu.addEventListener("wheel", event => {
+      event.stopPropagation();
+    }, { passive: true });
+
+    downloadFormatMenu.addEventListener("touchmove", event => {
+      event.stopPropagation();
+    }, { passive: true });
+
+    downloadFormat.addEventListener("change", syncDownloadFormatUI);
+
+    document.addEventListener("click", event => {
+      if (!downloadFormatWrap.contains(event.target)) {
+        closeDownloadFormatMenu();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeDownloadFormatMenu();
+      }
+    });
+
+    function shouldPinEditorFullscreen() {
+      return window.matchMedia("(min-width: 1024px)").matches;
+    }
+
+    function shouldRecoverPinnedEditorFullscreen() {
+      return (
+        editorStepFullscreenPinned &&
+        shouldPinEditorFullscreen() &&
+        !photoEditorSection.classList.contains("hidden")
+      );
+    }
+
+    function clearPinnedEditorFullscreenRecovery() {
+      pinnedFullscreenRecoveryTimerIds.forEach(timerId => {
+        window.clearTimeout(timerId);
+      });
+      pinnedFullscreenRecoveryTimerIds = [];
+    }
+
+    function schedulePinnedEditorFullscreenRecovery(
+      delays = [0, 120, 260, 480, 820, 1300, 2000]
+    ) {
+      clearPinnedEditorFullscreenRecovery();
+
+      if (!shouldRecoverPinnedEditorFullscreen() || isFullscreenActive()) {
+        return;
+      }
+
+      delays.forEach(delay => {
+        const timerId = window.setTimeout(() => {
+          if (!shouldRecoverPinnedEditorFullscreen() || isFullscreenActive()) {
+            clearPinnedEditorFullscreenRecovery();
+            return;
+          }
+
+          void restorePinnedEditorFullscreen();
+        }, delay);
+
+        pinnedFullscreenRecoveryTimerIds.push(timerId);
+      });
+    }
+
+    function triggerPinnedEditorFullscreenRecovery() {
+      if (!shouldRecoverPinnedEditorFullscreen()) {
+        clearPinnedEditorFullscreenRecovery();
+        return;
+      }
+
+      if (document.visibilityState === "hidden") {
+        return;
+      }
+
+      if (isFullscreenActive()) {
+        clearPinnedEditorFullscreenRecovery();
+        syncLiveCameraFit();
+        return;
+      }
+
+      void restorePinnedEditorFullscreen();
+      schedulePinnedEditorFullscreenRecovery([140, 360, 780, 1400]);
+    }
+
+    async function restorePinnedEditorFullscreen() {
+      if (
+        !editorStepFullscreenPinned ||
+        !shouldPinEditorFullscreen() ||
+        photoEditorSection.classList.contains("hidden") ||
+        isFullscreenActive()
+      ) {
+        clearPinnedEditorFullscreenRecovery();
+        syncLiveCameraFit();
+        return isFullscreenActive();
+      }
+
+      if (isAttemptingPinnedFullscreenRestore) {
+        return isFullscreenActive();
+      }
+
+      isAttemptingPinnedFullscreenRestore = true;
+
+      try {
+        await enterFullscreen({ pinForEditorStep: true });
+      } finally {
+        isAttemptingPinnedFullscreenRestore = false;
+      }
+
+      if (isFullscreenActive()) {
+        clearPinnedEditorFullscreenRecovery();
+      }
+
+      syncLiveCameraFit();
+      return isFullscreenActive();
+    }
+
+    function handleFullscreenChange() {
+      if (!isFullscreenActive()) {
+        cameraSessionOwnsFullscreen = false;
+        if (shouldRecoverPinnedEditorFullscreen()) {
+          schedulePinnedEditorFullscreenRecovery();
+        }
+      } else {
+        clearPinnedEditorFullscreenRecovery();
+      }
+
+      syncLiveCameraFit();
+
+      if (downloadFormatWrap.classList.contains("is-open")) {
+        syncDownloadFormatMenuLayout();
+      }
+    }
+
+    ["fullscreenchange", "webkitfullscreenchange", "MSFullscreenChange"].forEach(eventName => {
+      document.addEventListener(eventName, handleFullscreenChange);
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        triggerPinnedEditorFullscreenRecovery();
+      }
+    });
+    window.addEventListener("focus", triggerPinnedEditorFullscreenRecovery);
+    document.addEventListener("pointerdown", triggerPinnedEditorFullscreenRecovery, true);
+    document.addEventListener("keydown", triggerPinnedEditorFullscreenRecovery, true);
+    syncDownloadFormatUI();
 
     frameUpload.addEventListener("change", () => {
       const file = frameUpload.files && frameUpload.files[0]
@@ -5100,16 +5988,42 @@
 
     syncFrameUploadState();
 
-    function enterFullscreen() {
+    async function enterFullscreen({ pinForEditorStep = false } = {}) {
       const el = document.documentElement;
+      const shouldPinForEditorStep = pinForEditorStep && shouldPinEditorFullscreen();
 
-      if (el.requestFullscreen) {
-        el.requestFullscreen();
-      } else if (el.webkitRequestFullscreen) {
-        el.webkitRequestFullscreen();
-      } else if (el.msRequestFullscreen) {
-        el.msRequestFullscreen();
+      if (shouldPinForEditorStep) {
+        editorStepFullscreenPinned = true;
       }
+
+      if (isFullscreenActive()) {
+        cameraSessionOwnsFullscreen = true;
+        syncLiveCameraFit();
+        return true;
+      }
+
+      cameraSessionOwnsFullscreen = false;
+
+      try {
+        if (el.requestFullscreen) {
+          await el.requestFullscreen();
+        } else if (el.webkitRequestFullscreen) {
+          await Promise.resolve(el.webkitRequestFullscreen());
+        } else if (el.msRequestFullscreen) {
+          await Promise.resolve(el.msRequestFullscreen());
+        }
+      } catch (error) {
+        console.debug("Fullscreen request skipped:", error);
+      }
+
+      cameraSessionOwnsFullscreen = isFullscreenActive();
+      if (cameraSessionOwnsFullscreen) {
+        clearPinnedEditorFullscreenRecovery();
+      } else if (shouldPinForEditorStep) {
+        schedulePinnedEditorFullscreenRecovery();
+      }
+      syncLiveCameraFit();
+      return cameraSessionOwnsFullscreen;
     }
 
     function fitSetupLayout() {
@@ -5142,8 +6056,10 @@
 
       sectionToShow.classList.remove("hidden");
 
+      closeDownloadFormatMenu();
       window.scrollTo(0, 0);
       requestAnimationFrame(fitSetupLayout);
+      requestAnimationFrame(syncLiveCameraFit);
     }
     /* ======================================================
        TRUE FREE STYLE IMAGE ENGINE (CANVAS-LIKE)
@@ -5320,16 +6236,148 @@
     let stream = null;
     let currentDeviceId = null;
     let availableCameras = [];
+    let noticeTimer = 0;
+    let cameraSessionOwnsFullscreen = false;
+    let editorStepFullscreenPinned = false;
+    let pinnedFullscreenRecoveryTimerIds = [];
+    let isAttemptingPinnedFullscreenRestore = false;
+
+    function showNotice(message = "", duration = 0) {
+      window.clearTimeout(noticeTimer);
+      notice.textContent = message;
+
+      if (message && duration > 0) {
+        noticeTimer = window.setTimeout(() => {
+          if (notice.textContent === message) {
+            notice.textContent = "";
+          }
+        }, duration);
+      }
+    }
+
+    function stopCameraStream() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+
+      cameraPreview.pause();
+      cameraPreview.srcObject = null;
+      cameraPreview.style.display = "none";
+    }
+
+    async function exitFullscreenIfOwned({ force = false } = {}) {
+      clearPinnedEditorFullscreenRecovery();
+      isAttemptingPinnedFullscreenRestore = false;
+
+      if (force) {
+        editorStepFullscreenPinned = false;
+      } else if (editorStepFullscreenPinned) {
+        syncLiveCameraFit();
+        return false;
+      }
+
+      if (!cameraSessionOwnsFullscreen) {
+        syncLiveCameraFit();
+        return false;
+      }
+
+      const fullscreenElement = getFullscreenElement();
+      cameraSessionOwnsFullscreen = false;
+
+      if (!fullscreenElement) {
+        syncLiveCameraFit();
+        return false;
+      }
+
+      try {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          await Promise.resolve(document.webkitExitFullscreen());
+        } else if (document.msExitFullscreen) {
+          await Promise.resolve(document.msExitFullscreen());
+        }
+      } catch (error) {
+        console.debug("Fullscreen exit skipped:", error);
+      }
+
+      syncLiveCameraFit();
+      return !isFullscreenActive();
+    }
+
+    async function resetLiveCameraSession({
+      showOpenCamera = true,
+      clearNotice = false,
+      exitFullscreen = true,
+      forceExitFullscreen = false
+    } = {}) {
+      stopCameraStream();
+      setCameraLiveMode(false);
+      cameraPreview.style.display = "none";
+      shutterWrapper.style.display = "none";
+      switchCameraBtn.classList.add("hidden");
+
+      if (showOpenCamera) {
+        openCameraBtn.classList.remove("hidden");
+      } else {
+        openCameraBtn.classList.add("hidden");
+      }
+
+      if (clearNotice) {
+        showNotice("");
+      }
+
+      if (exitFullscreen) {
+        await exitFullscreenIfOwned({ force: forceExitFullscreen });
+      }
+    }
+
+    function getCameraErrorMessage(err) {
+      if (!window.isSecureContext) {
+        return "Open this page over HTTPS to use the camera.";
+      }
+
+      switch (err && err.name) {
+        case "NotAllowedError":
+        case "PermissionDeniedError":
+          return "Camera permission was denied. Please allow access and try again.";
+        case "NotFoundError":
+        case "DevicesNotFoundError":
+          return "No camera was found on this device.";
+        case "NotReadableError":
+        case "TrackStartError":
+          return "The camera is busy in another app or browser tab.";
+        case "OverconstrainedError":
+        case "ConstraintNotSatisfiedError":
+          return "The selected camera is unavailable. Retrying with the default camera may help.";
+        case "AbortError":
+          return "Camera startup was interrupted. Please try again.";
+        case "SecurityError":
+          return "The browser blocked camera access for this page.";
+        default:
+          return "Unable to access the camera. Please check browser permission and try again.";
+      }
+    }
 
     async function getLocalCameras() {
+
+      if (!navigator.mediaDevices?.enumerateDevices) {
+        availableCameras = [];
+        return availableCameras;
+      }
 
       const devices = await navigator.mediaDevices.enumerateDevices();
 
       const videoDevices = devices.filter(d => d.kind === "videoinput");
 
       // Filter out virtual / phone cameras by label keywords
-      availableCameras = videoDevices.filter(device => {
-        const label = device.label.toLowerCase();
+      const filteredVideoDevices = videoDevices.filter(device => {
+        const label = (device.label || "").toLowerCase();
+
+        if (!label) {
+          return true;
+        }
 
         return !(
           label.includes("virtual") ||
@@ -5342,71 +6390,173 @@
         );
       });
 
+      availableCameras = filteredVideoDevices.length ? filteredVideoDevices : videoDevices;
+
       return availableCameras;
+    }
+
+    async function requestCameraStream() {
+      const baseVideoConstraints = {
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      };
+
+      if (currentDeviceId) {
+        try {
+          return await navigator.mediaDevices.getUserMedia({
+            video: {
+              ...baseVideoConstraints,
+              deviceId: { exact: currentDeviceId }
+            },
+            audio: false
+          });
+        } catch (err) {
+          if (err.name !== "OverconstrainedError" && err.name !== "NotFoundError") {
+            throw err;
+          }
+
+          currentDeviceId = null;
+        }
+      }
+
+      return navigator.mediaDevices.getUserMedia({
+        video: {
+          ...baseVideoConstraints,
+          facingMode: { ideal: currentFacing }
+        },
+        audio: false
+      });
+    }
+
+    async function attachStreamToPreview(nextStream) {
+      stream = nextStream;
+      cameraPreview.srcObject = stream;
+
+      if (cameraPreview.readyState < HTMLMediaElement.HAVE_METADATA) {
+        await new Promise(resolve => {
+          cameraPreview.addEventListener("loadedmetadata", resolve, { once: true });
+        });
+      }
+
+      await cameraPreview.play();
+
+      cameraPreview.style.display = "block";
+      userPhoto.style.display = "none";
+    }
+
+    async function syncCurrentCameraState() {
+      const activeTrack = stream ? stream.getVideoTracks()[0] : null;
+      const settings = activeTrack && activeTrack.getSettings
+        ? activeTrack.getSettings()
+        : {};
+
+      if (settings.deviceId) {
+        currentDeviceId = settings.deviceId;
+      }
+
+      if (settings.facingMode === "user" || settings.facingMode === "environment") {
+        currentFacing = settings.facingMode;
+      }
+
+      const cameras = await getLocalCameras();
+
+      if (!currentDeviceId && cameras.length) {
+        currentDeviceId = cameras[0].deviceId || null;
+      }
+
+      return cameras;
+    }
+
+    function showSwitchCameraControl() {
+      switchCameraBtn.classList.remove("hidden");
+    }
+
+    async function switchCameraWithFallback() {
+      const previousDeviceId = currentDeviceId;
+      const previousFacing = currentFacing;
+
+      if (availableCameras.length >= 2) {
+        const currentIndex = availableCameras.findIndex(
+          cam => cam.deviceId === currentDeviceId
+        );
+
+        const nextIndex = currentIndex >= 0
+          ? (currentIndex + 1) % availableCameras.length
+          : 0;
+
+        currentDeviceId = availableCameras[nextIndex].deviceId;
+      } else {
+        currentDeviceId = null;
+        currentFacing = currentFacing === "environment" ? "user" : "environment";
+      }
+
+      const cameraStarted = await startCamera();
+
+      if (cameraStarted) {
+        return true;
+      }
+
+      currentDeviceId = previousDeviceId;
+      currentFacing = previousFacing;
+
+      const restoredCamera = await startCamera();
+
+      if (restoredCamera) {
+        showNotice("No alternate camera was found.", 2200);
+      }
+
+      return false;
     }
 
     async function startCamera() {
 
+      if (!window.isSecureContext) {
+        showNotice("Open this page over HTTPS to use the camera.");
+        return false;
+      }
+
       if (!navigator.mediaDevices?.getUserMedia) {
-        alert("Camera not supported.");
-        return;
+        showNotice("Camera access is not supported in this browser.");
+        return false;
       }
 
       try {
+        showNotice("Requesting camera permission...");
+        stopCameraStream();
 
-        // Stop old stream
-        if (stream) {
-          stream.getTracks().forEach(track => track.stop());
-          stream = null;
-        }
+        const nextStream = await requestCameraStream();
+        await attachStreamToPreview(nextStream);
 
-        // 🔥 Get real local cameras
-        const cameras = await getLocalCameras();
-
-        if (!cameras.length) {
-          alert("No local camera found.");
-          return;
-        }
-
-        // If first time, use first real camera
-        if (!currentDeviceId) {
-          currentDeviceId = cameras[0].deviceId;
-        }
-
-        const constraints = {
-          video: {
-            deviceId: { exact: currentDeviceId },
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
-          },
-          audio: false
-        };
-
-        stream = await navigator.mediaDevices.getUserMedia(constraints);
-
-        cameraPreview.srcObject = stream;
-
-        await new Promise(resolve => {
-          cameraPreview.onloadedmetadata = resolve;
-        });
-
-        await cameraPreview.play();
-
-        cameraPreview.style.display = "block";
-        userPhoto.style.display = "none";
+        await syncCurrentCameraState();
+        setCameraLiveMode(true);
+        showNotice("Camera ready.", 2200);
+        return true;
 
       } catch (err) {
+        stopCameraStream();
+        setCameraLiveMode(false);
         console.error("Camera error:", err);
-        alert("Unable to access local camera.");
+        showNotice(getCameraErrorMessage(err));
+        return false;
       }
     }
     /* Open camera */
     openCameraBtn.onclick = async () => {
 
-      await startCamera();
+      await enterFullscreen({ pinForEditorStep: shouldPinEditorFullscreen() });
+      const cameraStarted = await startCamera();
+      await restorePinnedEditorFullscreen();
+
+      if (!cameraStarted) {
+        await resetLiveCameraSession({
+          showOpenCamera: true,
+          exitFullscreen: !editorStepFullscreenPinned
+        });
+        return;
+      }
 
       openCameraBtn.classList.add("hidden");
-      switchCameraBtn.classList.remove("hidden");
+      showSwitchCameraControl();
       shutterWrapper.style.display = "block";
       rotateBtn.classList.add("hidden");
       retakeBtn.classList.add("hidden");
@@ -5414,22 +6564,29 @@
     };
     /* Switch camera */
     switchCameraBtn.onclick = async () => {
+      const cameraStarted = await switchCameraWithFallback();
+      await restorePinnedEditorFullscreen();
 
-      if (availableCameras.length < 2) return;
+      if (!cameraStarted && !stream) {
+        await resetLiveCameraSession({
+          showOpenCamera: true,
+          exitFullscreen: !editorStepFullscreenPinned
+        });
+        return;
+      }
 
-      const currentIndex = availableCameras.findIndex(
-        cam => cam.deviceId === currentDeviceId
-      );
-
-      const nextIndex = (currentIndex + 1) % availableCameras.length;
-
-      currentDeviceId = availableCameras[nextIndex].deviceId;
-
-      await startCamera();
+      openCameraBtn.classList.add("hidden");
+      showSwitchCameraControl();
+      shutterWrapper.style.display = "block";
     };
 
     /* Capture image */
-    captureBtn.onclick = () => {
+    captureBtn.onclick = async () => {
+
+      if (!stream || !cameraPreview.videoWidth || !cameraPreview.videoHeight) {
+        showNotice("Wait for the camera preview to finish loading.");
+        return;
+      }
 
       const canvas = document.createElement("canvas");
       canvas.width = cameraPreview.videoWidth;
@@ -5441,24 +6598,31 @@
       userPhoto.onload = fitImage;
       userPhoto.src = canvas.toDataURL("image/png");
 
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-        stream = null;
-      }
-
-      cameraPreview.style.display = "none";
-      shutterWrapper.style.display = "none";
+      await resetLiveCameraSession({
+        showOpenCamera: false,
+        exitFullscreen: !editorStepFullscreenPinned
+      });
 
       userPhoto.style.display = "block";
-
-      switchCameraBtn.classList.add("hidden");
 
       rotateBtn.classList.remove("hidden");
       retakeBtn.classList.remove("hidden");
 
       goToPreviewBtn.style.display = "block";
     };
-    photoUpload.onchange = e => {
+    photoUpload.onchange = async e => {
+
+      const file = e.target.files && e.target.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      await resetLiveCameraSession({
+        showOpenCamera: true,
+        clearNotice: true,
+        exitFullscreen: !editorStepFullscreenPinned
+      });
 
       const reader = new FileReader();
 
@@ -5473,7 +6637,7 @@
         retakeBtn.classList.remove("hidden");   // ✅ ADD
       };
 
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(file);
     };
     /* ===============================
        BACK TO EDITOR BUTTON FIX
@@ -5492,14 +6656,29 @@
 
     });
     function fixViewportHeight() {
+      const viewport = getViewportMetrics();
       document.documentElement.style.setProperty(
         '--vh',
-        `${window.innerHeight * 0.01}px`
+        `${viewport.height * 0.01}px`
       );
+      document.documentElement.style.setProperty(
+        '--vw',
+        `${viewport.width * 0.01}px`
+      );
+      syncCameraViewportVars();
       fitSetupLayout();
+      syncLiveCameraFit();
+
+      if (downloadFormatWrap.classList.contains("is-open")) {
+        syncDownloadFormatMenuLayout();
+      }
     }
 
     window.addEventListener('resize', fixViewportHeight);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", fixViewportHeight);
+      window.visualViewport.addEventListener("scroll", fixViewportHeight);
+    }
     fixViewportHeight();
     window.addEventListener("load", fitSetupLayout);
     if (document.fonts && document.fonts.ready) {
@@ -5509,13 +6688,19 @@
     /* ======================================================
        FORM
     ====================================================== */
-    document.getElementById("setupForm").addEventListener("submit", e => {
+    document.getElementById("setupForm").addEventListener("submit", async e => {
       e.preventDefault();
 
       const file = selectedFrameFile || frameUpload.files[0];
       if (!file) {
         alert("Upload frame image");
         return;
+      }
+
+      if (shouldPinEditorFullscreen()) {
+        await enterFullscreen({ pinForEditorStep: true });
+      } else {
+        editorStepFullscreenPinned = false;
       }
 
       const reader = new FileReader();
@@ -5528,6 +6713,7 @@
           const naturalHeight = frameOverlay.naturalHeight;
 
           if (!naturalWidth || !naturalHeight) {
+            void exitFullscreenIfOwned({ force: true });
             alert("Invalid frame image.");
             return;
           }
@@ -5547,7 +6733,6 @@
           ];
 
           showStep(photoEditorSection);
-          enterFullscreen();
         };
 
         // ✅ Set image source AFTER defining onload
@@ -5556,8 +6741,24 @@
 
       reader.readAsDataURL(file);
     });
-    backBtn.onclick = () => showStep(setupSection);
-    backToEditorBtn.onclick = () => showStep(photoEditorSection);
+    backBtn.onclick = async () => {
+      await resetLiveCameraSession({
+        showOpenCamera: true,
+        clearNotice: true,
+        exitFullscreen: true,
+        forceExitFullscreen: true
+      });
+      showStep(setupSection);
+    };
+    backToEditorBtn.onclick = async () => {
+      if (shouldPinEditorFullscreen()) {
+        await enterFullscreen({ pinForEditorStep: true });
+      } else {
+        editorStepFullscreenPinned = false;
+      }
+
+      showStep(photoEditorSection);
+    };
     retakeBtn.onclick = async () => {
 
       userPhoto.src = "";
@@ -5574,13 +6775,22 @@
 
       goToPreviewBtn.style.display = "none";
 
-      await startCamera();
+      const cameraStarted = await startCamera();
+      await restorePinnedEditorFullscreen();
+
+      if (!cameraStarted) {
+        await resetLiveCameraSession({
+          showOpenCamera: true,
+          exitFullscreen: !editorStepFullscreenPinned
+        });
+        return;
+      }
 
       cameraPreview.style.display = "block";
 
       shutterWrapper.style.display = "block";
 
-      switchCameraBtn.classList.remove("hidden");
+      showSwitchCameraControl();
     };
 
     /* ===============================
@@ -5603,6 +6813,7 @@
         previewCaption.textContent = caption;
         previewHash.textContent = tags.join(" ");
 
+        await exitFullscreenIfOwned({ force: true });
         showStep(previewSection);
 
       } catch (err) {
