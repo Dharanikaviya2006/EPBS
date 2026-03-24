@@ -4853,6 +4853,378 @@
       }
     }
 
+    /* ===== STEP 2 MOBILE PORTRAIT: FINAL AUTHORITATIVE OVERRIDES ===== */
+    @media (max-width:1023px) and (orientation:portrait) {
+      #photoEditorSection.section {
+        padding:
+          calc(env(safe-area-inset-top, 0px) + 56px)
+          8px
+          calc(env(safe-area-inset-bottom, 0px) + 8px);
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+      #photoEditorSection .editor-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto;
+        width: 100%;
+        max-width: 520px;
+        height: calc(
+          100dvh -
+          env(safe-area-inset-top, 0px) -
+          env(safe-area-inset-bottom, 0px) -
+          72px
+        );
+        max-height: calc(
+          100dvh -
+          env(safe-area-inset-top, 0px) -
+          env(safe-area-inset-bottom, 0px) -
+          72px
+        );
+        margin: 0 auto;
+        padding: 0;
+        gap: 0;
+        border-radius: 22px;
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(240, 246, 255, 0.96));
+      }
+
+      #photoEditorSection .left-panel {
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        padding: clamp(8px, 1.4vh, 10px) clamp(8px, 2.4vw, 10px) clamp(6px, 1vh, 8px);
+        align-items: center;
+        justify-content: center;
+        border-right: none;
+        border-bottom: 1px solid rgba(18, 59, 107, 0.08);
+        background:
+          radial-gradient(circle at top, rgba(18, 59, 107, 0.08), transparent 55%),
+          linear-gradient(#ffffff, #f4f7fb);
+      }
+
+      #photoEditorSection .frame-container {
+        width: min(100%, 360px);
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto;
+        border-width: 4px;
+        border-radius: 20px;
+      }
+
+      #photoEditorSection .right-panel {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        min-height: 0;
+        padding: clamp(8px, 1.4vh, 10px);
+        gap: clamp(6px, 1vh, 8px);
+        justify-content: flex-start;
+        align-items: stretch;
+        text-align: left;
+        border-left: none;
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 247, 255, 0.96)),
+          radial-gradient(circle at top right, rgba(18, 59, 107, 0.06), transparent 44%);
+      }
+
+      #photoEditorSection .right-panel::before,
+      #photoEditorSection .right-panel::after {
+        display: none;
+      }
+
+      #photoEditorSection .panel-shell {
+        width: 100%;
+        padding: clamp(10px, 1.4vh, 12px);
+        gap: clamp(6px, 1vh, 8px);
+        border-radius: 18px;
+      }
+
+      #photoEditorSection .panel-kicker,
+      #photoEditorSection .panel-divider,
+      #photoEditorSection .editor-story {
+        display: none;
+      }
+
+      #photoEditorSection .panel-title {
+        width: 100%;
+        margin-bottom: 0;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        text-align: left;
+      }
+
+      #photoEditorSection .panel-title .icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+      }
+
+      #photoEditorSection .panel-title .copy {
+        align-items: flex-start;
+        gap: 2px;
+      }
+
+      #photoEditorSection .panel-title h3 {
+        font-size: 16px;
+        line-height: 1.1;
+      }
+
+      #photoEditorSection .panel-title p {
+        display: none;
+      }
+
+      #photoEditorSection .editor-stats {
+        gap: 8px;
+      }
+
+      #photoEditorSection .stat-card {
+        min-height: clamp(48px, 7.2vh, 58px);
+        padding: 8px 9px;
+        border-radius: 14px;
+      }
+
+      #photoEditorSection .stat-card strong {
+        font-size: 15px;
+      }
+
+      #photoEditorSection .stat-card span {
+        font-size: 9px;
+        line-height: 1.25;
+      }
+
+      #photoEditorSection #photoUpload,
+      #photoEditorSection #shutterWrapper,
+      #photoEditorSection .tool-grid,
+      #photoEditorSection #goToPreviewBtn {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+      }
+
+      #photoEditorSection .right-panel input[type="file"] {
+        min-height: 48px;
+        margin-top: 0;
+        padding: 10px 10px;
+        font-size: 11.5px;
+        line-height: 1.2;
+        border-radius: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      #photoEditorSection .right-panel input[type="file"]::file-selector-button {
+        padding: 8px 12px;
+        margin-right: 8px;
+        border-radius: 10px;
+      }
+
+      #photoEditorSection .tool-grid {
+        gap: 8px;
+        padding-top: 0;
+      }
+
+      #photoEditorSection .tool-grid #openCameraBtn,
+      #photoEditorSection .tool-grid #switchCameraBtn,
+      #photoEditorSection .tool-grid #rotateBtn,
+      #photoEditorSection .tool-grid #retakeBtn,
+      #photoEditorSection #goToPreviewBtn {
+        width: 100%;
+        max-width: none;
+      }
+
+      #photoEditorSection #openCameraBtn,
+      #photoEditorSection #switchCameraBtn,
+      #photoEditorSection #rotateBtn,
+      #photoEditorSection #retakeBtn,
+      #photoEditorSection #goToPreviewBtn {
+        min-height: clamp(42px, 6vh, 46px);
+        padding: 10px 12px;
+        font-size: 12px;
+        border-radius: 16px;
+      }
+
+      #photoEditorSection .tool-btn .icon,
+      #photoEditorSection .primary-cta .icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 10px;
+      }
+
+      #photoEditorSection .secondary-tool-row {
+        width: 100%;
+        gap: 8px;
+      }
+
+      #photoEditorSection .secondary-tool-row #rotateBtn,
+      #photoEditorSection .secondary-tool-row #retakeBtn {
+        width: calc(50% - 4px);
+        max-width: none;
+        min-width: 0;
+      }
+
+      #photoEditorSection #shutterWrapper {
+        padding: 0;
+        margin-top: 0 !important;
+      }
+
+      #photoEditorSection .shutter-btn {
+        width: 60px;
+        height: 60px;
+      }
+
+      #photoEditorSection .shutter-btn::after {
+        width: 40px;
+        height: 40px;
+      }
+
+      #photoEditorSection.camera-live .editor-layout {
+        height: calc(
+          var(--camera-live-height, 100dvh) -
+          env(safe-area-inset-top, 0px) -
+          env(safe-area-inset-bottom, 0px) -
+          12px
+        );
+        max-height: calc(
+          var(--camera-live-height, 100dvh) -
+          env(safe-area-inset-top, 0px) -
+          env(safe-area-inset-bottom, 0px) -
+          12px
+        );
+      }
+
+      #photoEditorSection.camera-live .left-panel {
+        padding: 8px 8px 4px;
+      }
+
+      #photoEditorSection.camera-live .right-panel {
+        padding: 8px 10px 10px;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width:1023px) and (orientation:portrait) and (max-height:700px) {
+      #photoEditorSection.section {
+        padding:
+          calc(env(safe-area-inset-top, 0px) + 52px)
+          8px
+          calc(env(safe-area-inset-bottom, 0px) + 8px);
+      }
+
+      #photoEditorSection .editor-layout {
+        max-width: 480px;
+        height: calc(
+          100dvh -
+          env(safe-area-inset-top, 0px) -
+          env(safe-area-inset-bottom, 0px) -
+          64px
+        );
+        max-height: calc(
+          100dvh -
+          env(safe-area-inset-top, 0px) -
+          env(safe-area-inset-bottom, 0px) -
+          64px
+        );
+      }
+
+      #photoEditorSection .left-panel {
+        padding: 6px 8px;
+      }
+
+      #photoEditorSection .frame-container {
+        width: min(100%, 312px);
+        border-width: 3px;
+      }
+
+      #photoEditorSection .right-panel {
+        padding: 8px;
+        gap: 6px;
+      }
+
+      #photoEditorSection .panel-shell {
+        padding: 8px 10px;
+        gap: 6px;
+      }
+
+      #photoEditorSection .panel-title .icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      #photoEditorSection .panel-title h3 {
+        font-size: 15px;
+      }
+
+      #photoEditorSection .editor-stats {
+        gap: 6px;
+      }
+
+      #photoEditorSection .stat-card {
+        min-height: 44px;
+        padding: 6px 8px;
+      }
+
+      #photoEditorSection .stat-card strong {
+        font-size: 14px;
+      }
+
+      #photoEditorSection .stat-card span {
+        font-size: 8px;
+        letter-spacing: .06em;
+      }
+
+      #photoEditorSection .right-panel input[type="file"] {
+        min-height: 44px;
+        padding: 8px 9px;
+        font-size: 11px;
+      }
+
+      #photoEditorSection .right-panel input[type="file"]::file-selector-button {
+        padding: 7px 10px;
+        margin-right: 6px;
+      }
+
+      #photoEditorSection #openCameraBtn,
+      #photoEditorSection #switchCameraBtn,
+      #photoEditorSection #rotateBtn,
+      #photoEditorSection #retakeBtn,
+      #photoEditorSection #goToPreviewBtn {
+        min-height: 40px;
+        padding: 8px 10px;
+        font-size: 11px;
+      }
+
+      #photoEditorSection .tool-btn .icon,
+      #photoEditorSection .primary-cta .icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      #photoEditorSection .secondary-tool-row {
+        gap: 6px;
+      }
+
+      #photoEditorSection .shutter-btn {
+        width: 56px;
+        height: 56px;
+      }
+
+      #photoEditorSection .shutter-btn::after {
+        width: 36px;
+        height: 36px;
+      }
+
+      #photoEditorSection.camera-live .right-panel {
+        padding: 6px 8px 8px;
+        gap: 6px;
+      }
+    }
+
     /* ===== CUSTOM EXPORT DROPDOWN ===== */
     #previewSection .export-format-card {
       width: 100%;
