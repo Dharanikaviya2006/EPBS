@@ -4138,6 +4138,11 @@
       transform: translateY(-1px) scale(1.03);
     }
 
+    html,
+    body {
+      overflow: hidden !important;
+    }
+
     .section,
     #setupSection,
     #photoEditorSection,
@@ -4146,6 +4151,55 @@
     #photoEditorSection .editor-layout,
     #previewSection .editor-layout {
       overflow: hidden;
+    }
+
+    .section {
+      position: fixed !important;
+      inset: 0;
+      width: 100vw;
+      height: 100dvh;
+      max-height: 100dvh;
+    }
+
+    .setup-shell {
+      width: min(620px, calc(100vw - 36px));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      flex: 0 0 auto;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    .setup-shell .page-title {
+      width: 100%;
+      align-items: center;
+    }
+
+    .setup-shell #setupForm {
+      width: 100%;
+    }
+
+    #notice {
+      position: fixed;
+      left: 50%;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+      transform: translateX(-50%);
+      margin: 0;
+      height: auto;
+      min-height: 0;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 24px rgba(10, 37, 69, 0.12);
+      z-index: 10002;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    #notice:empty {
+      display: none;
     }
 
     @media (min-width:1024px) {
@@ -4164,6 +4218,11 @@
       #photoEditorSection,
       #previewSection {
         padding: 16px;
+      }
+
+      .setup-shell {
+        width: min(620px, calc(100vw - 44px));
+        gap: 12px;
       }
 
       #photoEditorSection .editor-layout,
@@ -4235,8 +4294,8 @@
       }
 
       #setupForm {
-        width: clamp(470px, 40vw, 580px);
-        max-width: calc(100vw - 36px);
+        width: 100%;
+        max-width: 100%;
         max-height: none;
         padding: clamp(18px, 2vh, 24px) clamp(18px, 2vw, 24px);
         gap: clamp(10px, 1vh, 14px);
@@ -4354,6 +4413,11 @@
     }
 
     @media (max-width:1023px) and (orientation:portrait) {
+      .setup-shell {
+        width: min(100%, calc(100vw - 24px));
+        gap: 8px;
+      }
+
       #setupSection {
         gap: 8px;
         padding:
@@ -4376,8 +4440,8 @@
       }
 
       #setupForm {
-        width: min(100%, 460px);
-        max-width: calc(100vw - 24px);
+        width: 100%;
+        max-width: 100%;
         padding: 14px 14px 16px;
         gap: 8px;
         border-radius: 24px;
@@ -4459,6 +4523,10 @@
     }
 
     @media (max-width:600px) {
+      .setup-shell {
+        width: calc(100vw - 20px);
+      }
+
       #setupSection h2 {
         font-size: clamp(26px, 8vw, 36px);
       }
@@ -4499,6 +4567,11 @@
     }
 
     @media (min-width:1024px) and (max-height:820px) {
+      .setup-shell {
+        width: min(590px, calc(100vw - 40px));
+        gap: 10px;
+      }
+
       #setupSection {
         gap: 8px;
         padding:
@@ -4512,7 +4585,6 @@
       }
 
       #setupForm {
-        width: clamp(450px, 39vw, 540px);
         padding: 16px 16px 18px;
         gap: 8px;
       }
@@ -4545,6 +4617,10 @@
     }
 
     @media (max-height:720px) {
+      .setup-shell {
+        gap: 6px;
+      }
+
       #setupSection {
         gap: 5px;
       }
@@ -4625,61 +4701,63 @@
   </div>
   <div class="dot-grid"></div>
   <div class="section" id="setupSection">
-    <div class="page-title">
-      <div class="hero-badge"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path>
-          </svg></span><span>HE5 Event Branding Studio</span></div>
-      <h2 style="text-align:center;color:white">Frame Setup</h2>
-    </div>
-    <form id="setupForm">
-      <div class="form-header">
-        <h4>Prepare Your Template</h4>
-        <p>Set the visual frame and default copy that should appear in every generated event post.</p>
+    <div class="setup-shell" id="setupShell">
+      <div class="page-title">
+        <div class="hero-badge"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path>
+            </svg></span><span>HE5 Event Branding Studio</span></div>
+        <h2 style="text-align:center;color:white">Frame Setup</h2>
       </div>
-      <div class="field-group" id="frameUploadField">
-        <label class="field-label" for="frameUpload"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="4" y="5" width="16" height="14" rx="2"></rect>
-              <path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path>
-            </svg></span><span>Frame artwork</span></label>
-        <div class="file-upload-shell" id="frameUploadShell">
-          <input type="file" id="frameUpload" accept="image/*" required>
-          <label class="upload-drop-surface" id="frameUploadSurface" for="frameUpload">
-            <span class="upload-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
-                <path d="M12 15V5"></path>
-                <path d="M8.5 8.5L12 5l3.5 3.5"></path>
-                <path d="M6 12.5v4a1.5 1.5 0 0 0 1.5 1.5h9a1.5 1.5 0 0 0 1.5-1.5v-4"></path>
-                <path d="M8 12.5h8"></path>
-              </svg></span>
-            <span class="upload-drop-copy">
-              <strong id="frameUploadPrompt">Drag and drop file here</strong>
-            </span>
-            <span class="upload-drop-divider" aria-hidden="true">or</span>
-            <span class="upload-drop-action" id="frameUploadAction" aria-hidden="true">Browse for file</span>
-            <span class="upload-drop-status" id="frameUploadStatus" aria-live="polite">PNG preferred for transparent frames.</span>
-          </label>
+      <form id="setupForm">
+        <div class="form-header">
+          <h4>Prepare Your Template</h4>
+          <p>Set the visual frame and default copy that should appear in every generated event post.</p>
         </div>
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="defaultCaption"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 20l4.5-1 8.8-8.8a2.1 2.1 0 0 0-3-3L5.5 16 4 20z"></path>
-              <path d="M13 7l4 4"></path>
-            </svg></span><span>Default caption</span></label>
-        <textarea id="defaultCaption" placeholder="Default professional caption"></textarea>
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="defaultTags"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M9 4L7 20"></path>
-              <path d="M17 4l-2 16"></path>
-              <path d="M4 9h16"></path>
-              <path d="M3 15h16"></path>
-            </svg></span><span>Hashtags</span></label>
-        <input type="text" id="defaultTags" placeholder="#HE5Solutions #Innovation">
-      </div>
-      <button type="submit" class="cta-btn primary-cta"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14"></path>
-            <path d="M13 6l6 6-6 6"></path>
-          </svg></span><span>Continue to Editor</span></button>
-    </form>
+        <div class="field-group" id="frameUploadField">
+          <label class="field-label" for="frameUpload"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="4" y="5" width="16" height="14" rx="2"></rect>
+                <path d="M8 13l2.5-2.5L14 14l2-2 2 2.5"></path>
+              </svg></span><span>Frame artwork</span></label>
+          <div class="file-upload-shell" id="frameUploadShell">
+            <input type="file" id="frameUpload" accept="image/*" required>
+            <label class="upload-drop-surface" id="frameUploadSurface" for="frameUpload">
+              <span class="upload-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                  <path d="M12 15V5"></path>
+                  <path d="M8.5 8.5L12 5l3.5 3.5"></path>
+                  <path d="M6 12.5v4a1.5 1.5 0 0 0 1.5 1.5h9a1.5 1.5 0 0 0 1.5-1.5v-4"></path>
+                  <path d="M8 12.5h8"></path>
+                </svg></span>
+              <span class="upload-drop-copy">
+                <strong id="frameUploadPrompt">Drag and drop file here</strong>
+              </span>
+              <span class="upload-drop-divider" aria-hidden="true">or</span>
+              <span class="upload-drop-action" id="frameUploadAction" aria-hidden="true">Browse for file</span>
+              <span class="upload-drop-status" id="frameUploadStatus" aria-live="polite">PNG preferred for transparent frames.</span>
+            </label>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="defaultCaption"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 20l4.5-1 8.8-8.8a2.1 2.1 0 0 0-3-3L5.5 16 4 20z"></path>
+                <path d="M13 7l4 4"></path>
+              </svg></span><span>Default caption</span></label>
+          <textarea id="defaultCaption" placeholder="Default professional caption"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="defaultTags"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 4L7 20"></path>
+                <path d="M17 4l-2 16"></path>
+                <path d="M4 9h16"></path>
+                <path d="M3 15h16"></path>
+              </svg></span><span>Hashtags</span></label>
+          <input type="text" id="defaultTags" placeholder="#HE5Solutions #Innovation">
+        </div>
+        <button type="submit" class="cta-btn primary-cta"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14"></path>
+              <path d="M13 6l6 6-6 6"></path>
+            </svg></span><span>Continue to Editor</span></button>
+      </form>
+    </div>
   </div>
   <div class="section hidden" id="photoEditorSection">
     <button class="back-btn" id="backBtn" type="button" aria-label="Back" title="Back">&#8592;</button>
@@ -4872,6 +4950,7 @@
     const frameUploadPrompt = document.getElementById("frameUploadPrompt");
     const frameUploadAction = document.getElementById("frameUploadAction");
     const frameUploadStatus = document.getElementById("frameUploadStatus");
+    const setupShell = document.getElementById("setupShell");
     const defaultCaption = document.getElementById("defaultCaption");
     const defaultTags = document.getElementById("defaultTags");
     const setupSection = document.getElementById("setupSection");
@@ -5032,6 +5111,29 @@
         el.msRequestFullscreen();
       }
     }
+
+    function fitSetupLayout() {
+      if (!setupShell || setupSection.classList.contains("hidden")) {
+        return;
+      }
+
+      setupShell.style.transform = "scale(1)";
+
+      const sectionRect = setupSection.getBoundingClientRect();
+      const sectionStyles = getComputedStyle(setupSection);
+      const paddingTop = parseFloat(sectionStyles.paddingTop) || 0;
+      const paddingBottom = parseFloat(sectionStyles.paddingBottom) || 0;
+      const availableHeight = Math.max(0, sectionRect.height - paddingTop - paddingBottom);
+      const contentHeight = setupShell.scrollHeight;
+
+      if (!availableHeight || !contentHeight) {
+        return;
+      }
+
+      const scale = Math.min(1, availableHeight / contentHeight);
+      setupShell.style.transform = `scale(${scale})`;
+    }
+
     function showStep(sectionToShow) {
 
       setupSection.classList.add("hidden");
@@ -5041,6 +5143,7 @@
       sectionToShow.classList.remove("hidden");
 
       window.scrollTo(0, 0);
+      requestAnimationFrame(fitSetupLayout);
     }
     /* ======================================================
        TRUE FREE STYLE IMAGE ENGINE (CANVAS-LIKE)
@@ -5393,10 +5496,15 @@
         '--vh',
         `${window.innerHeight * 0.01}px`
       );
+      fitSetupLayout();
     }
 
     window.addEventListener('resize', fixViewportHeight);
     fixViewportHeight();
+    window.addEventListener("load", fitSetupLayout);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitSetupLayout);
+    }
 
     /* ======================================================
        FORM
